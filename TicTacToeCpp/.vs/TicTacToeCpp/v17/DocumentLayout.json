@@ -22,8 +22,20 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 3,
           "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{75188d03-9892-4ae2-abf1-207126247ce5}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:129:0:{75188d03-9892-4ae2-abf1-207126247ce5}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
@@ -32,7 +44,7 @@
               "RelativeDocumentMoniker": "TTTFunc.cpp",
               "ToolTip": "C:\\Users\\Patryk\\Desktop\\Praca\\C Plus Plus\\TicTacToeCpp\\TTTFunc.cpp",
               "RelativeToolTip": "TTTFunc.cpp",
-              "ViewState": "AQIAAGwAAAAAAAAAAAAAAHMAAABSAAAA",
+              "ViewState": "AQIAAF0AAAAAAAAAAAAAAHcAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2024-07-17T18:27:37.774Z",
               "EditorCaption": ""
@@ -47,8 +59,7 @@
               "RelativeToolTip": "TicTacToe.h",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAAAOAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-07-17T17:19:51.77Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-17T17:19:51.77Z"
             },
             {
               "$type": "Document",
@@ -60,8 +71,7 @@
               "RelativeToolTip": "TicTacToeCpp.cpp",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAUAAAATAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2024-07-17T17:05:44.649Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-17T17:05:44.649Z"
             }
           ]
         }
