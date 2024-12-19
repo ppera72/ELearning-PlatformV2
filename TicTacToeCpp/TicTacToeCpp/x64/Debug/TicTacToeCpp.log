@@ -1,0 +1,4 @@
+﻿  TTTFunc.cpp
+C:\Users\Patryk\Desktop\Praca\C Plus Plus\TicTacToeCpp\TTTFunc.cpp(14,12): warning C4244: "argument": konwersja z "time_t" do "unsigned int", możliwa utrata danych
+C:\Users\Patryk\Desktop\Praca\C Plus Plus\TicTacToeCpp\TTTFunc.cpp(53,11): warning C4244: "inicjowanie": konwersja z "__int64" do "int", możliwa utrata danych
+  TicTacToeCpp.vcxproj -> C:\Users\Patryk\Desktop\Praca\C Plus Plus\TicTacToeCpp\x64\Debug\TicTacToeCpp.exe

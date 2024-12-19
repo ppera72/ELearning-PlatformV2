@@ -1,0 +1,53 @@
+- logowanie, tworzenie kont
+	- regex do hasła? done
+- przesyłanie plików, wystawianie ocen
+- egzaminy abcd?
+- wyniki?
+- może wykresy wyników dla roku/sem itp.
+- 
+
+
+
+klasa zmiana danych:
+- zmiany imienia, nazwiska osobna funkcja
+- nowe imie, nazw jako paramter
+- prof czy stud w funkcji (może jako parametr też?)
+- dziedziczenie po login? (żeby mieć te funkcje z regexem)
+- po zmianie -> powrót na login, żeby się zalogować
+
+
+klasa zadania:
+- dodaj, zmien, usun zadanie
+- rocznik jako parametr(wybieramy dla kogo jest to zadanie)
+- wyświetlanie zadań
+- 
+
+
+CHUJNIA KRUWA
+
+
+zostawić logowanie i rejestracje
+
+rejestracja => tworzenie nowego obiektu student/prof
+logowanie => sprawdzanie w obu frakcjach czy jest taki delikwent
+dane zapisywać w plikach
+może w zadaniach to odczytywać?
+
+jakieś gui może w formie pytanie/odp/przesłanie pliku z dysku(zapisanie nazwy/zawartości w zmiennej, odczyt przez prof, zwrócenie z oceną?)
+może jakieś rozwijane menu w gui->ustawienia
+
+klasa osoba:
+- imie, nazwisko, email, hasło, data urodzenia, jakieś dupne funkcje jak na lab
+
+klasa student (dziedziczenie po osoba)
+- kierunek, rok studiów?, 
+
+klasa prof (dziedziczenie po osoba)
+- tytuł, specjalizacja/katedra/czego uczy
+
+klasa admin (dziedziczenie po osoba)
+- ?
+
+klasa zadania:
+- tworzenie zadań, modyfikacja, odpowiadanie, może testy(pytania w tab, odpowiedzi też)
+- może wykresy ocen? jak w usosie
