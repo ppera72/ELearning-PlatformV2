@@ -40,7 +40,7 @@ void userData::readFromFile(std::string filePath, bool ifStud)
 
 int userData::getLastID(std::vector<std::string> data)
 {
-    int id = 1;
+    int id = 0;
     if(data.size() == 0){
         return id;
     }
