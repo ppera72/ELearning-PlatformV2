@@ -123,10 +123,8 @@ void MainWindow::on_registerToDatabaseButton_clicked() // enter/leaveEvent to ho
     if(checkNames(nameRegisterInput, surnameRegisterInput) && checkEmail(emailRegisterInput) && checkPassword(passwordRegisterInput) && (studentRegisterRadioButton || professorRegisterRadioButton)){
         std::stringstream helpMessage;
         std::string message;
-        if(checkIfInDatabase(emailRegisterInput.toStdString(), UserData.studentData)){
+        if(checkIfInDatabase(emailRegisterInput.toStdString(), UserData.studentData) || checkIfInDatabase(emailRegisterInput.toStdString(), UserData.professorData)){
             QMessageBox::information(this, "Registation information", "Account already in database!", QMessageBox::Ok);
-            qDebug()<<emailRegisterInput.toStdString();
-            qDebug()<<checkIfInDatabase(emailRegisterInput.toStdString(), UserData.studentData);
         }
         else{
             if(studentRegisterRadioButton){
