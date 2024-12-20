@@ -2,7 +2,6 @@
 #include "ui_mainwindow.h"
 #include <QDebug>
 #include <QMessageBox>
-#include <algorithm>
 #include <sstream>
 
 MainWindow::MainWindow(QWidget *parent)
@@ -18,6 +17,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->exitButton, &QPushButton::clicked, this, &MainWindow::on_exitButton_clicked);
 
     UserData.readFromFile(UserData.studFileName, true);
+    UserData.readFromFile(UserData.profFileName, false);
     for(auto&& a : UserData.studentData){
         qDebug()<<a;
     }
@@ -38,8 +38,6 @@ void MainWindow::on_exitButton_clicked()
 {
     MainWindow::close();
 }
-
-
 
 void MainWindow::on_loginButton_clicked()
 {
@@ -84,8 +82,13 @@ bool MainWindow::checkNames(QString name, QString surname){
 }
 
 bool MainWindow::checkIfInDatabase(std::string email, std::vector<std::string> data){
-    if (std::find(data.begin(), data.end(), email) != data.end())
-        return true;
+    if(data.empty())
+        return false;
+    for(auto&& user: data){
+        if(user.find(email) != std::string::npos){
+            return true;
+        }
+    }
     return false;
 }
 
@@ -118,27 +121,37 @@ void MainWindow::on_registerToDatabaseButton_clicked() // enter/leaveEvent to ho
     }
 
     if(checkNames(nameRegisterInput, surnameRegisterInput) && checkEmail(emailRegisterInput) && checkPassword(passwordRegisterInput) && (studentRegisterRadioButton || professorRegisterRadioButton)){
-        qDebug()<<"gitra";
-        QMessageBox::information(this, "Registation information", "Account added to database!", QMessageBox::Ok);
         std::stringstream helpMessage;
         std::string message;
-        if(studentRegisterRadioButton){
-            UserData.lastID = UserData.getLastID(UserData.studentData);
-            UserData.lastID += 1;
-            helpMessage<<UserData.lastID<<";"<<nameRegisterInput.toStdString()<<";"<<surnameRegisterInput.toStdString()<<";"<<dateOBRegisterInput.toStdString()<<";"<<emailRegisterInput.toStdString()<<";"<<passwordRegisterInput.toStdString()<<";"<<majorRegisterInput.toStdString(); // change to include major code
-            message = helpMessage.str();
-            UserData.writeToFile(UserData.studFileName, message);
-            UserData.studentData.push_back(message);
+        if(checkIfInDatabase(emailRegisterInput.toStdString(), UserData.studentData)){
+            QMessageBox::information(this, "Registation information", "Account already in database!", QMessageBox::Ok);
+            qDebug()<<emailRegisterInput.toStdString();
+            qDebug()<<checkIfInDatabase(emailRegisterInput.toStdString(), UserData.studentData);
         }
         else{
-            UserData.lastID = UserData.getLastID(UserData.professorData);
-            UserData.lastID += 1;
-            helpMessage<<UserData.lastID<<";"<<nameRegisterInput.toStdString()<<";"<<surnameRegisterInput.toStdString()<<";"<<dateOBRegisterInput.toStdString()<<";"<<emailRegisterInput.toStdString()<<";"<<passwordRegisterInput.toStdString()<<";"<<majorRegisterInput.toStdString(); // change to include major code
-            message = helpMessage.str();
-            UserData.writeToFile(UserData.profFileName, message);
-            UserData.professorData.push_back(message);
+            if(studentRegisterRadioButton){
+                UserData.lastID = UserData.getLastID(UserData.studentData);
+                UserData.lastID += 1;
+                helpMessage<<UserData.lastID<<";"<<nameRegisterInput.toStdString()<<";"<<surnameRegisterInput.toStdString()<<";"<<dateOBRegisterInput.toStdString()<<";"<<emailRegisterInput.toStdString()<<";"<<passwordRegisterInput.toStdString()<<";"<<majorRegisterInput.toStdString(); // change to include major code
+                message = helpMessage.str();
+                UserData.writeToFile(UserData.studFileName, message);
+                UserData.studentData.push_back(message);
+            }
+            else{
+                UserData.lastID = UserData.getLastID(UserData.professorData);
+                UserData.lastID += 1;
+                helpMessage<<UserData.lastID<<";"<<nameRegisterInput.toStdString()<<";"<<surnameRegisterInput.toStdString()<<";"<<dateOBRegisterInput.toStdString()<<";"<<emailRegisterInput.toStdString()<<";"<<passwordRegisterInput.toStdString()<<";"<<majorRegisterInput.toStdString(); // change to include major code
+                message = helpMessage.str();
+                UserData.writeToFile(UserData.profFileName, message);
+                UserData.professorData.push_back(message);
+            }
+            QMessageBox::information(this, "Registation information", "Account added to database!", QMessageBox::Ok);
+            ui->nameRegisterInput->clear();
+            ui->surnameRegisterInput->clear();
+            ui->emailRegisterInput->clear();
+            ui->passwordRegisterInput->clear();
+            ui->stackedWidget->setCurrentIndex(0);
         }
-        ui->stackedWidget->setCurrentIndex(0);
     }
     else{
         qDebug()<<"u done fucked up";
