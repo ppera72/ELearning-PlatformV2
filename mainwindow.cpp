@@ -129,7 +129,6 @@ void MainWindow::on_registerToDatabaseButton_clicked() // enter/leaveEvent to ho
             message = helpMessage.str();
             UserData.writeToFile(UserData.studFileName, message);
             UserData.studentData.push_back(message);
-
         }
         else{
             UserData.lastID = UserData.getLastID(UserData.professorData);
@@ -145,11 +144,6 @@ void MainWindow::on_registerToDatabaseButton_clicked() // enter/leaveEvent to ho
         qDebug()<<"u done fucked up";
     }
 }
-
-/*void MainWindow::on_passwordRegisterHelpButton_clicked()
-{
-    QMessageBox::information(this, tr("Password Input"), tr("Password must contain:\n - minimum 8 characters\n - minimum 1 uppercase and 1 lowercase letter\n - minimum 1 digit\n - minimum 1 special charater (#?!@$%^&*-)"), QMessageBox::Ok);
-}*/
 
 void MainWindow::on_backToLoginPageButton_clicked()
 {
