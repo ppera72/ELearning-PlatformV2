@@ -31,5 +31,8 @@ private:
     void on_backToLoginPageButton_clicked();
     void on_exitButton_clicked();
     bool checkIfInDatabase(std::string email, std::vector<std::string> data);
+    bool checkIfPassMatches(std::string email, std::string password, std::vector<std::string> data);
+    void on_SMLogOutButton_clicked();
+    void on_PMLogOutButton_clicked();
 };
 #endif // MAINWINDOW_H

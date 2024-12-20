@@ -15,6 +15,9 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->registerToDatabaseButton, &QPushButton::clicked, this, &MainWindow::on_registerToDatabaseButton_clicked);
     connect(ui->backToLoginPageButton, &QPushButton::clicked, this, &MainWindow::on_backToLoginPageButton_clicked);
     connect(ui->exitButton, &QPushButton::clicked, this, &MainWindow::on_exitButton_clicked);
+    connect(ui->SMLogOutButton, &QPushButton::clicked, this, &MainWindow::on_SMLogOutButton_clicked);
+    connect(ui->PMLogOutButton, &QPushButton::clicked, this, &MainWindow::on_PMLogOutButton_clicked);
+
 
     UserData.readFromFile(UserData.studFileName, true);
     UserData.readFromFile(UserData.profFileName, false);
@@ -28,35 +31,6 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
-
-// LOGIN PAGE
-
-QString emailLoginInput, passwordLoginInput;
-bool studentStatus, professorStatus;
-
-void MainWindow::on_exitButton_clicked()
-{
-    MainWindow::close();
-}
-
-void MainWindow::on_loginButton_clicked()
-{
-    emailLoginInput = ui->emailLoginInput->text();
-    passwordLoginInput = ui->passwordLoginInput->text();
-    if (emailLoginInput.isEmpty() || passwordLoginInput.isEmpty()){
-        QMessageBox::warning(this, tr("Login Verification"), tr("Provide all login details!"), QMessageBox::Ok);
-    }
-
-    /*else{
-
-    }*/
-}
-
-void MainWindow::on_registerButton_clicked()
-{
-    ui->stackedWidget->setCurrentIndex(1);
-}
-// LOGIN PAGE END
 
 // REGISTER PAGE
 
@@ -92,6 +66,7 @@ bool MainWindow::checkIfInDatabase(std::string email, std::vector<std::string> d
     return false;
 }
 
+
 QString nameRegisterInput, surnameRegisterInput, emailRegisterInput, passwordRegisterInput, majorRegisterInput, dateOBRegisterInput; // different majors
 bool studentRegisterRadioButton, professorRegisterRadioButton;
 
@@ -103,7 +78,7 @@ void MainWindow::on_registerToDatabaseButton_clicked() // enter/leaveEvent to ho
     professorRegisterRadioButton = ui->professorRegisterRadioButton->isChecked();
     emailRegisterInput = ui->emailRegisterInput->text();
     passwordRegisterInput = ui->passwordRegisterInput->text();
-    majorRegisterInput = ui->majorRegisterCombo->currentText().replace(" ","");
+    majorRegisterInput = ui->majorRegisterCombo->currentText().replace(" ","");  //change that somehow
     dateOBRegisterInput = ui->dateOfBirthRegisterEdit->text();
 
     if(nameRegisterInput.isEmpty() || surnameRegisterInput.isEmpty() || emailRegisterInput.isEmpty() || passwordRegisterInput.isEmpty() || !(studentRegisterRadioButton || professorRegisterRadioButton)){
@@ -171,4 +146,99 @@ void MainWindow::on_backToLoginPageButton_clicked()
 }
 
 // REGISTER PAGE END
+
+// LOGIN PAGE
+
+std::string emailLoginInput, passwordLoginInput;
+bool studentStatus, professorStatus;
+
+bool MainWindow::checkIfPassMatches(std::string email, std::string password, std::vector<std::string> data)
+{
+    if(data.empty())
+        return false;
+    for(auto&& user: data){
+        if(user.find(email) != std::string::npos){
+            if(user.find(password) != std::string::npos){
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+void MainWindow::on_exitButton_clicked()
+{
+    MainWindow::close();
+}
+
+void MainWindow::on_loginButton_clicked()
+{
+    emailLoginInput = ui->emailLoginInput->text().toStdString();
+    passwordLoginInput = ui->passwordLoginInput->text().toStdString();
+    if (emailLoginInput.empty() || passwordLoginInput.empty()){
+        QMessageBox::warning(this, tr("Login Verification"), tr("Provide all login details!"), QMessageBox::Ok);
+    }
+    else{
+        bool ifStud = checkIfInDatabase(emailLoginInput, UserData.studentData);
+        bool ifProf = checkIfInDatabase(emailLoginInput, UserData.professorData);
+        if(!ifStud && !ifProf){
+            QMessageBox::warning(this, tr("Login Attempt"), tr("Account not in database!\nCheck credetials or register a new account!"), QMessageBox::Ok);
+        }
+        if(ifStud){
+            if(checkIfPassMatches(emailLoginInput, passwordLoginInput, UserData.studentData)){
+                QMessageBox::information(this, "Login Attempt", "Succesfully logged in!", QMessageBox::Ok);
+                ui->emailLoginInput->clear();
+                ui->passwordLoginInput->clear();
+                ui->stackedWidget->setCurrentIndex(2);
+                // Student();
+            }
+            else{
+                QMessageBox::warning(this, tr("Login Attempt"), tr("Wrong password!\nPlease try again!"), QMessageBox::Ok);
+            }
+        }
+        if(ifProf){
+            if(checkIfPassMatches(emailLoginInput, passwordLoginInput, UserData.professorData)){
+                QMessageBox::information(this, "Login Attempt", "Succesfully logged in!", QMessageBox::Ok);
+                ui->emailLoginInput->clear();
+                ui->passwordLoginInput->clear();
+                ui->stackedWidget->setCurrentIndex(3);
+                // Professor();
+            }
+            else{
+                QMessageBox::warning(this, tr("Login Attempt"), tr("Wrong password!\nPlease try again!"), QMessageBox::Ok);
+            }
+        }
+    }
+}
+
+void MainWindow::on_registerButton_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(1);
+}
+// LOGIN PAGE END
+
+
+// STUDENT MAIN PAGE
+void MainWindow::on_SMLogOutButton_clicked(){
+    QMessageBox::StandardButton reply;
+    reply = QMessageBox::question(this, "Log Out", "Are you sure you want to log out?", QMessageBox::Yes|QMessageBox::No);
+    if(reply == QMessageBox::Yes){
+        // destructor of stud instance? / deleting him
+        ui->stackedWidget->setCurrentIndex(0);
+    }
+}
+// STUDENT MAIN PAGE END
+
+
+// PROFESSOR MAIN PAGE
+void MainWindow::on_PMLogOutButton_clicked(){
+    QMessageBox::StandardButton reply;
+    reply = QMessageBox::question(this, "Log Out", "Are you sure you want to log out?", QMessageBox::Yes|QMessageBox::No);
+    if(reply == QMessageBox::Yes){
+        // destructor of prof instance? / deleting him
+        ui->stackedWidget->setCurrentIndex(0);
+    }
+}
+// PROFESSOR MAIN PAGE END
+
 

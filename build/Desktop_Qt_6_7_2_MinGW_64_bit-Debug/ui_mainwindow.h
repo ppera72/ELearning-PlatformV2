@@ -53,6 +53,12 @@ public:
     QLabel *studentMajorRegisterLabel;
     QLabel *dateOfBirthRegisterLabel;
     QDateEdit *dateOfBirthRegisterEdit;
+    QWidget *studentMainPage;
+    QLabel *label;
+    QPushButton *SMLogOutButton;
+    QWidget *professorMainPage;
+    QLabel *label_2;
+    QPushButton *PMLogOutButton;
 
     void setupUi(QMainWindow *MainWindow)
     {
@@ -154,11 +160,29 @@ public:
         dateOfBirthRegisterEdit->setObjectName("dateOfBirthRegisterEdit");
         dateOfBirthRegisterEdit->setGeometry(QRect(230, 280, 110, 25));
         stackedWidget->addWidget(registerWidnow);
+        studentMainPage = new QWidget();
+        studentMainPage->setObjectName("studentMainPage");
+        label = new QLabel(studentMainPage);
+        label->setObjectName("label");
+        label->setGeometry(QRect(300, 200, 49, 16));
+        SMLogOutButton = new QPushButton(studentMainPage);
+        SMLogOutButton->setObjectName("SMLogOutButton");
+        SMLogOutButton->setGeometry(QRect(90, 530, 80, 24));
+        stackedWidget->addWidget(studentMainPage);
+        professorMainPage = new QWidget();
+        professorMainPage->setObjectName("professorMainPage");
+        label_2 = new QLabel(professorMainPage);
+        label_2->setObjectName("label_2");
+        label_2->setGeometry(QRect(350, 290, 49, 16));
+        PMLogOutButton = new QPushButton(professorMainPage);
+        PMLogOutButton->setObjectName("PMLogOutButton");
+        PMLogOutButton->setGeometry(QRect(80, 540, 80, 24));
+        stackedWidget->addWidget(professorMainPage);
         MainWindow->setCentralWidget(centralwidget);
 
         retranslateUi(MainWindow);
 
-        stackedWidget->setCurrentIndex(1);
+        stackedWidget->setCurrentIndex(3);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -211,6 +235,10 @@ public:
 
         studentMajorRegisterLabel->setText(QCoreApplication::translate("MainWindow", "Student Major / Professor Departament:", nullptr));
         dateOfBirthRegisterLabel->setText(QCoreApplication::translate("MainWindow", "Date of Birth:", nullptr));
+        label->setText(QCoreApplication::translate("MainWindow", "stud", nullptr));
+        SMLogOutButton->setText(QCoreApplication::translate("MainWindow", "Log Out", nullptr));
+        label_2->setText(QCoreApplication::translate("MainWindow", "prof", nullptr));
+        PMLogOutButton->setText(QCoreApplication::translate("MainWindow", "Log Out", nullptr));
     } // retranslateUi
 
 };
