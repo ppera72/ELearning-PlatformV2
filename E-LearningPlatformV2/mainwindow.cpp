@@ -123,15 +123,12 @@ void MainWindow::on_registerToDatabaseButton_clicked() // enter/leaveEvent to ho
         if(studentRegisterRadioButton){
             std::stringstream helpMessage;
             std::string message;
-            UserData.lastID = UserData.getLastID(UserData.studentData);  // naprawić kruwa xDDDDDDDDDDDDDDD
-            qDebug()<<UserData.lastID;
-            if(UserData.lastID != 1){
-                UserData.lastID += 1;
-                qDebug()<<UserData.lastID;
-            }
+            UserData.lastID = UserData.getLastID(UserData.studentData);
+            UserData.lastID += 1;
             helpMessage<<UserData.lastID<<";"<<nameRegisterInput.toStdString()<<";"<<surnameRegisterInput.toStdString()<<";"<<dateOBRegisterInput.toStdString()<<";"<<emailRegisterInput.toStdString()<<";"<<passwordRegisterInput.toStdString()<<";"<<majorRegisterInput.toStdString(); // change to include major code
             message = helpMessage.str();
             UserData.writeToFile(UserData.studFileName, message);
+            UserData.studentData.push_back(message);
             ui->stackedWidget->setCurrentIndex(0);
         }
 
