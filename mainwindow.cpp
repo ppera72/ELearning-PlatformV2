@@ -66,10 +66,10 @@ bool MainWindow::checkIfInDatabase(std::string email, std::vector<std::string> d
 }
 
 
-QString nameRegisterInput, surnameRegisterInput, emailRegisterInput, passwordRegisterInput, studentMajorRegisterInput, dateOBRegisterInput, profSpecRegisterInput, profTitleRegisterInput; // different majors
+QString nameRegisterInput, surnameRegisterInput, emailRegisterInput, passwordRegisterInput, studentMajorRegisterInput, dateOBRegisterInput, profSpecRegisterInput, profTitleRegisterInput;
 bool studentRegisterRadioButton, professorRegisterRadioButton;
 
-void MainWindow::on_registerToDatabaseButton_clicked() // enter/leaveEvent to hover dodać do hasła, maila itp?
+void MainWindow::on_registerToDatabaseButton_clicked()
 {
     nameRegisterInput = ui->nameRegisterInput->text();
     surnameRegisterInput = ui->surnameRegisterInput->text();
@@ -94,7 +94,6 @@ void MainWindow::on_registerToDatabaseButton_clicked() // enter/leaveEvent to ho
 
         if(!checkPassword(passwordRegisterInput))
             QMessageBox::warning(this, tr("Register Verification"), tr("Password is incorect!"), QMessageBox::Ok);
-
     }
 
     if(checkNames(nameRegisterInput, surnameRegisterInput) && checkEmail(emailRegisterInput) && checkPassword(passwordRegisterInput) && (studentRegisterRadioButton || professorRegisterRadioButton)){
@@ -107,7 +106,7 @@ void MainWindow::on_registerToDatabaseButton_clicked() // enter/leaveEvent to ho
             if(studentRegisterRadioButton){
                 UserData.lastID = UserData.getLastID(UserData.studentData);
                 UserData.lastID += 1;
-                helpMessage<<UserData.lastID<<";"<<nameRegisterInput.toStdString()<<";"<<surnameRegisterInput.toStdString()<<";"<<dateOBRegisterInput.toStdString()<<";"<<emailRegisterInput.toStdString()<<";"<<passwordRegisterInput.toStdString()<<";"<<studentMajorRegisterInput.toStdString(); // change to include major code
+                helpMessage<<UserData.lastID<<";"<<nameRegisterInput.toStdString()<<";"<<surnameRegisterInput.toStdString()<<";"<<dateOBRegisterInput.toStdString()<<";"<<emailRegisterInput.toStdString()<<";"<<passwordRegisterInput.toStdString()<<";"<<studentMajorRegisterInput.toStdString();
                 message = helpMessage.str();
                 UserData.writeToFile(UserData.studFileName, message);
                 UserData.studentData.push_back(message);
@@ -115,7 +114,7 @@ void MainWindow::on_registerToDatabaseButton_clicked() // enter/leaveEvent to ho
             else{
                 UserData.lastID = UserData.getLastID(UserData.professorData);
                 UserData.lastID += 1;
-                //helpMessage<<UserData.lastID<<";"<<nameRegisterInput.toStdString()<<";"<<surnameRegisterInput.toStdString()<<";"<<dateOBRegisterInput.toStdString()<<";"<<emailRegisterInput.toStdString()<<";"<<passwordRegisterInput.toStdString()<<";"<<profSpecRegisterInput.toStdString()<<";"<<profTitleRegisterInput.toStdString(); // change to include major code
+                helpMessage<<UserData.lastID<<";"<<nameRegisterInput.toStdString()<<";"<<surnameRegisterInput.toStdString()<<";"<<dateOBRegisterInput.toStdString()<<";"<<emailRegisterInput.toStdString()<<";"<<passwordRegisterInput.toStdString()<<";"<<profSpecRegisterInput.toStdString()<<";"<<profTitleRegisterInput.toStdString();
                 message = helpMessage.str();
                 UserData.writeToFile(UserData.profFileName, message);
                 UserData.professorData.push_back(message);
@@ -225,7 +224,7 @@ void MainWindow::on_SMLogOutButton_clicked(){
     QMessageBox::StandardButton reply;
     reply = QMessageBox::question(this, "Log Out", "Are you sure you want to log out?", QMessageBox::Yes|QMessageBox::No);
     if(reply == QMessageBox::Yes){
-        // destructor of stud instance? / deleting him
+        // destructor of stud instance? / deleting
         ui->stackedWidget->setCurrentIndex(0);
     }
 }
@@ -237,7 +236,7 @@ void MainWindow::on_PMLogOutButton_clicked(){
     QMessageBox::StandardButton reply;
     reply = QMessageBox::question(this, "Log Out", "Are you sure you want to log out?", QMessageBox::Yes|QMessageBox::No);
     if(reply == QMessageBox::Yes){
-        // destructor of prof instance? / deleting him
+        // destructor of prof instance? / deleting
         ui->stackedWidget->setCurrentIndex(0);
     }
 }
