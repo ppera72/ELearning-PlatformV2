@@ -14,6 +14,10 @@ public:
 
     //void addTest(questionFile, startDate, endDate); // maybe check if structure is correct?
     //void editTest(questionFile);
+
+    //void addAssignment(file, startDate, endDate);
+    //void editAssignment(file);
+    //double gradeAssignment(assignmentID);
 };
 
 #endif // PROFESSOR_H
