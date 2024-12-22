@@ -11,6 +11,7 @@ public:
     char courseCode[2];
 
     Student(QString n, QString s, int a, QString e, QString p, Date dateOB);
+    //int startTest(std::string testName); ?
 };
 
 #endif // STUDENT_H

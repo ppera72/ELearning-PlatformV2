@@ -24,7 +24,6 @@ MainWindow::MainWindow(QWidget *parent)
     for(auto&& a : UserData.studentData){
         qDebug()<<a;
     }
-
 }
 
 MainWindow::~MainWindow()
@@ -67,7 +66,7 @@ bool MainWindow::checkIfInDatabase(std::string email, std::vector<std::string> d
 }
 
 
-QString nameRegisterInput, surnameRegisterInput, emailRegisterInput, passwordRegisterInput, majorRegisterInput, dateOBRegisterInput; // different majors
+QString nameRegisterInput, surnameRegisterInput, emailRegisterInput, passwordRegisterInput, studentMajorRegisterInput, dateOBRegisterInput, profSpecRegisterInput, profTitleRegisterInput; // different majors
 bool studentRegisterRadioButton, professorRegisterRadioButton;
 
 void MainWindow::on_registerToDatabaseButton_clicked() // enter/leaveEvent to hover dodać do hasła, maila itp?
@@ -78,7 +77,9 @@ void MainWindow::on_registerToDatabaseButton_clicked() // enter/leaveEvent to ho
     professorRegisterRadioButton = ui->professorRegisterRadioButton->isChecked();
     emailRegisterInput = ui->emailRegisterInput->text();
     passwordRegisterInput = ui->passwordRegisterInput->text();
-    majorRegisterInput = ui->majorRegisterCombo->currentText().replace(" ","");  //change that somehow
+    studentMajorRegisterInput = ui->studentMajorRegisterCombo->currentText().right(6).mid(1, 4); // getting code in brackets + removing brackets
+    profSpecRegisterInput = ui->professorSpecRegisterCombo->currentText().right(6).mid(1, 4); ;  // same as ^
+    profTitleRegisterInput = ui->professorTitleRegisterCombo->currentText();
     dateOBRegisterInput = ui->dateOfBirthRegisterEdit->text();
 
     if(nameRegisterInput.isEmpty() || surnameRegisterInput.isEmpty() || emailRegisterInput.isEmpty() || passwordRegisterInput.isEmpty() || !(studentRegisterRadioButton || professorRegisterRadioButton)){
@@ -93,6 +94,7 @@ void MainWindow::on_registerToDatabaseButton_clicked() // enter/leaveEvent to ho
 
         if(!checkPassword(passwordRegisterInput))
             QMessageBox::warning(this, tr("Register Verification"), tr("Password is incorect!"), QMessageBox::Ok);
+
     }
 
     if(checkNames(nameRegisterInput, surnameRegisterInput) && checkEmail(emailRegisterInput) && checkPassword(passwordRegisterInput) && (studentRegisterRadioButton || professorRegisterRadioButton)){
@@ -105,7 +107,7 @@ void MainWindow::on_registerToDatabaseButton_clicked() // enter/leaveEvent to ho
             if(studentRegisterRadioButton){
                 UserData.lastID = UserData.getLastID(UserData.studentData);
                 UserData.lastID += 1;
-                helpMessage<<UserData.lastID<<";"<<nameRegisterInput.toStdString()<<";"<<surnameRegisterInput.toStdString()<<";"<<dateOBRegisterInput.toStdString()<<";"<<emailRegisterInput.toStdString()<<";"<<passwordRegisterInput.toStdString()<<";"<<majorRegisterInput.toStdString(); // change to include major code
+                helpMessage<<UserData.lastID<<";"<<nameRegisterInput.toStdString()<<";"<<surnameRegisterInput.toStdString()<<";"<<dateOBRegisterInput.toStdString()<<";"<<emailRegisterInput.toStdString()<<";"<<passwordRegisterInput.toStdString()<<";"<<studentMajorRegisterInput.toStdString(); // change to include major code
                 message = helpMessage.str();
                 UserData.writeToFile(UserData.studFileName, message);
                 UserData.studentData.push_back(message);
@@ -113,7 +115,7 @@ void MainWindow::on_registerToDatabaseButton_clicked() // enter/leaveEvent to ho
             else{
                 UserData.lastID = UserData.getLastID(UserData.professorData);
                 UserData.lastID += 1;
-                helpMessage<<UserData.lastID<<";"<<nameRegisterInput.toStdString()<<";"<<surnameRegisterInput.toStdString()<<";"<<dateOBRegisterInput.toStdString()<<";"<<emailRegisterInput.toStdString()<<";"<<passwordRegisterInput.toStdString()<<";"<<majorRegisterInput.toStdString(); // change to include major code
+                //helpMessage<<UserData.lastID<<";"<<nameRegisterInput.toStdString()<<";"<<surnameRegisterInput.toStdString()<<";"<<dateOBRegisterInput.toStdString()<<";"<<emailRegisterInput.toStdString()<<";"<<passwordRegisterInput.toStdString()<<";"<<profSpecRegisterInput.toStdString()<<";"<<profTitleRegisterInput.toStdString(); // change to include major code
                 message = helpMessage.str();
                 UserData.writeToFile(UserData.profFileName, message);
                 UserData.professorData.push_back(message);
@@ -127,7 +129,7 @@ void MainWindow::on_registerToDatabaseButton_clicked() // enter/leaveEvent to ho
         }
     }
     else{
-        qDebug()<<"u done fucked up";
+        QMessageBox::warning(this, tr("Register Attempt"), tr("Something went wrong!\nTry Again!"), QMessageBox::Ok);
     }
 }
 

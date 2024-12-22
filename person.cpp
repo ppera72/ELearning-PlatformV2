@@ -32,11 +32,6 @@ Date Person::setDate() const
     return dateOfBirth;
 }
 
-char Person::Status() const
-{
-    return status;
-}
-
 void Person::Name(QString n)
 {
     name = n;
@@ -65,9 +60,4 @@ void Person::Password(QString p)
 void Person::getDate(Date dateOB)
 {
     dateOfBirth = dateOB;
-}
-
-void Person::Status(char s)
-{
-    status = s;
 }

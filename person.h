@@ -10,7 +10,6 @@ public:
     QString name, surname, email, password;
     int age;
     Date dateOfBirth;
-    char status; // student, prof or admin?
 
 
     Person(QString n, QString s, int a, QString e, QString p, Date dateOB);
