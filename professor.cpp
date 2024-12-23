@@ -1,4 +1,4 @@
 #include "professor.h"
 
-Professor::Professor(QString n, QString s, int a, QString e, QString p, Date dateOB) : Person(n, s, a, e, p, dateOB) {
+Professor::Professor(int id, std::string n, std::string s, Date dateOB, std::string e, std::string p) : Person(id, n, s, dateOB, e, p) {
 }

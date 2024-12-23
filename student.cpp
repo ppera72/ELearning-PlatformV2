@@ -1,4 +1,4 @@
 #include "student.h"
 
-Student::Student(QString n, QString s, int a, QString e, QString p, Date dateOB) : Person(n, s, a, e, p, dateOB){
+Student::Student(int id, std::string n, std::string s, Date dateOB, std::string e, std::string p, std::string cC) : Person(id, n, s, dateOB, e, p){
 }

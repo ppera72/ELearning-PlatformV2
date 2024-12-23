@@ -1,8 +1,11 @@
 #include "mainwindow.h"
+#include "student.h"
 #include "ui_mainwindow.h"
 #include <QDebug>
 #include <QMessageBox>
 #include <sstream>
+#include <iostream>
+#include <string>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -191,7 +194,9 @@ void MainWindow::on_loginButton_clicked()
                 ui->emailLoginInput->clear();
                 ui->passwordLoginInput->clear();
                 ui->stackedWidget->setCurrentIndex(2);
-                // Student();
+
+                Student currentStudent = getStudData(UserData.studentData);
+                ui->nameLabel->setText(QString::fromStdString(currentStudent.Name()));
             }
             else{
                 QMessageBox::warning(this, tr("Login Attempt"), tr("Wrong password!\nPlease try again!"), QMessageBox::Ok);
@@ -208,6 +213,31 @@ void MainWindow::on_loginButton_clicked()
             else{
                 QMessageBox::warning(this, tr("Login Attempt"), tr("Wrong password!\nPlease try again!"), QMessageBox::Ok);
             }
+        }
+    }
+}
+
+Student MainWindow::getStudData(std::vector<std::string> &data){
+    for(auto&& user: data){
+        if(user.find(emailLoginInput) != std::string::npos){
+            std::vector<std::string> helpVec;
+            size_t pos = 0;
+            size_t prev = 0;
+            while((pos = user.find(';', prev)) != std::string::npos){
+                helpVec.push_back(user.substr(prev, pos - prev));
+                prev = pos + 1;
+            }
+            helpVec.push_back(user.substr(prev));
+            int id = stoi(helpVec[0]);
+            std::string name = helpVec[1];
+            std::string surname = helpVec[2];
+            Date dateOfBirth(helpVec[3]);
+            std::string email = helpVec[4];
+            std::string password = helpVec[5];
+            std::string courseCode = helpVec[6];
+
+            Student stud(id, name, surname, dateOfBirth, email, password, courseCode);
+            return stud;
         }
     }
 }

@@ -7,10 +7,11 @@ class Professor: public Person
 {
 public:
 
-    QString title;
-    QString sciSpec;
+    std::string title;
+    std::string sciSpec;
 
-    Professor(QString n, QString s, int a, QString e, QString p, Date dateOB);
+    Professor(int id, std::string n, std::string s, Date dateOB, std::string e, std::string p);
+    Professor();
 
     //void addTest(questionFile, startDate, endDate); // maybe check if structure is correct?
     //void editTest(questionFile);

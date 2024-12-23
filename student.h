@@ -8,9 +8,10 @@
 class Student: public Person
 {
 public:
-    char courseCode[4];
+    std::string courseCode;
 
-    Student(QString n, QString s, int a, QString e, QString p, Date dateOB);
+    Student(int id, std::string n, std::string s, Date dateOB, std::string e, std::string p, std::string cC);
+    Student();
     //int startTest(std::string testName); ?
     //void sendAssignment(file);
 

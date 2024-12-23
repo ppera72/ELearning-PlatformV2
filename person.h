@@ -7,26 +7,24 @@
 class Person
 {
 public:
-    QString name, surname, email, password;
-    int age;
+    std::string name, surname, email, password;
+    int id;
     Date dateOfBirth;
 
 
-    Person(QString n, QString s, int a, QString e, QString p, Date dateOB);
-    QString Name() const;
-    QString Surname() const;
-    int Age() const;
+    Person(int id, std::string n, std::string s, Date dateOB, std::string e, std::string p);
+    std::string Name() const;
+    std::string Surname() const;
     char Status() const;
-    QString Email() const;
-    QString Password() const;
+    std::string Email() const;
+    std::string Password() const;
     Date setDate() const;
 
-    void Name(QString n);
-    void Surname(QString s);
-    void Age(int a);
+    void Name(std::string n);
+    void Surname(std::string s);
     void Status(char s);
-    void Email(QString e);
-    void Password(QString p);
+    void Email(std::string e);
+    void Password(std::string p);
     void getDate(Date dateOB);
 };
 

@@ -2,6 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "professor.h"
+#include "student.h"
 #include "userdata.h"
 
 QT_BEGIN_NAMESPACE
@@ -19,6 +21,7 @@ public:
     ~MainWindow();
     userData UserData;
 
+
 private:
     Ui::MainWindow *ui;
     void on_pushButton_clicked();
@@ -32,6 +35,8 @@ private:
     void on_exitButton_clicked();
     bool checkIfInDatabase(std::string email, std::vector<std::string> data);
     bool checkIfPassMatches(std::string email, std::string password, std::vector<std::string> data);
+    Student getStudData(std::vector<std::string> &data);
+    Professor getProfData(Professor prof);
     void on_SMLogOutButton_clicked();
     void on_PMLogOutButton_clicked();
 };

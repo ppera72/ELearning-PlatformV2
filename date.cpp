@@ -1,6 +1,24 @@
 #include "date.h"
+#include <vector>
 
 Date::Date(int d, int m, int y) : day(d), month(m), year(y) { correctDate();}
+
+Date::Date(std::string date){
+    size_t pos = 0;
+    size_t prev = 0;
+    std::vector<int> dateOB;
+
+    while ((pos = date.find('.', prev)) != std::string::npos) {
+        dateOB.push_back(stoi(date.substr(prev, pos - prev)));
+        prev = pos + 1;
+    }
+    day = dateOB[0];
+    month = dateOB[1];
+    year = dateOB[2];
+
+    correctDate();
+}
+
 
 int Date::Day() const
 {

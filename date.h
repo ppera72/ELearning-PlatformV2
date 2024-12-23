@@ -8,6 +8,7 @@ class Date
     int day, month, year;
 public:
     Date(int day, int month, int year);
+    Date(std::string date);
     int Day() const;
     int Month() const;
     int Year() const;
@@ -17,6 +18,7 @@ public:
     void Year(int y);
 
     void correctDate();
+
 };
 
 #endif // DATE_H
