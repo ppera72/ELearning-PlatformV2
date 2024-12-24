@@ -1,6 +1,19 @@
 #include "person.h"
 
-Person::Person(int id, std::string n, std::string s, Date dateOB, std::string e, std::string p): name(n), surname(s), email(e), password(p), id(id), dateOfBirth(dateOB){}
+Person::Person(int i, std::string n, std::string s, Date dateOB, std::string e, std::string p): name(n), surname(s), email(e), password(p), id(i), dateOfBirth(dateOB){}
+
+Person::Person(){
+    id = 0;
+    name = "";
+    surname = "";
+    email = "";
+    password = "";
+}
+
+int Person::Id() const
+{
+    return id;
+}
 
 std::string Person::Name() const
 {
@@ -27,6 +40,9 @@ Date Person::setDate() const
     return dateOfBirth;
 }
 
+void Person::Id(int i){
+    id = i;
+}
 void Person::Name(std::string n)
 {
     name = n;

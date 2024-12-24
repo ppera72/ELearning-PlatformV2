@@ -19,6 +19,8 @@ Date::Date(std::string date){
     correctDate();
 }
 
+Date::Date(){}
+
 
 int Date::Day() const
 {
@@ -71,4 +73,11 @@ void Date::correctDate()
         month = 12;
     else if (month < 1)
         month = 1;
+}
+
+
+std::string Date::wholeDate(){
+    std::string help;
+    help = std::to_string(day) + "." + std::to_string(month) + "." + std::to_string(year);
+    return help;
 }

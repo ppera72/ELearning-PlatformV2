@@ -9,6 +9,7 @@ class Date
 public:
     Date(int day, int month, int year);
     Date(std::string date);
+    Date();
     int Day() const;
     int Month() const;
     int Year() const;
@@ -16,6 +17,7 @@ public:
     void Day(int d);
     void Month(int m);
     void Year(int y);
+    std::string wholeDate();
 
     void correctDate();
 

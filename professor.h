@@ -2,15 +2,17 @@
 #define PROFESSOR_H
 
 #include "person.h"
+#include "date.h"
 
 class Professor: public Person
 {
-public:
-
+private:
     std::string title;
     std::string sciSpec;
+public:
 
-    Professor(int id, std::string n, std::string s, Date dateOB, std::string e, std::string p);
+
+    Professor(int id, std::string n, std::string s, Date dateOB, std::string e, std::string p, std::string t, std::string sSp);
     Professor();
 
     //void addTest(questionFile, startDate, endDate); // maybe check if structure is correct?

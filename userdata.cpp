@@ -3,7 +3,7 @@
 #include <QDebug>
 void userData::writeToFile(std::string filePath, std::string message)
 {
-    std::string path = "C:\\Users\\Patryk\\Desktop\\Praca\\C Plus Plus\\E-LearningPlatformV2\\userData\\" + filePath;
+    std::string path = "C:\\Users\\Patryk\\Desktop\\Praca\\C Plus Plus\\E-LearningPlatformV2\\userData\\" + filePath; // change path!!!
     std::ifstream File(path.c_str());
     if(File.good()){
         std::ofstream File(path, std::ios_base::app);
@@ -18,7 +18,7 @@ void userData::writeToFile(std::string filePath, std::string message)
 
 void userData::readFromFile(std::string filePath, bool ifStud)
 {
-    std::string path = "C:\\Users\\Patryk\\Desktop\\Praca\\C Plus Plus\\E-LearningPlatformV2\\userData\\" + filePath;
+    std::string path = "C:\\Users\\Patryk\\Desktop\\Praca\\C Plus Plus\\E-LearningPlatformV2\\userData\\" + filePath; // change path!!!
     std::ifstream File(path.c_str());
     if(File.good()){
         std::string c;
@@ -48,7 +48,6 @@ int userData::getLastID(std::vector<std::string> data)
     for(unsigned long long i = 0; i < lastEntry.length(); i++){
         if(lastEntry[i] == ';'){
             id = stoi(lastEntry.substr(0, i));
-            //qDebug()<<id;
             break;
         }
     }

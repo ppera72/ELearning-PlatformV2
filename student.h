@@ -7,11 +7,14 @@
 
 class Student: public Person
 {
-public:
+private:
     std::string courseCode;
-
+public:
     Student(int id, std::string n, std::string s, Date dateOB, std::string e, std::string p, std::string cC);
     Student();
+
+    std::string CourseCode();
+
     //int startTest(std::string testName); ?
     //void sendAssignment(file);
 

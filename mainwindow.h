@@ -2,9 +2,9 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include "professor.h"
-#include "student.h"
 #include "userdata.h"
+#include "student.h"
+#include "professor.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -20,6 +20,13 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
     userData UserData;
+    Student currentStudent;
+    Professor currentProfessor;
+
+    bool checkEmail(QString email);
+    bool checkPassword(QString password);
+    bool checkNames(QString name, QString surname);
+
 
 
 private:
@@ -27,17 +34,22 @@ private:
     void on_pushButton_clicked();
     void on_loginButton_clicked();
     void on_registerButton_clicked();
-    bool checkEmail(QString email);
-    bool checkPassword(QString password);
-    bool checkNames(QString name, QString surname);
+
     void on_registerToDatabaseButton_clicked();
     void on_backToLoginPageButton_clicked();
     void on_exitButton_clicked();
     bool checkIfInDatabase(std::string email, std::vector<std::string> data);
     bool checkIfPassMatches(std::string email, std::string password, std::vector<std::string> data);
     Student getStudData(std::vector<std::string> &data);
-    Professor getProfData(Professor prof);
+    Professor getProfData(std::vector<std::string> &data);
     void on_SMLogOutButton_clicked();
     void on_PMLogOutButton_clicked();
+
+    void on_studMainChangeEmailButton_clicked();
+    void on_studMainChangePasswordButton_clicked();
+    void on_studMainChangeNameButton_clicked();
+    void on_studMainChangeSurnameButton_clicked();
+
+
 };
 #endif // MAINWINDOW_H
