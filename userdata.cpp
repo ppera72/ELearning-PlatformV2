@@ -53,3 +53,13 @@ int userData::getLastID(std::vector<std::string> data)
     }
     return id;
 }
+
+void userData::clearFile(std::string filePath)
+{
+    std::string path = "C:\\Users\\Patryk\\Desktop\\Praca\\C Plus Plus\\E-LearningPlatformV2\\userData\\" + filePath; // change path!!!
+    std::ifstream File(path.c_str());
+    if(File.good()){
+        std::ofstream File(path, std::ofstream::out | std::ofstream::trunc);
+        File.close();
+    }
+}

@@ -21,7 +21,7 @@ public:
     void writeToFile(std::string filePath, std::string message);
     void readFromFile(std::string filePath, bool ifStud);
     int getLastID(std::vector<std::string> data);
-
+    void clearFile(std::string filePath);
 };
 
 #endif // USERDATA_H

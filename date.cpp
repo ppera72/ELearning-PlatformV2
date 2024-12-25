@@ -1,17 +1,17 @@
 #include "date.h"
 #include <vector>
+#include <sstream>
+#include <iomanip>
 
 Date::Date(int d, int m, int y) : day(d), month(m), year(y) { correctDate();}
 
 Date::Date(std::string date){
-    size_t pos = 0;
-    size_t prev = 0;
     std::vector<int> dateOB;
 
-    while ((pos = date.find('.', prev)) != std::string::npos) {
-        dateOB.push_back(stoi(date.substr(prev, pos - prev)));
-        prev = pos + 1;
-    }
+    dateOB.push_back(stoi(date.substr(0, 2)));
+    dateOB.push_back(stoi(date.substr(3, 5)));
+    dateOB.push_back(stoi(date.substr(6, 10)));
+
     day = dateOB[0];
     month = dateOB[1];
     year = dateOB[2];
@@ -77,7 +77,8 @@ void Date::correctDate()
 
 
 std::string Date::wholeDate(){
-    std::string help;
-    help = std::to_string(day) + "." + std::to_string(month) + "." + std::to_string(year);
+    std::ostringstream oss;
+    oss << std::setfill('0') << std::setw(2) << day << "."<< std::setfill('0') << std::setw(2) << month << "." << Year();
+    std::string help = oss.str();
     return help;
 }

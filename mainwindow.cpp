@@ -202,7 +202,6 @@ void MainWindow::on_loginButton_clicked()
 
                 currentStudent = getStudData(UserData.studentData);
                 ui->nameLabel->setText(QString::fromStdString(currentStudent.Name()));
-                qDebug()<<currentStudent.Id();
             }
             else{
                 QMessageBox::warning(this, tr("Login Attempt"), tr("Wrong password!\nPlease try again!"), QMessageBox::Ok);
@@ -267,7 +266,6 @@ void MainWindow::on_studMainChangeEmailButton_clicked()
         if(checkEmail(text) && !checkIfInDatabase(text.toStdString(), UserData.studentData) && !checkIfInDatabase(text.toStdString(), UserData.professorData)){
             currentStudent.Email(text.toStdString());
             QMessageBox::information(this, "Details Change", "Email has been successfully changed!", QMessageBox::Ok);
-            qDebug()<<currentStudent.Email();
         }
         else{
             QMessageBox::warning(this, "Incorect input data", "Email is incorrect!\nPlease try again!", QMessageBox::Ok);
@@ -304,17 +302,22 @@ void MainWindow::on_SMLogOutButton_clicked(){
     reply = QMessageBox::question(this, "Log Out", "Are you sure you want to log out?", QMessageBox::Yes|QMessageBox::No);
     if(reply == QMessageBox::Yes){
         for(auto&& user : UserData.studentData){
-            if(user.find(currentStudent.Id()) != std::string::npos){
+            if(user.find(std::to_string(currentStudent.Id())) != std::string::npos){
                 std::stringstream helpMessage;
                 std::string message;
                 helpMessage<<currentStudent.Id()<<";"<<currentStudent.Name()<<";"<<currentStudent.Surname()<<";"<<currentStudent.dateOfBirth.wholeDate()<<";"<<currentStudent.Email()<<";"<<currentStudent.Password()<<";"<<currentStudent.CourseCode();
                 message = helpMessage.str();
-                // open file -> change in file
                 UserData.studentData[currentStudent.Id() - 1] = message;
+                UserData.clearFile(UserData.studFileName);
+                for(auto&& a : UserData.studentData){
+                    UserData.writeToFile(UserData.studFileName, a);
+                }
+                break;
             }
         }
         ui->stackedWidget->setCurrentIndex(0);
     }
+
 }
 // STUDENT MAIN PAGE END
 
