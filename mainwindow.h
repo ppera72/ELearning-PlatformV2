@@ -5,6 +5,7 @@
 #include "userdata.h"
 #include "student.h"
 #include "professor.h"
+#include "assignments.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -22,16 +23,15 @@ public:
     userData UserData;
     Student currentStudent;
     Professor currentProfessor;
+    Assignments assignments;
 
     bool checkEmail(QString email);
     bool checkPassword(QString password);
     bool checkNames(QString name, QString surname);
 
 
-
 private:
     Ui::MainWindow *ui;
-    void on_pushButton_clicked();
     void on_loginButton_clicked();
     void on_registerButton_clicked();
 
@@ -40,15 +40,19 @@ private:
     void on_exitButton_clicked();
     bool checkIfInDatabase(std::string email, std::vector<std::string> data);
     bool checkIfPassMatches(std::string email, std::string password, std::vector<std::string> data);
-    Student getStudData(std::vector<std::string> &data);
-    Professor getProfData(std::vector<std::string> &data);
+    Student getStudData(std::vector<std::string> data);
+    Professor getProfData(std::vector<std::string> data);
+
     void on_SMLogOutButton_clicked();
     void on_PMLogOutButton_clicked();
 
-    void on_studMainChangeEmailButton_clicked();
-    void on_studMainChangePasswordButton_clicked();
-    void on_studMainChangeNameButton_clicked();
-    void on_studMainChangeSurnameButton_clicked();
+    void on_SMChangeEmailButton_clicked();
+    void on_SMChangePasswordButton_clicked();
+    void on_SMChangeNameButton_clicked();
+    void on_SMChangeSurnameButton_clicked();
+
+    void on_PMAddNewAssignment_clicked();
+    void on_PMAddNewTest_clicked();
 
 
 };

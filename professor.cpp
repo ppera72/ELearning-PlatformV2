@@ -12,3 +12,13 @@ Professor::Professor(){
     title = "";
     sciSpec = "";
 }
+
+std::string Professor::Title()
+{
+    return title;
+}
+
+std::string Professor::SciSpec()
+{
+    return sciSpec;
+}

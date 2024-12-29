@@ -21,16 +21,19 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->exitButton, &QPushButton::clicked, this, &MainWindow::on_exitButton_clicked);
     connect(ui->SMLogOutButton, &QPushButton::clicked, this, &MainWindow::on_SMLogOutButton_clicked);
     connect(ui->PMLogOutButton, &QPushButton::clicked, this, &MainWindow::on_PMLogOutButton_clicked);
-    connect(ui->studMainChangeEmailButton, &QPushButton::clicked, this, &MainWindow::on_studMainChangeEmailButton_clicked);
-    connect(ui->studMainChangePasswordButton, &QPushButton::clicked, this, &MainWindow::on_studMainChangePasswordButton_clicked);
-    connect(ui->studMainChangeNameButton, &QPushButton::clicked, this, &MainWindow::on_studMainChangeNameButton_clicked);
-    connect(ui->studMainChangeSurnameButton, &QPushButton::clicked, this, &MainWindow::on_studMainChangeSurnameButton_clicked);
-
-
+    connect(ui->SMChangeEmailButton, &QPushButton::clicked, this, &MainWindow::on_SMChangeEmailButton_clicked);
+    connect(ui->SMChangePasswordButton, &QPushButton::clicked, this, &MainWindow::on_SMChangePasswordButton_clicked);
+    connect(ui->SMChangeNameButton, &QPushButton::clicked, this, &MainWindow::on_SMChangeNameButton_clicked);
+    connect(ui->SMChangeSurnameButton, &QPushButton::clicked, this, &MainWindow::on_SMChangeSurnameButton_clicked);
+    connect(ui->PMAddNewAssignmentButton, &QPushButton::clicked, this, &MainWindow::on_PMAddNewAssignment_clicked);
+    connect(ui->PMAddNewTestButton, &QPushButton::clicked, this, &MainWindow::on_PMAddNewTest_clicked);
 
     UserData.readFromFile(UserData.studFileName, true);
     UserData.readFromFile(UserData.profFileName, false);
     for(auto&& a : UserData.studentData){
+        qDebug()<<a;
+    }
+    for(auto&& a : UserData.professorData){
         qDebug()<<a;
     }
 }
@@ -123,7 +126,7 @@ void MainWindow::on_registerToDatabaseButton_clicked()
             else{
                 UserData.lastID = UserData.getLastID(UserData.professorData);
                 UserData.lastID += 1;
-                helpMessage<<UserData.lastID<<";"<<nameRegisterInput.toStdString()<<";"<<surnameRegisterInput.toStdString()<<";"<<dateOBRegisterInput.toStdString()<<";"<<emailRegisterInput.toStdString()<<";"<<passwordRegisterInput.toStdString()<<";"<<profSpecRegisterInput.toStdString()<<";"<<profTitleRegisterInput.toStdString();
+                helpMessage<<UserData.lastID<<";"<<nameRegisterInput.toStdString()<<";"<<surnameRegisterInput.toStdString()<<";"<<dateOBRegisterInput.toStdString()<<";"<<emailRegisterInput.toStdString()<<";"<<passwordRegisterInput.toStdString()<<";"<<profTitleRegisterInput.toStdString()<<";"<<profSpecRegisterInput.toStdString();
                 message = helpMessage.str();
                 UserData.writeToFile(UserData.profFileName, message);
                 UserData.professorData.push_back(message);
@@ -200,8 +203,10 @@ void MainWindow::on_loginButton_clicked()
                 ui->passwordLoginInput->clear();
                 ui->stackedWidget->setCurrentIndex(2);
 
+                // pre SM:
                 currentStudent = getStudData(UserData.studentData);
-                ui->nameLabel->setText(QString::fromStdString(currentStudent.Name()));
+                ui->SMNameLabel->setText(QString::fromStdString(currentStudent.Name()));
+
             }
             else{
                 QMessageBox::warning(this, tr("Login Attempt"), tr("Wrong password!\nPlease try again!"), QMessageBox::Ok);
@@ -213,7 +218,10 @@ void MainWindow::on_loginButton_clicked()
                 ui->emailLoginInput->clear();
                 ui->passwordLoginInput->clear();
                 ui->stackedWidget->setCurrentIndex(3);
-                // Professor();
+
+                // pre PM:
+                currentProfessor = getProfData(UserData.professorData);
+                ui->PMNameLabel->setText(QString::fromStdString(currentProfessor.Name()));
             }
             else{
                 QMessageBox::warning(this, tr("Login Attempt"), tr("Wrong password!\nPlease try again!"), QMessageBox::Ok);
@@ -222,7 +230,7 @@ void MainWindow::on_loginButton_clicked()
     }
 }
 
-Student MainWindow::getStudData(std::vector<std::string> &data){
+Student MainWindow::getStudData(std::vector<std::string> data){
     for(auto&& user: data){
         if(user.find(emailLoginInput) != std::string::npos){
             std::vector<std::string> helpVec;
@@ -249,6 +257,34 @@ Student MainWindow::getStudData(std::vector<std::string> &data){
     return Student();
 }
 
+Professor MainWindow::getProfData(std::vector<std::string> data){
+    for(auto&& user: data){
+        if(user.find(emailLoginInput) != std::string::npos){
+            std::vector<std::string> helpVec;
+            size_t pos = 0;
+            size_t prev = 0;
+            while((pos = user.find(';', prev)) != std::string::npos){
+                helpVec.push_back(user.substr(prev, pos - prev));
+                prev = pos + 1;
+            }
+            helpVec.push_back(user.substr(prev));
+
+            int id = stoi(helpVec[0]);
+            std::string name = helpVec[1];
+            std::string surname = helpVec[2];
+            Date dateOfBirth(helpVec[3]);
+            std::string email = helpVec[4];
+            std::string password = helpVec[5];
+            std::string title = helpVec[6];
+            std::string sciSpec = helpVec[7];
+
+            Professor prof(id, name, surname, dateOfBirth, email, password, title, sciSpec);
+            return prof;
+        }
+    }
+    return Professor();
+}
+
 void MainWindow::on_registerButton_clicked()
 {
     ui->stackedWidget->setCurrentIndex(1);
@@ -257,7 +293,7 @@ void MainWindow::on_registerButton_clicked()
 
 // STUDENT MAIN PAGE
 
-void MainWindow::on_studMainChangeEmailButton_clicked()
+void MainWindow::on_SMChangeEmailButton_clicked()
 {
     bool ok;
     QString text = QInputDialog::getText(this, tr("Details Change"),tr("Your new email:"), QLineEdit::Normal,QString::fromStdString(currentStudent.Email()), &ok);
@@ -273,7 +309,7 @@ void MainWindow::on_studMainChangeEmailButton_clicked()
     }
 }
 
-void MainWindow::on_studMainChangePasswordButton_clicked()
+void MainWindow::on_SMChangePasswordButton_clicked()
 {
     bool ok;
     QString text = QInputDialog::getText(this, tr("Change Details"),tr("Your new password:"), QLineEdit::Normal,QString::fromStdString(currentStudent.Password()), &ok);
@@ -281,7 +317,7 @@ void MainWindow::on_studMainChangePasswordButton_clicked()
         qDebug()<<text;
 }
 
-void MainWindow::on_studMainChangeNameButton_clicked()
+void MainWindow::on_SMChangeNameButton_clicked()
 {
     bool ok;
     QString text = QInputDialog::getText(this, tr("Change Details"),tr("Your new name:"), QLineEdit::Normal,QString::fromStdString(currentStudent.Name()), &ok);
@@ -289,7 +325,7 @@ void MainWindow::on_studMainChangeNameButton_clicked()
         qDebug()<<text;
 }
 
-void MainWindow::on_studMainChangeSurnameButton_clicked()
+void MainWindow::on_SMChangeSurnameButton_clicked()
 {
     bool ok;
     QString text = QInputDialog::getText(this, tr("Change Details"),tr("Your new surname:"), QLineEdit::Normal,QString::fromStdString(currentStudent.Surname()), &ok);
@@ -330,6 +366,14 @@ void MainWindow::on_PMLogOutButton_clicked(){
         // adding to file
         ui->stackedWidget->setCurrentIndex(0);
     }
+}
+
+void MainWindow::on_PMAddNewAssignment_clicked(){
+    ui->stackedWidget->setCurrentIndex(6);
+}
+
+void MainWindow::on_PMAddNewTest_clicked(){
+    ui->stackedWidget->setCurrentIndex(5);
 }
 // PROFESSOR MAIN PAGE END
 

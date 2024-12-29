@@ -14,10 +14,6 @@ public:
     Student();
 
     std::string CourseCode();
-
-    //int startTest(std::string testName); ?
-    //void sendAssignment(file);
-
 };
 
 #endif // STUDENT_H
