@@ -363,7 +363,20 @@ void MainWindow::on_PMLogOutButton_clicked(){
     QMessageBox::StandardButton reply;
     reply = QMessageBox::question(this, "Log Out", "Are you sure you want to log out?", QMessageBox::Yes|QMessageBox::No);
     if(reply == QMessageBox::Yes){
-        // adding to file
+        for(auto&& user : UserData.professorData){
+            if(user.find(std::to_string(currentProfessor.Id())) != std::string::npos){
+                std::stringstream helpMessage;
+                std::string message;
+                helpMessage<<currentProfessor.Id()<<";"<<currentProfessor.Name()<<";"<<currentProfessor.Surname()<<";"<<currentProfessor.dateOfBirth.wholeDate()<<";"<<currentProfessor.Email()<<";"<<currentProfessor.Password()<<";"<<currentProfessor.Title()<<";"<<currentProfessor.SciSpec();
+                message = helpMessage.str();
+                UserData.professorData[currentProfessor.Id() - 1] = message;
+                UserData.clearFile(UserData.profFileName);
+                for(auto&& a : UserData.professorData){
+                    UserData.writeToFile(UserData.profFileName, a);
+                }
+                break;
+            }
+        }
         ui->stackedWidget->setCurrentIndex(0);
     }
 }
@@ -377,6 +390,9 @@ void MainWindow::on_PMAddNewTest_clicked(){
 }
 // PROFESSOR MAIN PAGE END
 
+// ADD ASSIGNMENT PAGE
 
+
+// ADD ASSIGNMENT PAGE END
 
 
