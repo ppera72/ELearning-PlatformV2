@@ -1,0 +1,3 @@
+0;Czym jest Ag?;Srebro;Zloto;Miedz;Hel
+0;Czym jest H?;Wodor;Selen;Tytan;Wegiel
+0;Czym jest Au;Zloto;Brom;Polon;Rad

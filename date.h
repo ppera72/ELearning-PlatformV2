@@ -20,7 +20,7 @@ public:
     std::string wholeDate();
 
     void correctDate();
-
+    int compareDates(Date diffDate);
 };
 
 #endif // DATE_H

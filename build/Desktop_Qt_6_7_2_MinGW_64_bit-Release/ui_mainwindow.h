@@ -84,7 +84,6 @@ public:
     QLabel *ATLabel;
     QLabel *ATTitleLabel;
     QLabel *ATEndDateLabel;
-    QComboBox *ATCourceCodeCombo;
     QLineEdit *ATTitleInput;
     QDateEdit *ATEndDateDateEdit;
     QLabel *ATBeginDateLabel;
@@ -94,7 +93,8 @@ public:
     QPushButton *ATAddQuestionsButton;
     QPushButton *ATAddTestButton;
     QPushButton *ATCancelButton;
-    QListWidget *listWidget;
+    QListWidget *ATQuestionsList;
+    QComboBox *ATCourceCodeCombo;
     QWidget *ATAddQuestionsPage;
     QLabel *ATAQLabel;
     QLabel *ATAQNumberOfQuestionsLabel;
@@ -116,8 +116,8 @@ public:
     QLineEdit *AADesctiptionInput;
     QPushButton *AAAddButton;
     QPushButton *AACancelButton;
-    QComboBox *AACourceCodeCombo;
     QLabel *AACourceCodeLabel;
+    QComboBox *AACourceCodeCombo;
 
     void setupUi(QMainWindow *MainWindow)
     {
@@ -324,24 +324,21 @@ public:
         ATTitleLabel->setFont(font1);
         ATEndDateLabel = new QLabel(addTestPage);
         ATEndDateLabel->setObjectName("ATEndDateLabel");
-        ATEndDateLabel->setGeometry(QRect(400, 240, 81, 31));
+        ATEndDateLabel->setGeometry(QRect(440, 240, 81, 31));
         ATEndDateLabel->setFont(font1);
-        ATCourceCodeCombo = new QComboBox(addTestPage);
-        ATCourceCodeCombo->setObjectName("ATCourceCodeCombo");
-        ATCourceCodeCombo->setGeometry(QRect(180, 200, 72, 24));
         ATTitleInput = new QLineEdit(addTestPage);
         ATTitleInput->setObjectName("ATTitleInput");
         ATTitleInput->setGeometry(QRect(190, 130, 491, 24));
         ATEndDateDateEdit = new QDateEdit(addTestPage);
         ATEndDateDateEdit->setObjectName("ATEndDateDateEdit");
-        ATEndDateDateEdit->setGeometry(QRect(540, 240, 110, 25));
+        ATEndDateDateEdit->setGeometry(QRect(570, 240, 101, 25));
         ATBeginDateLabel = new QLabel(addTestPage);
         ATBeginDateLabel->setObjectName("ATBeginDateLabel");
-        ATBeginDateLabel->setGeometry(QRect(400, 190, 101, 31));
+        ATBeginDateLabel->setGeometry(QRect(440, 190, 101, 31));
         ATBeginDateLabel->setFont(font1);
         ATBeginDateDateEdit = new QDateEdit(addTestPage);
         ATBeginDateDateEdit->setObjectName("ATBeginDateDateEdit");
-        ATBeginDateDateEdit->setGeometry(QRect(540, 190, 101, 25));
+        ATBeginDateDateEdit->setGeometry(QRect(570, 190, 101, 25));
         ATCourceCodeLabel = new QLabel(addTestPage);
         ATCourceCodeLabel->setObjectName("ATCourceCodeLabel");
         ATCourceCodeLabel->setGeometry(QRect(40, 190, 121, 31));
@@ -352,16 +349,28 @@ public:
         ATQuestionsLabel->setFont(font1);
         ATAddQuestionsButton = new QPushButton(addTestPage);
         ATAddQuestionsButton->setObjectName("ATAddQuestionsButton");
-        ATAddQuestionsButton->setGeometry(QRect(90, 500, 111, 31));
+        ATAddQuestionsButton->setGeometry(QRect(320, 500, 111, 31));
         ATAddTestButton = new QPushButton(addTestPage);
         ATAddTestButton->setObjectName("ATAddTestButton");
-        ATAddTestButton->setGeometry(QRect(320, 500, 101, 31));
+        ATAddTestButton->setGeometry(QRect(90, 500, 101, 31));
         ATCancelButton = new QPushButton(addTestPage);
         ATCancelButton->setObjectName("ATCancelButton");
         ATCancelButton->setGeometry(QRect(580, 500, 101, 31));
-        listWidget = new QListWidget(addTestPage);
-        listWidget->setObjectName("listWidget");
-        listWidget->setGeometry(QRect(190, 300, 501, 151));
+        ATQuestionsList = new QListWidget(addTestPage);
+        ATQuestionsList->setObjectName("ATQuestionsList");
+        ATQuestionsList->setGeometry(QRect(190, 300, 501, 151));
+        ATCourceCodeCombo = new QComboBox(addTestPage);
+        ATCourceCodeCombo->addItem(QString());
+        ATCourceCodeCombo->addItem(QString());
+        ATCourceCodeCombo->addItem(QString());
+        ATCourceCodeCombo->addItem(QString());
+        ATCourceCodeCombo->addItem(QString());
+        ATCourceCodeCombo->addItem(QString());
+        ATCourceCodeCombo->addItem(QString());
+        ATCourceCodeCombo->addItem(QString());
+        ATCourceCodeCombo->addItem(QString());
+        ATCourceCodeCombo->setObjectName("ATCourceCodeCombo");
+        ATCourceCodeCombo->setGeometry(QRect(170, 200, 231, 24));
         stackedWidget->addWidget(addTestPage);
         ATAddQuestionsPage = new QWidget();
         ATAddQuestionsPage->setObjectName("ATAddQuestionsPage");
@@ -436,13 +445,22 @@ public:
         AACancelButton = new QPushButton(addAssignmentPage);
         AACancelButton->setObjectName("AACancelButton");
         AACancelButton->setGeometry(QRect(490, 490, 101, 31));
-        AACourceCodeCombo = new QComboBox(addAssignmentPage);
-        AACourceCodeCombo->setObjectName("AACourceCodeCombo");
-        AACourceCodeCombo->setGeometry(QRect(180, 310, 72, 24));
         AACourceCodeLabel = new QLabel(addAssignmentPage);
         AACourceCodeLabel->setObjectName("AACourceCodeLabel");
         AACourceCodeLabel->setGeometry(QRect(40, 300, 121, 31));
         AACourceCodeLabel->setFont(font1);
+        AACourceCodeCombo = new QComboBox(addAssignmentPage);
+        AACourceCodeCombo->addItem(QString());
+        AACourceCodeCombo->addItem(QString());
+        AACourceCodeCombo->addItem(QString());
+        AACourceCodeCombo->addItem(QString());
+        AACourceCodeCombo->addItem(QString());
+        AACourceCodeCombo->addItem(QString());
+        AACourceCodeCombo->addItem(QString());
+        AACourceCodeCombo->addItem(QString());
+        AACourceCodeCombo->addItem(QString());
+        AACourceCodeCombo->setObjectName("AACourceCodeCombo");
+        AACourceCodeCombo->setGeometry(QRect(180, 310, 231, 24));
         stackedWidget->addWidget(addAssignmentPage);
         MainWindow->setCentralWidget(centralwidget);
 
@@ -546,6 +564,16 @@ public:
         ATAddQuestionsButton->setText(QCoreApplication::translate("MainWindow", "Add Questions", nullptr));
         ATAddTestButton->setText(QCoreApplication::translate("MainWindow", "Add Test", nullptr));
         ATCancelButton->setText(QCoreApplication::translate("MainWindow", "Cancel", nullptr));
+        ATCourceCodeCombo->setItemText(0, QCoreApplication::translate("MainWindow", "Aviation and Astronautics [AvAs]", nullptr));
+        ATCourceCodeCombo->setItemText(1, QCoreApplication::translate("MainWindow", "Chemical Engineering and Technology [ChET]", nullptr));
+        ATCourceCodeCombo->setItemText(2, QCoreApplication::translate("MainWindow", "Chemical Technology [ChTe]", nullptr));
+        ATCourceCodeCombo->setItemText(3, QCoreApplication::translate("MainWindow", "Civil Engineering [CiEn]", nullptr));
+        ATCourceCodeCombo->setItemText(4, QCoreApplication::translate("MainWindow", "Computer Engineering [CoEn]", nullptr));
+        ATCourceCodeCombo->setItemText(5, QCoreApplication::translate("MainWindow", "Electrical Engineering [ElEn]", nullptr));
+        ATCourceCodeCombo->setItemText(6, QCoreApplication::translate("MainWindow", "Finance and Accounting [FiAc]", nullptr));
+        ATCourceCodeCombo->setItemText(7, QCoreApplication::translate("MainWindow", "Logistics [Logi]", nullptr));
+        ATCourceCodeCombo->setItemText(8, QCoreApplication::translate("MainWindow", "Modern Management [MoMa]", nullptr));
+
         ATAQLabel->setText(QCoreApplication::translate("MainWindow", "Add New Questions", nullptr));
         ATAQNumberOfQuestionsLabel->setText(QCoreApplication::translate("MainWindow", "Number of Questions:", nullptr));
         ATAQAddQuestionsButton->setText(QCoreApplication::translate("MainWindow", "Add Questions", nullptr));
@@ -560,6 +588,16 @@ public:
         AAAddButton->setText(QCoreApplication::translate("MainWindow", "Add Assignment", nullptr));
         AACancelButton->setText(QCoreApplication::translate("MainWindow", "Cancel", nullptr));
         AACourceCodeLabel->setText(QCoreApplication::translate("MainWindow", "Cource Code:", nullptr));
+        AACourceCodeCombo->setItemText(0, QCoreApplication::translate("MainWindow", "Aviation and Astronautics [AvAs]", nullptr));
+        AACourceCodeCombo->setItemText(1, QCoreApplication::translate("MainWindow", "Chemical Engineering and Technology [ChET]", nullptr));
+        AACourceCodeCombo->setItemText(2, QCoreApplication::translate("MainWindow", "Chemical Technology [ChTe]", nullptr));
+        AACourceCodeCombo->setItemText(3, QCoreApplication::translate("MainWindow", "Civil Engineering [CiEn]", nullptr));
+        AACourceCodeCombo->setItemText(4, QCoreApplication::translate("MainWindow", "Computer Engineering [CoEn]", nullptr));
+        AACourceCodeCombo->setItemText(5, QCoreApplication::translate("MainWindow", "Electrical Engineering [ElEn]", nullptr));
+        AACourceCodeCombo->setItemText(6, QCoreApplication::translate("MainWindow", "Finance and Accounting [FiAc]", nullptr));
+        AACourceCodeCombo->setItemText(7, QCoreApplication::translate("MainWindow", "Logistics [Logi]", nullptr));
+        AACourceCodeCombo->setItemText(8, QCoreApplication::translate("MainWindow", "Modern Management [MoMa]", nullptr));
+
     } // retranslateUi
 
 };

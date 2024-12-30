@@ -57,6 +57,12 @@ private:
     void on_AAAddButton_clicked();
     void on_AACancelButton_clicked();
 
+    void on_ATAddQuestionsButton_clicked();
+    void on_ATAddTestButton_clicked();
+    void on_ATCancelButton_clicked();
+    void on_ATAQAddQuestionsButton_clicked();
+    void on_ATAQConfirmQuestionsButton_clicked();
+    void on_ATAQCancelButtonn_clicked();
 
 };
 #endif // MAINWINDOW_H

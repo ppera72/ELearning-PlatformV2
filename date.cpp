@@ -2,6 +2,7 @@
 #include <vector>
 #include <sstream>
 #include <iomanip>
+#include <QDebug>
 
 Date::Date(int d, int m, int y) : day(d), month(m), year(y) { correctDate();}
 
@@ -73,6 +74,24 @@ void Date::correctDate()
         month = 12;
     else if (month < 1)
         month = 1;
+}
+
+int Date::compareDates(Date diffDate)
+{
+    if(diffDate.Year() < this->Year())
+        return -1;
+    else if(diffDate.Year() > this->Year())
+        return 1;
+    else if(diffDate.Month() < this->Month())
+        return -1;
+    else if(diffDate.Month() > this->Month())
+        return 1;
+    else if(diffDate.Day() < this->Day())
+        return -1;
+    else if(diffDate.Day() > this->Day())
+        return 1;
+
+    return 0;
 }
 
 

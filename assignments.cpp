@@ -18,7 +18,6 @@ void Assignments::loadData()
         }
         assignmentLastID = getLastID(assignmentList);
     }
-
     if(testFile.good()){
         std::string c;
         while(std::getline(testFile, c)){
@@ -26,7 +25,6 @@ void Assignments::loadData()
         }
         testLastID = getLastID(testList);
     }
-
     assignmentFile.close();
     testFile.close();
 }
@@ -47,7 +45,7 @@ int Assignments::getLastID(std::vector<std::string> data)
     return id;
 }
 
-void Assignments::addTest(std::string filePath, std::string message){  // maybe merge with addAssignment
+void Assignments::addTest(std::string filePath, std::string message){  // maybe merge with addAssignment + add creating directory
     std::string path = "C:\\Users\\Patryk\\Desktop\\Praca\\C Plus Plus\\E-LearningPlatformV2\\assignments\\" + filePath; // change path!!!
     std::ifstream File(path.c_str());
     if(File.good()){

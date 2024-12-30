@@ -14,6 +14,11 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
+    setFixedSize(width(), height());
+
+    setWindowFlag(Qt::WindowCloseButtonHint, false);
+    setWindowFlag(Qt::WindowMaximizeButtonHint, false);
+
     connect(ui->loginButton, &QPushButton::clicked, this, &MainWindow::on_loginButton_clicked);
     connect(ui->registerButton, &QPushButton::clicked, this, &MainWindow::on_registerButton_clicked);
     connect(ui->registerToDatabaseButton, &QPushButton::clicked, this, &MainWindow::on_registerToDatabaseButton_clicked);
@@ -29,6 +34,19 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->PMAddNewTestButton, &QPushButton::clicked, this, &MainWindow::on_PMAddNewTest_clicked);
     connect(ui->AAAddButton, &QPushButton::clicked, this, &MainWindow::on_AAAddButton_clicked);
     connect(ui->AACancelButton, &QPushButton::clicked, this, &MainWindow::on_AACancelButton_clicked);
+
+    connect(ui->ATAddQuestionsButton, &QPushButton::clicked, this, &MainWindow::on_ATAddQuestionsButton_clicked);
+    connect(ui->ATAddTestButton, &QPushButton::clicked, this, &MainWindow::on_ATAddTestButton_clicked);
+    connect(ui->ATCancelButton, &QPushButton::clicked, this, &MainWindow::on_ATCancelButton_clicked);
+    connect(ui->ATAQAddQuestionsButton, &QPushButton::clicked, this, &MainWindow::on_ATAQAddQuestionsButton_clicked);
+    connect(ui->ATAQConfirmQuestionsButton, &QPushButton::clicked, this, &MainWindow::on_ATAQConfirmQuestionsButton_clicked);
+    connect(ui->ATAQCancelButton, &QPushButton::clicked, this, &MainWindow::on_ATAQCancelButtonn_clicked);
+
+    ui->dateOfBirthRegisterEdit->setDate(QDate::currentDate());
+    ui->AABeginDateDateEdit->setDate(QDate::currentDate());
+    ui->AAEndDateDateEdit->setDate(QDate::currentDate());
+    ui->ATBeginDateDateEdit->setDate(QDate::currentDate());
+    ui->ATEndDateDateEdit->setDate(QDate::currentDate());
 
 
     UserData.readFromFile(UserData.studFileName, true);
@@ -51,7 +69,6 @@ MainWindow::MainWindow(QWidget *parent)
     for(auto&& a : assignments.testList){
         qDebug()<<a;
     }
-
 }
 
 MainWindow::~MainWindow()
@@ -222,7 +239,11 @@ void MainWindow::on_loginButton_clicked()
                 // pre SM:
                 currentStudent = getStudData(UserData.studentData);
                 ui->SMNameLabel->setText(QString::fromStdString(currentStudent.Name()));
-
+                for(auto&& assignment : assignments.assignmentList){
+                    if(assignment.find(currentStudent.CourseCode())){
+                        ui->SMUpcomingTasksCombo->addItem(QString::fromStdString(assignment));
+                    }
+                }
 
             }
             else{
@@ -413,20 +434,22 @@ Date AABeginDate, AAEndDate;
 void MainWindow::on_AAAddButton_clicked(){
     AATitle = ui->AATitleInput->text().toStdString();
     AADesc = ui->AADesctiptionInput->text().toStdString();
-    AACourceCode = ui->AACourceCodeCombo->currentText().toStdString();
+    AACourceCode = ui->AACourceCodeCombo->currentText().right(6).mid(1, 4).toStdString();
     AABeginDate = ui->AABeginDateDateEdit->text().toStdString();
     AAEndDate = ui->AAEndDateDateEdit->text().toStdString();
 
     if(AATitle.empty()){
         QMessageBox::warning(this, "Adding Assignment", "Title of assignment is empty!\nPlease fill it!", QMessageBox::Ok);
     }
-    if(AADesc.empty()){
+    else if(AADesc.empty()){
         QMessageBox::warning(this, "Adding Assignment", "Title of assignment is empty!\nPlease fill it!", QMessageBox::Ok);
     }
 
-    // check if endDate > beginDate
+    else if(AAEndDate.compareDates(AABeginDate) == 1 || AAEndDate.compareDates(AABeginDate) == 0){
+        QMessageBox::warning(this, "Adding Assignment", "End Date of assignment cannot be earlier than Begin Date!", QMessageBox::Ok);
+    }
 
-    if(!AATitle.empty() && !AADesc.empty()){
+    if(!AATitle.empty() && !AADesc.empty() && AAEndDate.compareDates(AABeginDate) == -1){
         std::stringstream helpMessage;
         std::string message;
         assignments.assignmentLastID = assignments.getLastID(assignments.assignmentList);
@@ -439,6 +462,7 @@ void MainWindow::on_AAAddButton_clicked(){
         ui->AATitleInput->clear();
         ui->AADesctiptionInput->clear();
         QMessageBox::information(this, "Assignment Confirm", "Assignment added successfully!", QMessageBox::Ok);
+        ui->stackedWidget->setCurrentIndex(3);
     }
 }
 void MainWindow::on_AACancelButton_clicked(){
@@ -450,9 +474,133 @@ void MainWindow::on_AACancelButton_clicked(){
         ui->stackedWidget->setCurrentIndex(3);
     }
 }
+
+
 // ADD ASSIGNMENT PAGE END
 
 // ADD TEST PAGE
+std::string ATTitle, ATCourceCode;
+int ATAQNumberOfQuestions;
+QList<std::string> ATQuestions, ATAQQuestions, ATQuestionsFull;
+Date ATBeginDate, ATEndDate;
+
+void MainWindow::on_ATAddTestButton_clicked()
+{
+    ATTitle = ui->ATTitleInput->text().toStdString();
+    ATCourceCode = ui->ATCourceCodeCombo->currentText().toStdString();
+    ATBeginDate = ui->ATBeginDateDateEdit->text().toStdString();
+    ATEndDate = ui->ATEndDateDateEdit->text().toStdString();
+
+    if(ATTitle.empty()){
+        QMessageBox::warning(this, "Adding Test", "Title of test is empty!\nPlease fill it!", QMessageBox::Ok);
+    }
+
+    else if(ATEndDate.compareDates(ATBeginDate) == 1 || ATEndDate.compareDates(ATBeginDate) == 0){
+        QMessageBox::warning(this, "Adding Test", "End Date of test cannot be earlier than Begin Date!", QMessageBox::Ok);
+    }
+
+    else if(ATQuestions.empty()){
+        QMessageBox::warning(this, "Adding Test", "Test does not contain any questions!\nPlease add them using ""Add Questions"" button!", QMessageBox::Ok);
+    }
+
+    if(!ATQuestions.empty() && !ATTitle.empty() && ATEndDate.compareDates(ATBeginDate) == -1){
+        QMessageBox::StandardButton reply;
+        reply = QMessageBox::question(this, "Adding Test", "Are you sure you want to add test?", QMessageBox::Yes|QMessageBox::No);
+        if(reply == QMessageBox::Yes){
+            for(auto&& a : ATQuestionsFull){
+                assignments.addTest(assignments.testFile, a);  //change after meerge
+            }
+            ui->ATTitleInput->clear();
+            ui->ATQuestionsList->clear();
+            ui->ATAQQuestionsList->clear();
+            ui->stackedWidget->setCurrentIndex(3);
+        }
+    }
+}
+
+void MainWindow::on_ATAddQuestionsButton_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(5);
+}
+void MainWindow::on_ATCancelButton_clicked()
+{
+    QMessageBox::StandardButton reply;
+    reply = QMessageBox::question(this, "Cancel Test", "Are you sure you want to cancel adding test?\nAll the data will be lost!", QMessageBox::Yes|QMessageBox::No);
+    if(reply == QMessageBox::Yes){
+        ui->ATTitleInput->clear();
+        ui->ATQuestionsList->clear();
+        ui->stackedWidget->setCurrentIndex(3);
+    }
+}
+
+void MainWindow::on_ATAQAddQuestionsButton_clicked()
+{
+    ATAQNumberOfQuestions = ui->ATAQNumberOfQuestionsSpinBox->value();
+
+    std::string questionMain;
+    if(ATAQNumberOfQuestions <= 0){
+        QMessageBox::warning(this, "Adding Questions", "Number of questions cannot be less than 1!\nPlease choose another number!", QMessageBox::Ok);
+    }
+
+    for(int i = 0; i < ATAQNumberOfQuestions; i++){
+        if(i == 0)
+            std::string helpMessage = std::to_string(assignments.getLastID(assignments.testList) + 1) + ";";
+
+        std::string helpMessage = std::to_string(assignments.getLastID(assignments.testList)) + ";";
+        bool okQ, okCA, okWA1, okWA2, okWA3;
+        QString question = QInputDialog::getText(this, tr("Question"),tr(&"Question " [ (i + 1)]), QLineEdit::Normal,"Question", &okQ);
+        if (okQ && !question.isEmpty())
+        {
+            helpMessage += question.toStdString() + ";";
+            questionMain = question.toStdString();
+            ATAQQuestions.append(questionMain);
+            ui->ATAQQuestionsList->addItem(QString::fromStdString(questionMain));
+        }
+
+        QString correctAnswer = QInputDialog::getText(this, tr("Correct Answer"),tr("Answer: "), QLineEdit::Normal,"Correct Answer", &okCA);
+        if (okCA && !correctAnswer.isEmpty())
+            helpMessage += correctAnswer.toStdString() + ";";
+
+        QString wrongAnswer1 = QInputDialog::getText(this, tr("Wrong Answer"),tr("Wrong Answer 1:"), QLineEdit::Normal,"Wrong Answer", &okWA1);
+        if (okWA1 && !wrongAnswer1.isEmpty())
+            helpMessage += wrongAnswer1.toStdString() + ";";
+
+        QString wrongAnswer2 = QInputDialog::getText(this, tr("Wrong Answer"),tr("Wrong Answer 2:"), QLineEdit::Normal,"Wrong Answer", &okWA2);
+        if (okWA2 && !wrongAnswer2.isEmpty())
+            helpMessage += wrongAnswer2.toStdString() + ";";
+
+        QString wrongAnswer3 = QInputDialog::getText(this, tr("Wrong Answer"),tr("Wrong Answer 3:"), QLineEdit::Normal,"Wrong Answer", &okWA3);
+        if (okWA3 && !wrongAnswer3.isEmpty())
+            helpMessage += wrongAnswer3.toStdString();
+
+        helpMessage += ATBeginDate.wholeDate() + ";" + ATEndDate.wholeDate();
+        ATQuestionsFull.append(helpMessage);
+    }
+}
+
+void MainWindow::on_ATAQConfirmQuestionsButton_clicked()
+{
+    QMessageBox::StandardButton reply;
+    reply = QMessageBox::question(this, "Add Test Questions", "Are you sure you want to add questions to test?", QMessageBox::Yes|QMessageBox::No);
+    if(reply == QMessageBox::Yes){
+        for(auto&& q : ATAQQuestions){
+            ATQuestions.append(q);
+            ui->ATQuestionsList->addItem(QString::fromStdString(q));
+        }
+        ui->stackedWidget->setCurrentIndex(4);
+    }
+}
+
+void MainWindow::on_ATAQCancelButtonn_clicked()
+{
+    QMessageBox::StandardButton reply;
+    reply = QMessageBox::question(this, "Cancel Test Questions", "Are you sure you want to cancel adding questions to test?\nAll the data will be lost!", QMessageBox::Yes|QMessageBox::No);
+    if(reply == QMessageBox::Yes){
+        ui->ATAQNumberOfQuestionsSpinBox->setValue(0);
+        ui->ATAQQuestionsList->clear();
+        ui->stackedWidget->setCurrentIndex(3);
+    }
+}
 
 // ADD TEST PAGE END
 
