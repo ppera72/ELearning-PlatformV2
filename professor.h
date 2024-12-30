@@ -15,6 +15,9 @@ public:
 
     std::string Title();
     std::string SciSpec();
+
+    void Title(std::string t);
+    void SciSpec(std::string s);
 };
 
 #endif // PROFESSOR_H

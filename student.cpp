@@ -4,14 +4,19 @@ Student::Student(int id, std::string n, std::string s, Date dateOB, std::string 
 }
 
 Student::Student(){
-    id = 0;
-    name = "";
-    surname = "";
-    email = "";
-    password = "";
-    courseCode = "";
+    Id(0);
+    Name("");
+    Surname("");
+    Date Date("01.01.2000");
+    Email("");
+    Password("");
+    CourseCode("");
 }
 
 std::string Student::CourseCode(){
     return courseCode;
+}
+
+void Student::CourseCode(std::string cC){
+    courseCode = cC;
 }

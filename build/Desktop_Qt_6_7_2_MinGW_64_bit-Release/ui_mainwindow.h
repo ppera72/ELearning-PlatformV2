@@ -15,9 +15,11 @@
 #include <QtWidgets/QDateEdit>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
+#include <QtWidgets/QListWidget>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QRadioButton>
+#include <QtWidgets/QSpinBox>
 #include <QtWidgets/QStackedWidget>
 #include <QtWidgets/QWidget>
 
@@ -78,9 +80,44 @@ public:
     QPushButton *PMChangeNameButton;
     QPushButton *PMAddNewAssignmentButton;
     QPushButton *PMAddNewTestButton;
-    QWidget *testPage;
     QWidget *addTestPage;
+    QLabel *ATLabel;
+    QLabel *ATTitleLabel;
+    QLabel *ATEndDateLabel;
+    QComboBox *ATCourceCodeCombo;
+    QLineEdit *ATTitleInput;
+    QDateEdit *ATEndDateDateEdit;
+    QLabel *ATBeginDateLabel;
+    QDateEdit *ATBeginDateDateEdit;
+    QLabel *ATCourceCodeLabel;
+    QLabel *ATQuestionsLabel;
+    QPushButton *ATAddQuestionsButton;
+    QPushButton *ATAddTestButton;
+    QPushButton *ATCancelButton;
+    QListWidget *listWidget;
+    QWidget *ATAddQuestionsPage;
+    QLabel *ATAQLabel;
+    QLabel *ATAQNumberOfQuestionsLabel;
+    QSpinBox *ATAQNumberOfQuestionsSpinBox;
+    QPushButton *ATAQAddQuestionsButton;
+    QListWidget *ATAQQuestionsList;
+    QPushButton *ATAQConfirmQuestionsButton;
+    QPushButton *ATAQCancelButton;
+    QLabel *ATAQQuestionsLabel;
     QWidget *addAssignmentPage;
+    QLabel *AALabel;
+    QLabel *AATitleLabel;
+    QLabel *AADescriptionLabel;
+    QLabel *AABeginDateLabel;
+    QLabel *AAEndDateLabel;
+    QDateEdit *AABeginDateDateEdit;
+    QDateEdit *AAEndDateDateEdit;
+    QLineEdit *AATitleInput;
+    QLineEdit *AADesctiptionInput;
+    QPushButton *AAAddButton;
+    QPushButton *AACancelButton;
+    QComboBox *AACourceCodeCombo;
+    QLabel *AACourceCodeLabel;
 
     void setupUi(QMainWindow *MainWindow)
     {
@@ -270,20 +307,148 @@ public:
         PMAddNewTestButton->setObjectName("PMAddNewTestButton");
         PMAddNewTestButton->setGeometry(QRect(550, 200, 141, 24));
         stackedWidget->addWidget(professorMainPage);
-        testPage = new QWidget();
-        testPage->setObjectName("testPage");
-        stackedWidget->addWidget(testPage);
         addTestPage = new QWidget();
         addTestPage->setObjectName("addTestPage");
+        ATLabel = new QLabel(addTestPage);
+        ATLabel->setObjectName("ATLabel");
+        ATLabel->setGeometry(QRect(260, 50, 241, 51));
+        ATLabel->setBaseSize(QSize(0, 0));
+        QFont font;
+        font.setPointSize(28);
+        ATLabel->setFont(font);
+        ATTitleLabel = new QLabel(addTestPage);
+        ATTitleLabel->setObjectName("ATTitleLabel");
+        ATTitleLabel->setGeometry(QRect(50, 120, 51, 31));
+        QFont font1;
+        font1.setPointSize(14);
+        ATTitleLabel->setFont(font1);
+        ATEndDateLabel = new QLabel(addTestPage);
+        ATEndDateLabel->setObjectName("ATEndDateLabel");
+        ATEndDateLabel->setGeometry(QRect(400, 240, 81, 31));
+        ATEndDateLabel->setFont(font1);
+        ATCourceCodeCombo = new QComboBox(addTestPage);
+        ATCourceCodeCombo->setObjectName("ATCourceCodeCombo");
+        ATCourceCodeCombo->setGeometry(QRect(180, 200, 72, 24));
+        ATTitleInput = new QLineEdit(addTestPage);
+        ATTitleInput->setObjectName("ATTitleInput");
+        ATTitleInput->setGeometry(QRect(190, 130, 491, 24));
+        ATEndDateDateEdit = new QDateEdit(addTestPage);
+        ATEndDateDateEdit->setObjectName("ATEndDateDateEdit");
+        ATEndDateDateEdit->setGeometry(QRect(540, 240, 110, 25));
+        ATBeginDateLabel = new QLabel(addTestPage);
+        ATBeginDateLabel->setObjectName("ATBeginDateLabel");
+        ATBeginDateLabel->setGeometry(QRect(400, 190, 101, 31));
+        ATBeginDateLabel->setFont(font1);
+        ATBeginDateDateEdit = new QDateEdit(addTestPage);
+        ATBeginDateDateEdit->setObjectName("ATBeginDateDateEdit");
+        ATBeginDateDateEdit->setGeometry(QRect(540, 190, 101, 25));
+        ATCourceCodeLabel = new QLabel(addTestPage);
+        ATCourceCodeLabel->setObjectName("ATCourceCodeLabel");
+        ATCourceCodeLabel->setGeometry(QRect(40, 190, 121, 31));
+        ATCourceCodeLabel->setFont(font1);
+        ATQuestionsLabel = new QLabel(addTestPage);
+        ATQuestionsLabel->setObjectName("ATQuestionsLabel");
+        ATQuestionsLabel->setGeometry(QRect(40, 300, 111, 31));
+        ATQuestionsLabel->setFont(font1);
+        ATAddQuestionsButton = new QPushButton(addTestPage);
+        ATAddQuestionsButton->setObjectName("ATAddQuestionsButton");
+        ATAddQuestionsButton->setGeometry(QRect(90, 500, 111, 31));
+        ATAddTestButton = new QPushButton(addTestPage);
+        ATAddTestButton->setObjectName("ATAddTestButton");
+        ATAddTestButton->setGeometry(QRect(320, 500, 101, 31));
+        ATCancelButton = new QPushButton(addTestPage);
+        ATCancelButton->setObjectName("ATCancelButton");
+        ATCancelButton->setGeometry(QRect(580, 500, 101, 31));
+        listWidget = new QListWidget(addTestPage);
+        listWidget->setObjectName("listWidget");
+        listWidget->setGeometry(QRect(190, 300, 501, 151));
         stackedWidget->addWidget(addTestPage);
+        ATAddQuestionsPage = new QWidget();
+        ATAddQuestionsPage->setObjectName("ATAddQuestionsPage");
+        ATAQLabel = new QLabel(ATAddQuestionsPage);
+        ATAQLabel->setObjectName("ATAQLabel");
+        ATAQLabel->setGeometry(QRect(220, 50, 341, 51));
+        ATAQLabel->setBaseSize(QSize(0, 0));
+        ATAQLabel->setFont(font);
+        ATAQNumberOfQuestionsLabel = new QLabel(ATAddQuestionsPage);
+        ATAQNumberOfQuestionsLabel->setObjectName("ATAQNumberOfQuestionsLabel");
+        ATAQNumberOfQuestionsLabel->setGeometry(QRect(40, 160, 191, 31));
+        ATAQNumberOfQuestionsLabel->setFont(font1);
+        ATAQNumberOfQuestionsSpinBox = new QSpinBox(ATAddQuestionsPage);
+        ATAQNumberOfQuestionsSpinBox->setObjectName("ATAQNumberOfQuestionsSpinBox");
+        ATAQNumberOfQuestionsSpinBox->setGeometry(QRect(260, 160, 81, 31));
+        ATAQAddQuestionsButton = new QPushButton(ATAddQuestionsPage);
+        ATAQAddQuestionsButton->setObjectName("ATAQAddQuestionsButton");
+        ATAQAddQuestionsButton->setGeometry(QRect(70, 480, 111, 31));
+        ATAQQuestionsList = new QListWidget(ATAddQuestionsPage);
+        ATAQQuestionsList->setObjectName("ATAQQuestionsList");
+        ATAQQuestionsList->setGeometry(QRect(240, 240, 491, 192));
+        ATAQConfirmQuestionsButton = new QPushButton(ATAddQuestionsPage);
+        ATAQConfirmQuestionsButton->setObjectName("ATAQConfirmQuestionsButton");
+        ATAQConfirmQuestionsButton->setGeometry(QRect(310, 480, 121, 31));
+        ATAQCancelButton = new QPushButton(ATAddQuestionsPage);
+        ATAQCancelButton->setObjectName("ATAQCancelButton");
+        ATAQCancelButton->setGeometry(QRect(590, 480, 101, 31));
+        ATAQQuestionsLabel = new QLabel(ATAddQuestionsPage);
+        ATAQQuestionsLabel->setObjectName("ATAQQuestionsLabel");
+        ATAQQuestionsLabel->setGeometry(QRect(40, 230, 101, 31));
+        ATAQQuestionsLabel->setFont(font1);
+        stackedWidget->addWidget(ATAddQuestionsPage);
         addAssignmentPage = new QWidget();
         addAssignmentPage->setObjectName("addAssignmentPage");
+        AALabel = new QLabel(addAssignmentPage);
+        AALabel->setObjectName("AALabel");
+        AALabel->setGeometry(QRect(220, 50, 361, 51));
+        AALabel->setBaseSize(QSize(0, 0));
+        AALabel->setFont(font);
+        AATitleLabel = new QLabel(addAssignmentPage);
+        AATitleLabel->setObjectName("AATitleLabel");
+        AATitleLabel->setGeometry(QRect(40, 140, 51, 31));
+        AATitleLabel->setFont(font1);
+        AADescriptionLabel = new QLabel(addAssignmentPage);
+        AADescriptionLabel->setObjectName("AADescriptionLabel");
+        AADescriptionLabel->setGeometry(QRect(40, 210, 111, 31));
+        AADescriptionLabel->setFont(font1);
+        AABeginDateLabel = new QLabel(addAssignmentPage);
+        AABeginDateLabel->setObjectName("AABeginDateLabel");
+        AABeginDateLabel->setGeometry(QRect(40, 370, 101, 31));
+        AABeginDateLabel->setFont(font1);
+        AAEndDateLabel = new QLabel(addAssignmentPage);
+        AAEndDateLabel->setObjectName("AAEndDateLabel");
+        AAEndDateLabel->setGeometry(QRect(40, 420, 81, 31));
+        AAEndDateLabel->setFont(font1);
+        AABeginDateDateEdit = new QDateEdit(addAssignmentPage);
+        AABeginDateDateEdit->setObjectName("AABeginDateDateEdit");
+        AABeginDateDateEdit->setGeometry(QRect(180, 380, 101, 25));
+        AAEndDateDateEdit = new QDateEdit(addAssignmentPage);
+        AAEndDateDateEdit->setObjectName("AAEndDateDateEdit");
+        AAEndDateDateEdit->setGeometry(QRect(180, 430, 110, 25));
+        AATitleInput = new QLineEdit(addAssignmentPage);
+        AATitleInput->setObjectName("AATitleInput");
+        AATitleInput->setGeometry(QRect(180, 150, 491, 24));
+        AADesctiptionInput = new QLineEdit(addAssignmentPage);
+        AADesctiptionInput->setObjectName("AADesctiptionInput");
+        AADesctiptionInput->setGeometry(QRect(170, 220, 511, 61));
+        AADesctiptionInput->setAlignment(Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop);
+        AAAddButton = new QPushButton(addAssignmentPage);
+        AAAddButton->setObjectName("AAAddButton");
+        AAAddButton->setGeometry(QRect(180, 490, 121, 31));
+        AACancelButton = new QPushButton(addAssignmentPage);
+        AACancelButton->setObjectName("AACancelButton");
+        AACancelButton->setGeometry(QRect(490, 490, 101, 31));
+        AACourceCodeCombo = new QComboBox(addAssignmentPage);
+        AACourceCodeCombo->setObjectName("AACourceCodeCombo");
+        AACourceCodeCombo->setGeometry(QRect(180, 310, 72, 24));
+        AACourceCodeLabel = new QLabel(addAssignmentPage);
+        AACourceCodeLabel->setObjectName("AACourceCodeLabel");
+        AACourceCodeLabel->setGeometry(QRect(40, 300, 121, 31));
+        AACourceCodeLabel->setFont(font1);
         stackedWidget->addWidget(addAssignmentPage);
         MainWindow->setCentralWidget(centralwidget);
 
         retranslateUi(MainWindow);
 
-        stackedWidget->setCurrentIndex(3);
+        stackedWidget->setCurrentIndex(0);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -372,6 +537,29 @@ public:
         PMChangeNameButton->setText(QCoreApplication::translate("MainWindow", "Change Name", nullptr));
         PMAddNewAssignmentButton->setText(QCoreApplication::translate("MainWindow", "Add New Assignment", nullptr));
         PMAddNewTestButton->setText(QCoreApplication::translate("MainWindow", "Add New Test", nullptr));
+        ATLabel->setText(QCoreApplication::translate("MainWindow", "Add New Test", nullptr));
+        ATTitleLabel->setText(QCoreApplication::translate("MainWindow", "Title:", nullptr));
+        ATEndDateLabel->setText(QCoreApplication::translate("MainWindow", "End Date:", nullptr));
+        ATBeginDateLabel->setText(QCoreApplication::translate("MainWindow", "Begin Date:", nullptr));
+        ATCourceCodeLabel->setText(QCoreApplication::translate("MainWindow", "Cource Code:", nullptr));
+        ATQuestionsLabel->setText(QCoreApplication::translate("MainWindow", "Questions:", nullptr));
+        ATAddQuestionsButton->setText(QCoreApplication::translate("MainWindow", "Add Questions", nullptr));
+        ATAddTestButton->setText(QCoreApplication::translate("MainWindow", "Add Test", nullptr));
+        ATCancelButton->setText(QCoreApplication::translate("MainWindow", "Cancel", nullptr));
+        ATAQLabel->setText(QCoreApplication::translate("MainWindow", "Add New Questions", nullptr));
+        ATAQNumberOfQuestionsLabel->setText(QCoreApplication::translate("MainWindow", "Number of Questions:", nullptr));
+        ATAQAddQuestionsButton->setText(QCoreApplication::translate("MainWindow", "Add Questions", nullptr));
+        ATAQConfirmQuestionsButton->setText(QCoreApplication::translate("MainWindow", "Confirm Questions", nullptr));
+        ATAQCancelButton->setText(QCoreApplication::translate("MainWindow", "Cancel", nullptr));
+        ATAQQuestionsLabel->setText(QCoreApplication::translate("MainWindow", "Questions:", nullptr));
+        AALabel->setText(QCoreApplication::translate("MainWindow", "Add New Assignment", nullptr));
+        AATitleLabel->setText(QCoreApplication::translate("MainWindow", "Title:", nullptr));
+        AADescriptionLabel->setText(QCoreApplication::translate("MainWindow", "Description:", nullptr));
+        AABeginDateLabel->setText(QCoreApplication::translate("MainWindow", "Begin Date:", nullptr));
+        AAEndDateLabel->setText(QCoreApplication::translate("MainWindow", "End Date:", nullptr));
+        AAAddButton->setText(QCoreApplication::translate("MainWindow", "Add Assignment", nullptr));
+        AACancelButton->setText(QCoreApplication::translate("MainWindow", "Cancel", nullptr));
+        AACourceCodeLabel->setText(QCoreApplication::translate("MainWindow", "Cource Code:", nullptr));
     } // retranslateUi
 
 };

@@ -14,6 +14,7 @@ public:
     Student();
 
     std::string CourseCode();
+    void CourseCode(std::string cC);
 };
 
 #endif // STUDENT_H

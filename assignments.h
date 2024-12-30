@@ -6,6 +6,8 @@
 class Assignments
 {
 public:
+    int assignmentLastID, testLastID;
+
     std::vector<std::string> assignmentList;
     std::vector<std::string> testList;
 
@@ -13,6 +15,7 @@ public:
     const std::string testFile = "tests.txt";
 
     void loadData();
+    int getLastID(std::vector<std::string> data);
 
     void addTest(std::string filePath, std::string message);
     void addAssginment(std::string filePath, std::string message);

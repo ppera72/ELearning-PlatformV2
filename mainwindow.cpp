@@ -27,15 +27,31 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->SMChangeSurnameButton, &QPushButton::clicked, this, &MainWindow::on_SMChangeSurnameButton_clicked);
     connect(ui->PMAddNewAssignmentButton, &QPushButton::clicked, this, &MainWindow::on_PMAddNewAssignment_clicked);
     connect(ui->PMAddNewTestButton, &QPushButton::clicked, this, &MainWindow::on_PMAddNewTest_clicked);
+    connect(ui->AAAddButton, &QPushButton::clicked, this, &MainWindow::on_AAAddButton_clicked);
+    connect(ui->AACancelButton, &QPushButton::clicked, this, &MainWindow::on_AACancelButton_clicked);
+
 
     UserData.readFromFile(UserData.studFileName, true);
     UserData.readFromFile(UserData.profFileName, false);
+    assignments.loadData();
+
     for(auto&& a : UserData.studentData){
         qDebug()<<a;
     }
     for(auto&& a : UserData.professorData){
         qDebug()<<a;
     }
+
+    qDebug()<<"ass: start";
+    for(auto&& a : assignments.assignmentList){
+        qDebug()<<a;
+    }
+
+    qDebug()<<"test: start";
+    for(auto&& a : assignments.testList){
+        qDebug()<<a;
+    }
+
 }
 
 MainWindow::~MainWindow()
@@ -207,6 +223,7 @@ void MainWindow::on_loginButton_clicked()
                 currentStudent = getStudData(UserData.studentData);
                 ui->SMNameLabel->setText(QString::fromStdString(currentStudent.Name()));
 
+
             }
             else{
                 QMessageBox::warning(this, tr("Login Attempt"), tr("Wrong password!\nPlease try again!"), QMessageBox::Ok);
@@ -222,6 +239,7 @@ void MainWindow::on_loginButton_clicked()
                 // pre PM:
                 currentProfessor = getProfData(UserData.professorData);
                 ui->PMNameLabel->setText(QString::fromStdString(currentProfessor.Name()));
+
             }
             else{
                 QMessageBox::warning(this, tr("Login Attempt"), tr("Wrong password!\nPlease try again!"), QMessageBox::Ok);
@@ -353,10 +371,8 @@ void MainWindow::on_SMLogOutButton_clicked(){
         }
         ui->stackedWidget->setCurrentIndex(0);
     }
-
 }
 // STUDENT MAIN PAGE END
-
 
 // PROFESSOR MAIN PAGE
 void MainWindow::on_PMLogOutButton_clicked(){
@@ -386,13 +402,58 @@ void MainWindow::on_PMAddNewAssignment_clicked(){
 }
 
 void MainWindow::on_PMAddNewTest_clicked(){
-    ui->stackedWidget->setCurrentIndex(5);
+    ui->stackedWidget->setCurrentIndex(4);
 }
 // PROFESSOR MAIN PAGE END
 
 // ADD ASSIGNMENT PAGE
+std::string AATitle, AADesc, AACourceCode;
+Date AABeginDate, AAEndDate;
 
+void MainWindow::on_AAAddButton_clicked(){
+    AATitle = ui->AATitleInput->text().toStdString();
+    AADesc = ui->AADesctiptionInput->text().toStdString();
+    AACourceCode = ui->AACourceCodeCombo->currentText().toStdString();
+    AABeginDate = ui->AABeginDateDateEdit->text().toStdString();
+    AAEndDate = ui->AAEndDateDateEdit->text().toStdString();
 
+    if(AATitle.empty()){
+        QMessageBox::warning(this, "Adding Assignment", "Title of assignment is empty!\nPlease fill it!", QMessageBox::Ok);
+    }
+    if(AADesc.empty()){
+        QMessageBox::warning(this, "Adding Assignment", "Title of assignment is empty!\nPlease fill it!", QMessageBox::Ok);
+    }
+
+    // check if endDate > beginDate
+
+    if(!AATitle.empty() && !AADesc.empty()){
+        std::stringstream helpMessage;
+        std::string message;
+        assignments.assignmentLastID = assignments.getLastID(assignments.assignmentList);
+        assignments.assignmentLastID += 1;
+        helpMessage<<assignments.assignmentLastID<<';'<<AATitle<<';'<<AADesc<<';'<<AACourceCode<<';'<<AABeginDate.wholeDate()<<';'<<AAEndDate.wholeDate();
+        message = helpMessage.str();
+        assignments.addAssginment(assignments.assignmentFile, message);
+        assignments.assignmentList.push_back(message);
+
+        ui->AATitleInput->clear();
+        ui->AADesctiptionInput->clear();
+        QMessageBox::information(this, "Assignment Confirm", "Assignment added successfully!", QMessageBox::Ok);
+    }
+}
+void MainWindow::on_AACancelButton_clicked(){
+    QMessageBox::StandardButton reply;
+    reply = QMessageBox::question(this, "Cancel Assignment", "Are you sure you want to cancel adding assignment?\nAll the data will be lost!", QMessageBox::Yes|QMessageBox::No);
+    if(reply == QMessageBox::Yes){
+        ui->AATitleInput->clear();
+        ui->AADesctiptionInput->clear();
+        ui->stackedWidget->setCurrentIndex(3);
+    }
+}
 // ADD ASSIGNMENT PAGE END
+
+// ADD TEST PAGE
+
+// ADD TEST PAGE END
 
 

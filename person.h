@@ -11,7 +11,6 @@ public:
     int id;
     Date dateOfBirth;
 
-
     Person(int id, std::string n, std::string s, Date dateOB, std::string e, std::string p);
     Person();
     int Id() const;

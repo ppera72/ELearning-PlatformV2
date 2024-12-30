@@ -54,6 +54,9 @@ private:
     void on_PMAddNewAssignment_clicked();
     void on_PMAddNewTest_clicked();
 
+    void on_AAAddButton_clicked();
+    void on_AACancelButton_clicked();
+
 
 };
 #endif // MAINWINDOW_H
