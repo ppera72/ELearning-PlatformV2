@@ -543,10 +543,13 @@ void MainWindow::on_ATAQAddQuestionsButton_clicked()
     }
 
     for(int i = 0; i < ATAQNumberOfQuestions; i++){
-        if(i == 0)
-            std::string helpMessage = std::to_string(assignments.getLastID(assignments.testList) + 1) + ";";
-
-        std::string helpMessage = std::to_string(assignments.getLastID(assignments.testList)) + ";";
+        std::string helpMessage;
+        if(i == 0){
+            helpMessage = std::to_string(assignments.getLastID(assignments.testList) + 1) + ";";
+        }
+        else{
+            helpMessage = std::to_string(assignments.getLastID(assignments.testList)) + ";";
+        }
         bool okQ, okCA, okWA1, okWA2, okWA3;
         QString question = QInputDialog::getText(this, tr("Question"),tr(&"Question " [ (i + 1)]), QLineEdit::Normal,"Question", &okQ);
         if (okQ && !question.isEmpty())

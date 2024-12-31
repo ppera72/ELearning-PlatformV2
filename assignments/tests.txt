@@ -1,3 +1,4 @@
 0;Czym jest Ag?;Srebro;Zloto;Miedz;Hel
 0;Czym jest H?;Wodor;Selen;Tytan;Wegiel
 0;Czym jest Au;Zloto;Brom;Polon;Rad
+1;Czy dziala?;hell yea;no;idk;idc00.00.0;00.00.0
