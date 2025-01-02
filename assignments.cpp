@@ -45,7 +45,7 @@ int Assignments::getLastID(std::vector<std::string> data)
     return id;
 }
 
-void Assignments::addTest(std::string filePath, std::string message){  // maybe merge with addAssignment + add creating directory
+void Assignments::addToFile(std::string filePath, std::string message){  // maybe merge with addAssignment + add creating directory
     std::string path = "C:\\Users\\Patryk\\Desktop\\Praca\\C Plus Plus\\E-LearningPlatformV2\\assignments\\" + filePath; // change path!!!
     std::ifstream File(path.c_str());
     if(File.good()){
@@ -59,17 +59,16 @@ void Assignments::addTest(std::string filePath, std::string message){  // maybe 
     File.close();
 }
 
-void Assignments::addAssginment(std::string filePath, std::string message){
-    std::string path = "C:\\Users\\Patryk\\Desktop\\Praca\\C Plus Plus\\E-LearningPlatformV2\\assignments\\" + filePath; // change path!!!
-    std::ifstream File(path.c_str());
-    if(File.good()){
-        std::ofstream File(path, std::ios_base::app);
-        File << message + "\n";
+std::vector<std::string> Assignments::getTestData(std::string test)
+{
+    std::vector<std::string> help;
+    size_t pos = 0;
+    size_t prev = 0;
+    while((pos = test.find(';', prev)) != std::string::npos){
+        help.push_back(test.substr(prev, pos - prev));
+        prev = pos + 1;
     }
-    else{
-        std::ofstream File(path);
-        File << message + "\n";
-        qDebug()<<"Created a file";
-    }
-    File.close();
+    help.push_back(test.substr(prev));
+    return help;
 }
+

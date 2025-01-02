@@ -40,7 +40,9 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->ATCancelButton, &QPushButton::clicked, this, &MainWindow::on_ATCancelButton_clicked);
     connect(ui->ATAQAddQuestionsButton, &QPushButton::clicked, this, &MainWindow::on_ATAQAddQuestionsButton_clicked);
     connect(ui->ATAQConfirmQuestionsButton, &QPushButton::clicked, this, &MainWindow::on_ATAQConfirmQuestionsButton_clicked);
-    connect(ui->ATAQCancelButton, &QPushButton::clicked, this, &MainWindow::on_ATAQCancelButtonn_clicked);
+    connect(ui->ATAQCancelButton, &QPushButton::clicked, this, &MainWindow::on_ATAQCancelButton_clicked);
+
+    connect(ui->SMStartSelectedTestButton, &QPushButton::clicked, this, &MainWindow::on_SMStartSelectedTestButton_clicked);
 
     ui->dateOfBirthRegisterEdit->setDate(QDate::currentDate());
     ui->AABeginDateDateEdit->setDate(QDate::currentDate());
@@ -464,7 +466,7 @@ void MainWindow::on_AAAddButton_clicked(){
         assignments.assignmentLastID += 1;
         helpMessage<<assignments.assignmentLastID<<';'<<AATitle<<';'<<AADesc<<';'<<AACourceCode<<';'<<AABeginDate.wholeDate()<<';'<<AAEndDate.wholeDate();
         message = helpMessage.str();
-        assignments.addAssginment(assignments.assignmentFile, message);
+        assignments.addToFile(assignments.assignmentFile, message);
 
         helpMessage.str(std::string());
         helpMessage<<assignments.assignmentLastID<<';'<<AATitle;
@@ -498,11 +500,6 @@ Date ATBeginDate, ATEndDate;
 
 void MainWindow::on_ATAddTestButton_clicked()
 {
-    ATTitle = ui->ATTitleInput->text().toStdString();
-    //ATCourceCode = ui->ATCourceCodeCombo->currentText().toStdString();
-    ATBeginDate = ui->ATBeginDateDateEdit->text().toStdString();
-    ATEndDate = ui->ATEndDateDateEdit->text().toStdString();
-
     if(ATTitle.empty()){
         QMessageBox::warning(this, "Adding Test", "Title of test is empty!\nPlease fill it!", QMessageBox::Ok);
     }
@@ -520,7 +517,7 @@ void MainWindow::on_ATAddTestButton_clicked()
         reply = QMessageBox::question(this, "Adding Test", "Are you sure you want to add test?", QMessageBox::Yes|QMessageBox::No);
         if(reply == QMessageBox::Yes){
             for(auto&& a : ATQuestionsFull){
-                assignments.addTest(assignments.testFile, a);  //change after meerge
+                assignments.addToFile(assignments.testFile, a);
             }
             ui->ATTitleInput->clear();
             ui->ATQuestionsList->clear();
@@ -547,6 +544,9 @@ void MainWindow::on_ATCancelButton_clicked()
 
 void MainWindow::on_ATAQAddQuestionsButton_clicked()
 {
+    ATTitle = ui->ATTitleInput->text().toStdString();
+    ATBeginDate = ui->ATBeginDateDateEdit->text().toStdString();
+    ATEndDate = ui->ATEndDateDateEdit->text().toStdString();
     ATAQNumberOfQuestions = ui->ATAQNumberOfQuestionsSpinBox->value();
     ATCourceCode = ui->ATCourceCodeCombo->currentText().right(6).mid(1, 4).toStdString();
 
@@ -557,12 +557,13 @@ void MainWindow::on_ATAQAddQuestionsButton_clicked()
 
     for(int i = 0; i < ATAQNumberOfQuestions; i++){
         std::string helpMessage;
-        if(i == 0){
-            helpMessage = std::to_string(assignments.getLastID(assignments.testList) + 1) + ";";
+        helpMessage = std::to_string(assignments.getLastID(assignments.testList) + 1) + ";";
+        /*if(i == 0){
+
         }
         else{
             helpMessage = std::to_string(assignments.getLastID(assignments.testList)) + ";";
-        }
+        }*/
         helpMessage += ATTitle + ";";
         bool okQ, okCA, okWA1, okWA2, okWA3;
         QString question = QInputDialog::getText(this, tr("Question"),tr(&"Question " [ (i + 1)]), QLineEdit::Normal,"Question", &okQ);
@@ -608,7 +609,7 @@ void MainWindow::on_ATAQConfirmQuestionsButton_clicked()
     }
 }
 
-void MainWindow::on_ATAQCancelButtonn_clicked()
+void MainWindow::on_ATAQCancelButton_clicked()
 {
     QMessageBox::StandardButton reply;
     reply = QMessageBox::question(this, "Cancel Test Questions", "Are you sure you want to cancel adding questions to test?\nAll the data will be lost!", QMessageBox::Yes|QMessageBox::No);
@@ -620,5 +621,25 @@ void MainWindow::on_ATAQCancelButtonn_clicked()
 }
 
 // ADD TEST PAGE END
+
+// SOLVE THE TEST PAGE
+std::string selectedTest;
+void MainWindow::on_SMStartSelectedTestButton_clicked()
+{
+    selectedTest = ui->SMUpcomingTestsList->currentItem()->text().toStdString();
+    assignments.currentTestData = assignments.getTestData(selectedTest);
+    std::string currentTestID = assignments.currentTestData[0];
+    for(auto&& test:assignments.testList){
+        if(test.find(currentTestID) == 0){
+            // test handling
+            ui->SMSTTQuestionLabel->setText(QString::fromStdString(assignments.currentTestData[2]));
+        }
+    }
+    for(auto&& data : assignments.currentTestData){
+        qDebug()<<data;
+    }
+}
+
+// SOLVE THE TEST PAGE END
 
 

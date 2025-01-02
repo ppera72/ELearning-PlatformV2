@@ -62,7 +62,9 @@ private:
     void on_ATCancelButton_clicked();
     void on_ATAQAddQuestionsButton_clicked();
     void on_ATAQConfirmQuestionsButton_clicked();
-    void on_ATAQCancelButtonn_clicked();
+    void on_ATAQCancelButton_clicked();
+
+    void on_SMStartSelectedTestButton_clicked();
 
 };
 #endif // MAINWINDOW_H
