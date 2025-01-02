@@ -239,9 +239,17 @@ void MainWindow::on_loginButton_clicked()
                 // pre SM:
                 currentStudent = getStudData(UserData.studentData);
                 ui->SMNameLabel->setText(QString::fromStdString(currentStudent.Name()));
+                qDebug()<<currentStudent.CourseCode();
                 for(auto&& assignment : assignments.assignmentList){
-                    if(assignment.find(currentStudent.CourseCode())){
-                        ui->SMUpcomingTasksCombo->addItem(QString::fromStdString(assignment));
+                    if(assignment.find(currentStudent.CourseCode()) != std::string::npos){
+                        qDebug()<<assignment;
+                        ui->SMUpcomingAssignmentsList->addItem(QString::fromStdString(assignment));
+                    }
+                }
+                for(auto&& test : assignments.testList){
+                    if(test.find(currentStudent.CourseCode()) != std::string::npos){
+                        qDebug()<<test;
+                        ui->SMUpcomingTestsList->addItem(QString::fromStdString(test));
                     }
                 }
 
@@ -451,13 +459,17 @@ void MainWindow::on_AAAddButton_clicked(){
 
     if(!AATitle.empty() && !AADesc.empty() && AAEndDate.compareDates(AABeginDate) == -1){
         std::stringstream helpMessage;
-        std::string message;
+        std::string message, assignmentToDisplay;
         assignments.assignmentLastID = assignments.getLastID(assignments.assignmentList);
         assignments.assignmentLastID += 1;
         helpMessage<<assignments.assignmentLastID<<';'<<AATitle<<';'<<AADesc<<';'<<AACourceCode<<';'<<AABeginDate.wholeDate()<<';'<<AAEndDate.wholeDate();
         message = helpMessage.str();
         assignments.addAssginment(assignments.assignmentFile, message);
-        assignments.assignmentList.push_back(message);
+
+        helpMessage.str(std::string());
+        helpMessage<<assignments.assignmentLastID<<';'<<AATitle;
+        assignmentToDisplay = helpMessage.str();
+        assignments.assignmentList.push_back(assignmentToDisplay);
 
         ui->AATitleInput->clear();
         ui->AADesctiptionInput->clear();
@@ -487,7 +499,7 @@ Date ATBeginDate, ATEndDate;
 void MainWindow::on_ATAddTestButton_clicked()
 {
     ATTitle = ui->ATTitleInput->text().toStdString();
-    ATCourceCode = ui->ATCourceCodeCombo->currentText().toStdString();
+    //ATCourceCode = ui->ATCourceCodeCombo->currentText().toStdString();
     ATBeginDate = ui->ATBeginDateDateEdit->text().toStdString();
     ATEndDate = ui->ATEndDateDateEdit->text().toStdString();
 
@@ -536,6 +548,7 @@ void MainWindow::on_ATCancelButton_clicked()
 void MainWindow::on_ATAQAddQuestionsButton_clicked()
 {
     ATAQNumberOfQuestions = ui->ATAQNumberOfQuestionsSpinBox->value();
+    ATCourceCode = ui->ATCourceCodeCombo->currentText().right(6).mid(1, 4).toStdString();
 
     std::string questionMain;
     if(ATAQNumberOfQuestions <= 0){
@@ -550,6 +563,7 @@ void MainWindow::on_ATAQAddQuestionsButton_clicked()
         else{
             helpMessage = std::to_string(assignments.getLastID(assignments.testList)) + ";";
         }
+        helpMessage += ATTitle + ";";
         bool okQ, okCA, okWA1, okWA2, okWA3;
         QString question = QInputDialog::getText(this, tr("Question"),tr(&"Question " [ (i + 1)]), QLineEdit::Normal,"Question", &okQ);
         if (okQ && !question.isEmpty())
@@ -574,9 +588,9 @@ void MainWindow::on_ATAQAddQuestionsButton_clicked()
 
         QString wrongAnswer3 = QInputDialog::getText(this, tr("Wrong Answer"),tr("Wrong Answer 3:"), QLineEdit::Normal,"Wrong Answer", &okWA3);
         if (okWA3 && !wrongAnswer3.isEmpty())
-            helpMessage += wrongAnswer3.toStdString();
+            helpMessage += wrongAnswer3.toStdString() + ";";
 
-        helpMessage += ATBeginDate.wholeDate() + ";" + ATEndDate.wholeDate();
+        helpMessage += ATCourceCode + ";" + ATBeginDate.wholeDate() + ";" + ATEndDate.wholeDate();
         ATQuestionsFull.append(helpMessage);
     }
 }

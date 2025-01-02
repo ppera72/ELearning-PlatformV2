@@ -2,3 +2,10 @@
 0;Czym jest H?;Wodor;Selen;Tytan;Wegiel
 0;Czym jest Au;Zloto;Brom;Polon;Rad
 1;Czy dziala?;hell yea;no;idk;idc00.00.0;00.00.0
+2;czym jest huj;a;a;a;a02.01.2025;03.01.2025
+2;New Test for Ci En
+3;New Test for Ci En;Question 1;Correct Answer;Wrong Answer 1;Wrong Answer 2;Wrong Answer 3;02.01.2025;03.01.2025
+2;New Test for Ci En;Question 2;Correct Answer 1;Wrong Answer 1;Wrong Answer 2;Wrong Answer 3;02.01.2025;03.01.2025
+3;;czy tak?;jeszcze jak;nie;nuh uh;nah;;00.00.0;00.00.0
+4;3rd test;czy tak;say gex;huh;how;h;Civil Engineering [CiEn];03.01.2025;02.01.2025
+5;;kill me;me to;Wrong Answer;Wrong Answer;Wrong Answer;CiEn;00.00.0;00.00.0

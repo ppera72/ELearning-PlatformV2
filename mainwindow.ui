@@ -19,7 +19,7 @@
      <rect>
       <x>0</x>
       <y>-20</y>
-      <width>800</width>
+      <width>801</width>
       <height>621</height>
      </rect>
     </property>
@@ -82,7 +82,7 @@
        </rect>
       </property>
       <property name="placeholderText">
-       <string/>
+       <string>abc</string>
       </property>
      </widget>
      <widget class="QLineEdit" name="passwordLoginInput">
@@ -596,27 +596,60 @@
        <string>Change Surname</string>
       </property>
      </widget>
-     <widget class="QLabel" name="SMUpcomingTasksLabel">
+     <widget class="QLabel" name="SMUpcomingAssignmentsLabel">
       <property name="geometry">
        <rect>
         <x>480</x>
         <y>110</y>
-        <width>101</width>
-        <height>16</height>
+        <width>181</width>
+        <height>21</height>
        </rect>
       </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
       <property name="text">
-       <string>Upcoming Tasks:</string>
+       <string>Upcoming Assignments:</string>
       </property>
      </widget>
-     <widget class="QComboBox" name="SMUpcomingTasksCombo">
+     <widget class="QListWidget" name="SMUpcomingAssignmentsList">
       <property name="geometry">
        <rect>
         <x>480</x>
-        <y>150</y>
+        <y>140</y>
         <width>281</width>
-        <height>24</height>
+        <height>111</height>
        </rect>
+      </property>
+     </widget>
+     <widget class="QListWidget" name="SMUpcomingTestsList">
+      <property name="geometry">
+       <rect>
+        <x>480</x>
+        <y>370</y>
+        <width>281</width>
+        <height>111</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label">
+      <property name="geometry">
+       <rect>
+        <x>480</x>
+        <y>340</y>
+        <width>131</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Upcoming Tests:</string>
       </property>
      </widget>
     </widget>
