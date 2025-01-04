@@ -708,19 +708,6 @@
      </widget>
     </widget>
     <widget class="QWidget" name="professorMainPage">
-     <widget class="QLabel" name="label_2">
-      <property name="geometry">
-       <rect>
-        <x>60</x>
-        <y>470</y>
-        <width>49</width>
-        <height>16</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>prof</string>
-      </property>
-     </widget>
      <widget class="QPushButton" name="PMLogOutButton">
       <property name="geometry">
        <rect>
@@ -836,6 +823,42 @@
       </property>
       <property name="text">
        <string>Add New Test</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="PMGradeSelectedAssignmentButton">
+      <property name="geometry">
+       <rect>
+        <x>500</x>
+        <y>530</y>
+        <width>171</width>
+        <height>24</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Grade Selected Assignment</string>
+      </property>
+     </widget>
+     <widget class="QListWidget" name="PMAssignmentsToGradeList">
+      <property name="geometry">
+       <rect>
+        <x>440</x>
+        <y>390</y>
+        <width>301</width>
+        <height>121</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLabel" name="PMAssignmentsToGradeLabel">
+      <property name="geometry">
+       <rect>
+        <x>440</x>
+        <y>360</y>
+        <width>141</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Assignments to grade:</string>
       </property>
      </widget>
     </widget>
@@ -1605,6 +1628,250 @@
       </property>
       <property name="text">
        <string>PTS.</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="SMSendTheAssignmentPage">
+     <widget class="QLabel" name="SMSTALabel">
+      <property name="geometry">
+       <rect>
+        <x>310</x>
+        <y>60</y>
+        <width>111</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Send Assignment</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="SMSTATitleLabel">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>140</y>
+        <width>341</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QLabel" name="SMSTADescriptionLabel">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>220</y>
+        <width>391</width>
+        <height>101</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="SMSTAAddFileButton">
+      <property name="geometry">
+       <rect>
+        <x>580</x>
+        <y>130</y>
+        <width>80</width>
+        <height>24</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Add File</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="SMSTASendAssignmentButton">
+      <property name="geometry">
+       <rect>
+        <x>140</x>
+        <y>510</y>
+        <width>131</width>
+        <height>24</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Send Assignment</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="SMSTACancelButton">
+      <property name="geometry">
+       <rect>
+        <x>540</x>
+        <y>510</y>
+        <width>80</width>
+        <height>24</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Cancel</string>
+      </property>
+     </widget>
+     <widget class="QListWidget" name="SMSTAFileList">
+      <property name="geometry">
+       <rect>
+        <x>490</x>
+        <y>180</y>
+        <width>271</width>
+        <height>91</height>
+       </rect>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="PMGTAPage">
+     <widget class="QPushButton" name="PMGTACancelButton">
+      <property name="geometry">
+       <rect>
+        <x>540</x>
+        <y>520</y>
+        <width>80</width>
+        <height>24</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Cancel</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="PMGTALabel">
+      <property name="geometry">
+       <rect>
+        <x>260</x>
+        <y>60</y>
+        <width>211</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Grade The Assignment</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="PMGTASenderLabel">
+      <property name="geometry">
+       <rect>
+        <x>40</x>
+        <y>150</y>
+        <width>49</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Sender:</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="PMGTASenderDataLabel">
+      <property name="geometry">
+       <rect>
+        <x>100</x>
+        <y>150</y>
+        <width>331</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QLabel" name="PMGTATitleLabel">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>210</y>
+        <width>121</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Title of Assignment:</string>
+      </property>
+     </widget>
+     <widget class="QListWidget" name="PMGTAListOfFiles">
+      <property name="geometry">
+       <rect>
+        <x>140</x>
+        <y>290</y>
+        <width>256</width>
+        <height>192</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLabel" name="PMGTAListOfFilesLabel">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>290</y>
+        <width>101</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>List of Files Sent:</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="PMGTAViewSelectedFileButton">
+      <property name="geometry">
+       <rect>
+        <x>180</x>
+        <y>520</y>
+        <width>131</width>
+        <height>24</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>View Selected File</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="PMGTAGradeTheAssignmentButton">
+      <property name="geometry">
+       <rect>
+        <x>560</x>
+        <y>280</y>
+        <width>141</width>
+        <height>24</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Grade The Assignment</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="PMGTATitleDataLabel">
+      <property name="geometry">
+       <rect>
+        <x>160</x>
+        <y>210</y>
+        <width>211</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="PMGTAViewFilePage">
+     <widget class="QPlainTextEdit" name="plainTextEdit">
+      <property name="geometry">
+       <rect>
+        <x>80</x>
+        <y>80</y>
+        <width>591</width>
+        <height>411</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="PMGTAVTFBackButton">
+      <property name="geometry">
+       <rect>
+        <x>550</x>
+        <y>540</y>
+        <width>80</width>
+        <height>24</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Back</string>
       </property>
      </widget>
     </widget>

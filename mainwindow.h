@@ -65,6 +65,17 @@ private:
     void on_ATAQCancelButton_clicked();
 
     void on_SMStartSelectedTestButton_clicked();
+    void on_SMStartSelectedAssignmentButton_clicked();
+
+    void on_SMSTACancelButton_clicked();
+    void on_SMSTASendAssignmentButton_clicked();
+    void on_SMSTAAddFileButton_clicked();
+
+    void on_PMGradeSelectedAssignmentButton_clicked();
+    void on_PMGTACancelButton_clicked();
+    void on_PMGTAViewSelectedFileButton_clicked();
+    void on_PMGTAGradeTheAssignmentButton_clicked();
+    void on_PMGTAVTFBackButton_clicked();
 
 };
 #endif // MAINWINDOW_H

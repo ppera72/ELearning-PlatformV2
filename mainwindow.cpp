@@ -9,6 +9,7 @@
 #include <algorithm>
 #include <ctime>
 #include <QButtonGroup>
+#include <QFileDialog>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -45,6 +46,19 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->ATAQCancelButton, &QPushButton::clicked, this, &MainWindow::on_ATAQCancelButton_clicked);
 
     connect(ui->SMStartSelectedTestButton, &QPushButton::clicked, this, &MainWindow::on_SMStartSelectedTestButton_clicked);
+    connect(ui->SMStartSelectedAssignmentButton, &QPushButton::clicked, this, &MainWindow::on_SMStartSelectedAssignmentButton_clicked);
+
+    connect(ui->SMSTACancelButton, &QPushButton::clicked, this, &MainWindow::on_SMSTACancelButton_clicked);
+    connect(ui->SMSTASendAssignmentButton, &QPushButton::clicked, this, &MainWindow::on_SMSTASendAssignmentButton_clicked);
+    connect(ui->SMSTAAddFileButton, &QPushButton::clicked, this, &MainWindow::on_SMSTAAddFileButton_clicked);
+
+    connect(ui->PMGradeSelectedAssignmentButton, &QPushButton::clicked, this, &MainWindow::on_PMGradeSelectedAssignmentButton_clicked);
+    connect(ui->PMGTACancelButton, &QPushButton::clicked, this, &MainWindow::on_PMGTACancelButton_clicked);
+    connect(ui->PMGTAViewSelectedFileButton, &QPushButton::clicked, this, &MainWindow::on_PMGTAViewSelectedFileButton_clicked);
+    connect(ui->PMGTAGradeTheAssignmentButton, &QPushButton::clicked, this, &MainWindow::on_PMGTAGradeTheAssignmentButton_clicked);
+    connect(ui->PMGTAVTFBackButton, &QPushButton::clicked, this, &MainWindow::on_PMGTAVTFBackButton_clicked);
+
+
 
     ui->dateOfBirthRegisterEdit->setDate(QDate::currentDate());
     ui->AABeginDateDateEdit->setDate(QDate::currentDate());
@@ -727,5 +741,157 @@ void MainWindow::on_SMStartSelectedTestButton_clicked()
 }
 
 // SOLVE THE TEST PAGE END
+
+// SEND THE ASSIGNMENT PAGE
+std::string selectedAssignment;
+QList<std::string> filesForAssignment;
+std::vector<std::string> helpAssignmentVec;
+void MainWindow::on_SMStartSelectedAssignmentButton_clicked(){
+    ui->stackedWidget->setCurrentIndex(8);
+
+    // get assignment data
+    selectedAssignment = ui->SMUpcomingAssignmentsList->currentItem()->text().toStdString();
+    helpAssignmentVec = assignments.getTestData(selectedAssignment);
+    int currentAssingmentID = stoi(helpAssignmentVec[0]);
+    for(auto&& assignment : assignments.assignmentList){
+        helpAssignmentVec = assignments.getTestData(assignment);
+        if(stoi(helpAssignmentVec[0]) == currentAssingmentID){
+            break;
+        }
+    }
+
+    // display data
+    ui->SMSTATitleLabel->setText(QString::fromStdString(helpAssignmentVec[1]));
+    ui->SMSTADescriptionLabel->setText(QString::fromStdString(helpAssignmentVec[2]));
+
+}
+
+void MainWindow::on_SMSTACancelButton_clicked(){
+    QMessageBox::StandardButton reply;
+    reply = QMessageBox::question(this, "Cancel Adding Assignment", "Are you sure you want to cancel adding assignemnt?\nAll the data will be lost!", QMessageBox::Yes|QMessageBox::No);
+    if(reply == QMessageBox::Yes){
+        ui->SMSTAFileList->clear();
+        ui->stackedWidget->setCurrentIndex(2);
+    }
+}
+
+void MainWindow::on_SMSTAAddFileButton_clicked(){
+    QString filter = "Text File(*.txt)";
+    QString fileName = QFileDialog::getOpenFileName(this, "Select assignment file.", "C:\\", filter);
+
+    QList<QListWidgetItem *> list = ui->SMSTAFileList->findItems(fileName, Qt::MatchExactly);  // find all files with fileName name
+    if(list.size() == 0){
+        ui->SMSTAFileList->addItem(fileName);
+        filesForAssignment.append(fileName.toStdString());
+    }
+    else{
+        QMessageBox::warning(this, "Adding file error!", "File already in list!", QMessageBox::Ok);
+    }
+}
+
+void MainWindow::on_SMSTASendAssignmentButton_clicked(){
+    if(ui->SMSTAFileList->count() == 0){
+        QMessageBox::warning(this, "Sending assignment error!", "File list is empty!\nPlease add a file to your assignment!", QMessageBox::Ok);
+    }
+    std::stringstream message;
+    message<<helpAssignmentVec[0]<<";"<<helpAssignmentVec[1]<<";"<<currentStudent.Id()<<";";
+    for(auto&& assignment : filesForAssignment){
+        message<<assignment<<";";
+    }
+    std::string mess = message.str();
+    mess.pop_back();
+    assignments.assignmentToGrade.push_back(mess);
+    assignments.addToFile(assignments.assignmentFileToGrade, mess);
+
+    QMessageBox::information(this, "Sending Assignment", "Assignemnt Send Successfully!", QMessageBox::Ok);
+    ui->SMSTAFileList->clear();
+    ui->stackedWidget->setCurrentIndex(2);
+
+    ui->SMCompletedTasksList->addItem(QString::fromStdString(selectedAssignment));
+    ui->PMAssignmentsToGradeList->addItem(QString::fromStdString(selectedAssignment));
+    // delete from upcoming
+}
+
+// SEND THE ASSIGNMENT PAGE END
+
+// GRADE THE ASSIGNMENT PAGE
+std::string selectedAssignmentToGrade;
+std::vector<std::string> helpGradeAssignmentVec;
+
+void MainWindow::on_PMGradeSelectedAssignmentButton_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(9);
+
+    // get assignment data
+    selectedAssignmentToGrade = ui->PMAssignmentsToGradeList->currentItem()->text().toStdString();
+    helpGradeAssignmentVec = assignments.getTestData(selectedAssignmentToGrade);
+    int currentAssingmentID = stoi(helpGradeAssignmentVec[0]);
+    for(auto&& assignment : assignments.assignmentList){
+        helpGradeAssignmentVec = assignments.getTestData(assignment);
+        if(stoi(helpGradeAssignmentVec[0]) == currentAssingmentID){
+            break;
+        }
+    }
+
+
+    // searching file names for assignment id
+    int senderID = 0;
+    for(auto&& entry : assignments.assignmentToGrade){
+        qDebug()<<entry;
+        std::vector<std::string> helpEntry = assignments.getTestData(entry);
+
+        if(currentAssingmentID == stoi(helpEntry[0])){
+            ui->PMGTAListOfFiles->addItem(QString::fromStdString(helpEntry[3]));
+            senderID = stoi(helpEntry[2]);
+            qDebug()<<senderID;
+            ui->PMGTATitleDataLabel->setText(QString::fromStdString(helpEntry[1]));
+        }
+    }
+
+
+    // searching user
+    for(auto&& user : UserData.studentData){
+        std::vector<std::string> currStudent = assignments.getTestData(user);
+        if(stoi(currStudent[0]) == senderID){
+            std::stringstream mess;
+            mess<<currStudent[1]<<" "<<currStudent[2]<<", ID:"<<currStudent[0]<<", Cource Code: "<<currStudent[6];
+            ui->PMGTASenderDataLabel->setText(QString::fromStdString(mess.str()));
+        }
+    }
+}
+
+void MainWindow::on_PMGTACancelButton_clicked()
+{
+    QMessageBox::StandardButton reply;
+    reply = QMessageBox::question(this, "Cancel Grading Assignment", "Are you sure you want to cancel grading the assignemnt?\nAll the data will be lost!", QMessageBox::Yes|QMessageBox::No);
+    if(reply == QMessageBox::Yes){
+        ui->stackedWidget->setCurrentIndex(3);
+    }
+}
+void MainWindow::on_PMGTAViewSelectedFileButton_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(10);
+    QString selectedFile = ui->PMGTAListOfFiles->currentItem()->text();
+    QFile file(selectedFile);
+
+    if(!file.open(QFile::ReadOnly | QFile::Text)){
+        QMessageBox::warning(this, "File Error", "File is empty!", QMessageBox::Ok);
+    }
+    QTextStream in(&file);
+    QString text = in.readAll();
+    ui->plainTextEdit->setPlainText(text);
+
+    file.close();
+}
+void MainWindow::on_PMGTAGradeTheAssignmentButton_clicked()
+{
+    // messagebox with grades?
+    // or earlier combo with grades?
+}
+
+void MainWindow::on_PMGTAVTFBackButton_clicked(){
+    ui->stackedWidget->setCurrentIndex(9);
+}
+// GRADE THE ASSIGNMENT PAGE END
 
 

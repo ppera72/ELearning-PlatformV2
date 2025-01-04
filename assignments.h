@@ -8,7 +8,7 @@ class Assignments
 public:
     int assignmentLastID, testLastID;
 
-    std::vector<std::string> assignmentList, assignmentListForDisplay;
+    std::vector<std::string> assignmentList, assignmentListForDisplay, assignmentToGrade;
     std::vector<std::string> testList, testListForDisplay;
     std::vector<std::string> currentTestData;
 
@@ -16,6 +16,7 @@ public:
     const std::string testFile = "tests.txt";
     const std::string assignmentFileForDisplay = "assignmentsDisplay.txt";
     const std::string testFileForDisplay = "testsDisplay.txt";
+    const std::string assignmentFileToGrade = "assignmentsToGrade.txt";
 
     void loadData();
     int getLastID(std::vector<std::string> data);

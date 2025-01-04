@@ -17,6 +17,7 @@
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QListWidget>
 #include <QtWidgets/QMainWindow>
+#include <QtWidgets/QPlainTextEdit>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QRadioButton>
 #include <QtWidgets/QSpinBox>
@@ -76,7 +77,6 @@ public:
     QPushButton *SMStartSelectedAssignmentButton;
     QPushButton *SMStartSelectedTestButton;
     QWidget *professorMainPage;
-    QLabel *label_2;
     QPushButton *PMLogOutButton;
     QLabel *PMNameLabel;
     QPushButton *PMChangeEmailButton;
@@ -86,6 +86,9 @@ public:
     QPushButton *PMChangeNameButton;
     QPushButton *PMAddNewAssignmentButton;
     QPushButton *PMAddNewTestButton;
+    QPushButton *PMGradeSelectedAssignmentButton;
+    QListWidget *PMAssignmentsToGradeList;
+    QLabel *PMAssignmentsToGradeLabel;
     QWidget *addTestPage;
     QLabel *ATLabel;
     QLabel *ATTitleLabel;
@@ -135,6 +138,28 @@ public:
     QLabel *SMSTTSlashLabel;
     QLabel *SMSTTAllAnswersLabel;
     QLabel *label_3;
+    QWidget *SMSendTheAssignmentPage;
+    QLabel *SMSTALabel;
+    QLabel *SMSTATitleLabel;
+    QLabel *SMSTADescriptionLabel;
+    QPushButton *SMSTAAddFileButton;
+    QPushButton *SMSTASendAssignmentButton;
+    QPushButton *SMSTACancelButton;
+    QListWidget *SMSTAFileList;
+    QWidget *PMGTAPage;
+    QPushButton *PMGTACancelButton;
+    QLabel *PMGTALabel;
+    QLabel *PMGTASenderLabel;
+    QLabel *PMGTASenderDataLabel;
+    QLabel *PMGTATitleLabel;
+    QListWidget *PMGTAListOfFiles;
+    QLabel *PMGTAListOfFilesLabel;
+    QPushButton *PMGTAViewSelectedFileButton;
+    QPushButton *PMGTAGradeTheAssignmentButton;
+    QLabel *PMGTATitleDataLabel;
+    QWidget *PMGTAViewFilePage;
+    QPlainTextEdit *plainTextEdit;
+    QPushButton *PMGTAVTFBackButton;
 
     void setupUi(QMainWindow *MainWindow)
     {
@@ -316,9 +341,6 @@ public:
         stackedWidget->addWidget(studentMainPage);
         professorMainPage = new QWidget();
         professorMainPage->setObjectName("professorMainPage");
-        label_2 = new QLabel(professorMainPage);
-        label_2->setObjectName("label_2");
-        label_2->setGeometry(QRect(60, 470, 49, 16));
         PMLogOutButton = new QPushButton(professorMainPage);
         PMLogOutButton->setObjectName("PMLogOutButton");
         PMLogOutButton->setGeometry(QRect(120, 280, 80, 24));
@@ -346,6 +368,15 @@ public:
         PMAddNewTestButton = new QPushButton(professorMainPage);
         PMAddNewTestButton->setObjectName("PMAddNewTestButton");
         PMAddNewTestButton->setGeometry(QRect(550, 200, 141, 24));
+        PMGradeSelectedAssignmentButton = new QPushButton(professorMainPage);
+        PMGradeSelectedAssignmentButton->setObjectName("PMGradeSelectedAssignmentButton");
+        PMGradeSelectedAssignmentButton->setGeometry(QRect(500, 530, 171, 24));
+        PMAssignmentsToGradeList = new QListWidget(professorMainPage);
+        PMAssignmentsToGradeList->setObjectName("PMAssignmentsToGradeList");
+        PMAssignmentsToGradeList->setGeometry(QRect(440, 390, 301, 121));
+        PMAssignmentsToGradeLabel = new QLabel(professorMainPage);
+        PMAssignmentsToGradeLabel->setObjectName("PMAssignmentsToGradeLabel");
+        PMAssignmentsToGradeLabel->setGeometry(QRect(440, 360, 141, 16));
         stackedWidget->addWidget(professorMainPage);
         addTestPage = new QWidget();
         addTestPage->setObjectName("addTestPage");
@@ -541,6 +572,72 @@ public:
         label_3->setGeometry(QRect(700, 70, 51, 31));
         label_3->setFont(font2);
         stackedWidget->addWidget(SMSolveTheTestPage);
+        SMSendTheAssignmentPage = new QWidget();
+        SMSendTheAssignmentPage->setObjectName("SMSendTheAssignmentPage");
+        SMSTALabel = new QLabel(SMSendTheAssignmentPage);
+        SMSTALabel->setObjectName("SMSTALabel");
+        SMSTALabel->setGeometry(QRect(310, 60, 111, 16));
+        SMSTATitleLabel = new QLabel(SMSendTheAssignmentPage);
+        SMSTATitleLabel->setObjectName("SMSTATitleLabel");
+        SMSTATitleLabel->setGeometry(QRect(30, 140, 341, 21));
+        SMSTADescriptionLabel = new QLabel(SMSendTheAssignmentPage);
+        SMSTADescriptionLabel->setObjectName("SMSTADescriptionLabel");
+        SMSTADescriptionLabel->setGeometry(QRect(20, 220, 391, 101));
+        SMSTAAddFileButton = new QPushButton(SMSendTheAssignmentPage);
+        SMSTAAddFileButton->setObjectName("SMSTAAddFileButton");
+        SMSTAAddFileButton->setGeometry(QRect(580, 130, 80, 24));
+        SMSTASendAssignmentButton = new QPushButton(SMSendTheAssignmentPage);
+        SMSTASendAssignmentButton->setObjectName("SMSTASendAssignmentButton");
+        SMSTASendAssignmentButton->setGeometry(QRect(140, 510, 131, 24));
+        SMSTACancelButton = new QPushButton(SMSendTheAssignmentPage);
+        SMSTACancelButton->setObjectName("SMSTACancelButton");
+        SMSTACancelButton->setGeometry(QRect(540, 510, 80, 24));
+        SMSTAFileList = new QListWidget(SMSendTheAssignmentPage);
+        SMSTAFileList->setObjectName("SMSTAFileList");
+        SMSTAFileList->setGeometry(QRect(490, 180, 271, 91));
+        stackedWidget->addWidget(SMSendTheAssignmentPage);
+        PMGTAPage = new QWidget();
+        PMGTAPage->setObjectName("PMGTAPage");
+        PMGTACancelButton = new QPushButton(PMGTAPage);
+        PMGTACancelButton->setObjectName("PMGTACancelButton");
+        PMGTACancelButton->setGeometry(QRect(540, 520, 80, 24));
+        PMGTALabel = new QLabel(PMGTAPage);
+        PMGTALabel->setObjectName("PMGTALabel");
+        PMGTALabel->setGeometry(QRect(260, 60, 211, 21));
+        PMGTASenderLabel = new QLabel(PMGTAPage);
+        PMGTASenderLabel->setObjectName("PMGTASenderLabel");
+        PMGTASenderLabel->setGeometry(QRect(40, 150, 49, 16));
+        PMGTASenderDataLabel = new QLabel(PMGTAPage);
+        PMGTASenderDataLabel->setObjectName("PMGTASenderDataLabel");
+        PMGTASenderDataLabel->setGeometry(QRect(100, 150, 331, 16));
+        PMGTATitleLabel = new QLabel(PMGTAPage);
+        PMGTATitleLabel->setObjectName("PMGTATitleLabel");
+        PMGTATitleLabel->setGeometry(QRect(30, 210, 121, 16));
+        PMGTAListOfFiles = new QListWidget(PMGTAPage);
+        PMGTAListOfFiles->setObjectName("PMGTAListOfFiles");
+        PMGTAListOfFiles->setGeometry(QRect(140, 290, 256, 192));
+        PMGTAListOfFilesLabel = new QLabel(PMGTAPage);
+        PMGTAListOfFilesLabel->setObjectName("PMGTAListOfFilesLabel");
+        PMGTAListOfFilesLabel->setGeometry(QRect(30, 290, 101, 16));
+        PMGTAViewSelectedFileButton = new QPushButton(PMGTAPage);
+        PMGTAViewSelectedFileButton->setObjectName("PMGTAViewSelectedFileButton");
+        PMGTAViewSelectedFileButton->setGeometry(QRect(180, 520, 131, 24));
+        PMGTAGradeTheAssignmentButton = new QPushButton(PMGTAPage);
+        PMGTAGradeTheAssignmentButton->setObjectName("PMGTAGradeTheAssignmentButton");
+        PMGTAGradeTheAssignmentButton->setGeometry(QRect(560, 280, 141, 24));
+        PMGTATitleDataLabel = new QLabel(PMGTAPage);
+        PMGTATitleDataLabel->setObjectName("PMGTATitleDataLabel");
+        PMGTATitleDataLabel->setGeometry(QRect(160, 210, 211, 16));
+        stackedWidget->addWidget(PMGTAPage);
+        PMGTAViewFilePage = new QWidget();
+        PMGTAViewFilePage->setObjectName("PMGTAViewFilePage");
+        plainTextEdit = new QPlainTextEdit(PMGTAViewFilePage);
+        plainTextEdit->setObjectName("plainTextEdit");
+        plainTextEdit->setGeometry(QRect(80, 80, 591, 411));
+        PMGTAVTFBackButton = new QPushButton(PMGTAViewFilePage);
+        PMGTAVTFBackButton->setObjectName("PMGTAVTFBackButton");
+        PMGTAVTFBackButton->setGeometry(QRect(550, 540, 80, 24));
+        stackedWidget->addWidget(PMGTAViewFilePage);
         MainWindow->setCentralWidget(centralwidget);
 
         retranslateUi(MainWindow);
@@ -628,7 +725,6 @@ public:
         SMCompletedTasksLabel->setText(QCoreApplication::translate("MainWindow", "Completed Assignments/Tests:", nullptr));
         SMStartSelectedAssignmentButton->setText(QCoreApplication::translate("MainWindow", "Start Seleced Assignment", nullptr));
         SMStartSelectedTestButton->setText(QCoreApplication::translate("MainWindow", "Start Selected Test", nullptr));
-        label_2->setText(QCoreApplication::translate("MainWindow", "prof", nullptr));
         PMLogOutButton->setText(QCoreApplication::translate("MainWindow", "Log Out", nullptr));
         PMNameLabel->setText(QString());
         PMChangeEmailButton->setText(QCoreApplication::translate("MainWindow", "Change Email", nullptr));
@@ -638,6 +734,8 @@ public:
         PMChangeNameButton->setText(QCoreApplication::translate("MainWindow", "Change Name", nullptr));
         PMAddNewAssignmentButton->setText(QCoreApplication::translate("MainWindow", "Add New Assignment", nullptr));
         PMAddNewTestButton->setText(QCoreApplication::translate("MainWindow", "Add New Test", nullptr));
+        PMGradeSelectedAssignmentButton->setText(QCoreApplication::translate("MainWindow", "Grade Selected Assignment", nullptr));
+        PMAssignmentsToGradeLabel->setText(QCoreApplication::translate("MainWindow", "Assignments to grade:", nullptr));
         ATLabel->setText(QCoreApplication::translate("MainWindow", "Add New Test", nullptr));
         ATTitleLabel->setText(QCoreApplication::translate("MainWindow", "Title:", nullptr));
         ATEndDateLabel->setText(QCoreApplication::translate("MainWindow", "End Date:", nullptr));
@@ -691,6 +789,22 @@ public:
         SMSTTSlashLabel->setText(QCoreApplication::translate("MainWindow", "/", nullptr));
         SMSTTAllAnswersLabel->setText(QString());
         label_3->setText(QCoreApplication::translate("MainWindow", "PTS.", nullptr));
+        SMSTALabel->setText(QCoreApplication::translate("MainWindow", "Send Assignment", nullptr));
+        SMSTATitleLabel->setText(QString());
+        SMSTADescriptionLabel->setText(QString());
+        SMSTAAddFileButton->setText(QCoreApplication::translate("MainWindow", "Add File", nullptr));
+        SMSTASendAssignmentButton->setText(QCoreApplication::translate("MainWindow", "Send Assignment", nullptr));
+        SMSTACancelButton->setText(QCoreApplication::translate("MainWindow", "Cancel", nullptr));
+        PMGTACancelButton->setText(QCoreApplication::translate("MainWindow", "Cancel", nullptr));
+        PMGTALabel->setText(QCoreApplication::translate("MainWindow", "Grade The Assignment", nullptr));
+        PMGTASenderLabel->setText(QCoreApplication::translate("MainWindow", "Sender:", nullptr));
+        PMGTASenderDataLabel->setText(QString());
+        PMGTATitleLabel->setText(QCoreApplication::translate("MainWindow", "Title of Assignment:", nullptr));
+        PMGTAListOfFilesLabel->setText(QCoreApplication::translate("MainWindow", "List of Files Sent:", nullptr));
+        PMGTAViewSelectedFileButton->setText(QCoreApplication::translate("MainWindow", "View Selected File", nullptr));
+        PMGTAGradeTheAssignmentButton->setText(QCoreApplication::translate("MainWindow", "Grade The Assignment", nullptr));
+        PMGTATitleDataLabel->setText(QString());
+        PMGTAVTFBackButton->setText(QCoreApplication::translate("MainWindow", "Back", nullptr));
     } // retranslateUi
 
 };
