@@ -63,3 +63,30 @@ void userData::clearFile(std::string filePath)
         File.close();
     }
 }
+
+double userData::assignAGrade(int corrAnswers, int numOfQuestions)
+{
+    int procent = (double)corrAnswers / numOfQuestions * 100;
+    double retValue;
+    switch(procent){
+        case 0 ... 50:
+            retValue = 2.0;
+            break;
+        case 51 ... 60:
+            retValue = 3.0;
+            break;
+        case 61 ... 70:
+            retValue = 3.5;
+            break;
+        case 71 ... 80:
+            retValue = 4.0;
+            break;
+        case 81 ... 90:
+            retValue = 4.5;
+            break;
+        case 91 ... 100:
+            retValue = 5.0;
+            break;
+    }
+    return retValue;
+}

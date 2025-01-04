@@ -7,9 +7,13 @@ void Assignments::loadData()
 {
     std::string pathAssignment = "C:\\Users\\Patryk\\Desktop\\Praca\\C Plus Plus\\E-LearningPlatformV2\\assignments\\" + assignmentFile; // change path!!!
     std::string pathTest = "C:\\Users\\Patryk\\Desktop\\Praca\\C Plus Plus\\E-LearningPlatformV2\\assignments\\" + testFile; // change path!!!
+    std::string pathAssignmentForDisplay = "C:\\Users\\Patryk\\Desktop\\Praca\\C Plus Plus\\E-LearningPlatformV2\\assignments\\" + assignmentFileForDisplay; // change path!!!
+    std::string pathTestForDisplay = "C:\\Users\\Patryk\\Desktop\\Praca\\C Plus Plus\\E-LearningPlatformV2\\assignments\\" + testFileForDisplay; // change path!!!
 
     std::ifstream assignmentFile(pathAssignment.c_str());
     std::ifstream testFile(pathTest.c_str());
+    std::ifstream assignmentFileForDisplay(pathAssignmentForDisplay.c_str());
+    std::ifstream testFileForDisplay(pathTestForDisplay.c_str());
 
     if(assignmentFile.good()){
         std::string c;
@@ -25,8 +29,24 @@ void Assignments::loadData()
         }
         testLastID = getLastID(testList);
     }
+    if(assignmentFileForDisplay.good()){
+        std::string c;
+        while(std::getline(assignmentFileForDisplay, c)){
+            assignmentListForDisplay.push_back(c);
+        }
+        assignmentLastID = getLastID(assignmentList);
+    }
+    if(testFileForDisplay.good()){
+        std::string c;
+        while(std::getline(testFileForDisplay, c)){
+            testListForDisplay.push_back(c);
+        }
+        testLastID = getLastID(testList);
+    }
     assignmentFile.close();
     testFile.close();
+    assignmentFileForDisplay.close();
+    testFileForDisplay.close();
 }
 
 int Assignments::getLastID(std::vector<std::string> data)
