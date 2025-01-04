@@ -556,7 +556,7 @@ void MainWindow::on_ATAddTestButton_clicked()
                 }
             }
             writedTests.clear();
-            assignments.testListForDisplay.clear(); // this causes issues when prof->add test->log out->stud / but not when stud->
+            assignments.testListForDisplay.clear(); // this causes issues when prof->add test->log out->stud and stud->log out->stud/ but not when stud->
             ui->ATTitleInput->clear();
             ui->ATQuestionsList->clear();
             ui->ATAQQuestionsList->clear();
@@ -664,7 +664,7 @@ std::string selectedTest;
 void MainWindow::on_SMStartSelectedTestButton_clicked()
 {
     int correctAnswersScore = 0;
-    double grade;
+    std::string grade;
     std::string testTitle;
     // getting questions+answers
 
@@ -696,24 +696,25 @@ void MainWindow::on_SMStartSelectedTestButton_clicked()
             ansButtons[i]->setText(QString::fromStdString(answers[i]));
         }
 
-        QObject::connect(ui->SMSTTNextQuestionButton, &QPushButton::clicked, &loop, &QEventLoop::quit);
-        /*QRadioButton *clickedAnswer = qobject_cast<QRadioButton *>(sender());
-        QObject *senderObj = sender();
-        qDebug() << "sender: " << senderObj->metaObject()->className(); // maybe change checking answers to ifs?
-        qDebug()<<clickedAnswer->text();
-        if(clickedAnswer != nullptr){
-            QString a = clickedAnswer->text();
-            if(a == QString::fromStdString(helpTestVec[4]))
-                correctAnswersScore += 1; // maybe messagebox? idk
-        }*/
-        ui->SMSTTCorrectAnswersLabel->setText(QString::number(correctAnswersScore));
+        QObject::connect(ui->SMSTTNextQuestionButton, &QPushButton::clicked, &loop, &QEventLoop::quit);  // wait for nextQuestionButton
+
         loop.exec();
+        for(int i = 0; i < 4; i++){  // check answer
+            if(ansButtons[i]->isChecked()){
+                if(ansButtons[i]->text() == QString::fromStdString(helpTestVec[4])){
+                    correctAnswersScore += 1;
+                    break;
+                }
+                ansButtons[i]->setChecked(false);
+            }
+
+        }
+        ui->SMSTTCorrectAnswersLabel->setText(QString::number(correctAnswersScore));
     }
 
     grade = UserData.assignAGrade(correctAnswersScore, helpQuestionsVec.size());
-    qDebug()<<correctAnswersScore;
-    qDebug()<<grade;
-    std::string messBoxMessage = "You've completed this test\nYou've scored: " + std::to_string(correctAnswersScore) + " and got: " + std::to_string(grade);
+
+    std::string messBoxMessage = "You've completed this test\nYou've scored: " + std::to_string(correctAnswersScore) + " and got: " + grade;
     QMessageBox::information(this, "Test Completed!", QString::fromStdString(messBoxMessage), QMessageBox::Ok);
     std::stringstream message;
     message<<currentStudent.Id()<<";"<<testTitle<<";"<<grade;
@@ -723,9 +724,6 @@ void MainWindow::on_SMStartSelectedTestButton_clicked()
     ui->SMCompletedTasksList->addItem(QString::fromStdString(selectedTest));
     ui->stackedWidget->setCurrentIndex(2);
     // delete form upcoming tests
-    for(auto&& gr : UserData.studentGrades){
-        qDebug()<<gr;
-    }
 }
 
 // SOLVE THE TEST PAGE END

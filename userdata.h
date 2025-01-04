@@ -19,7 +19,7 @@ public:
     void readFromFile(std::string filePath, bool ifStud);
     int getLastID(std::vector<std::string> data);
     void clearFile(std::string filePath);
-    double assignAGrade(int corrAnswers, int numOfQuestions);
+    std::string assignAGrade(int corrAnswers, int numOfQuestions);
 };
 
 #endif // USERDATA_H

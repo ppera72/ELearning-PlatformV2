@@ -1,5 +1,6 @@
 #include "userdata.h"
 #include <fstream>
+#include <sstream>
 #include <QDebug>
 void userData::writeToFile(std::string filePath, std::string message)
 {
@@ -64,10 +65,10 @@ void userData::clearFile(std::string filePath)
     }
 }
 
-double userData::assignAGrade(int corrAnswers, int numOfQuestions)
+std::string userData::assignAGrade(int corrAnswers, int numOfQuestions)
 {
-    int procent = (double)corrAnswers / numOfQuestions * 100;
-    double retValue;
+    int procent = (float)corrAnswers / numOfQuestions * 100;
+    float retValue;
     switch(procent){
         case 0 ... 50:
             retValue = 2.0;
@@ -87,6 +88,11 @@ double userData::assignAGrade(int corrAnswers, int numOfQuestions)
         case 91 ... 100:
             retValue = 5.0;
             break;
+        default:
+            retValue = 2.0;
+            break;
     }
-    return retValue;
+    std::ostringstream os;
+    os<<retValue;
+    return os.str();
 }
