@@ -35,7 +35,7 @@ std::string Person::Password() const
     return password;
 }
 
-Date Person::setDate() const
+Date Person::getDate() const
 {
     return dateOfBirth;
 }
@@ -64,7 +64,7 @@ void Person::Password(std::string p)
     password = p;
 }
 
-void Person::getDate(Date dateOB)
+void Person::setDate(Date dateOB)
 {
     dateOfBirth = dateOB;
 }

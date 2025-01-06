@@ -19,7 +19,7 @@ public:
     char Status() const;
     std::string Email() const;
     std::string Password() const;
-    Date setDate() const;
+    Date getDate() const;
 
     void Id(int i);
     void Name(std::string n);
@@ -27,7 +27,7 @@ public:
     void Status(char s);
     void Email(std::string e);
     void Password(std::string p);
-    void getDate(Date dateOB);
+    void setDate(Date dateOB);
 };
 
 #endif // PERSON_H

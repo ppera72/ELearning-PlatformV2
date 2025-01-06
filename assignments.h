@@ -19,6 +19,7 @@ public:
     const std::string assignmentFileToGrade = "assignmentsToGrade.txt";
 
     void loadData();
+    void clearFile(std::string fileName);
     int getLastID(std::vector<std::string> data);
 
     void addToFile(std::string filePath, std::string message);

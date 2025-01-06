@@ -86,6 +86,15 @@ void Assignments::addToFile(std::string filePath, std::string message){  // add 
     File.close();
 }
 
+void Assignments::clearFile(std::string fileName){
+    std::string path = "C:\\Users\\Patryk\\Desktop\\Praca\\C Plus Plus\\E-LearningPlatformV2\\assignments\\" + fileName; // change path!!!
+    std::ifstream File(path.c_str());
+    if(File.good()){
+        std::ofstream File(path, std::ofstream::out | std::ofstream::trunc);
+        File.close();
+    }
+}
+
 std::vector<std::string> Assignments::getTestData(std::string test)
 {
     std::vector<std::string> help;

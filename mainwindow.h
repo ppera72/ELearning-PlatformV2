@@ -50,6 +50,14 @@ private:
     void on_SMChangePasswordButton_clicked();
     void on_SMChangeNameButton_clicked();
     void on_SMChangeSurnameButton_clicked();
+    void on_SMViewAccountDataButton_clicked();
+    void on_SMAccountDetailsBackButton_clicked();
+    void on_SMViewGradesButton_clicked();
+    void on_SMVGBackButton_clicked();
+
+
+    void on_PMViewAccountDataButton_clicked();
+    void on_PMAccountDetailsBackButton_clicked();
 
     void on_PMAddNewAssignment_clicked();
     void on_PMAddNewTest_clicked();
