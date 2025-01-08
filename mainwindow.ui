@@ -30,7 +30,7 @@
      <string/>
     </property>
     <property name="currentIndex">
-     <number>13</number>
+     <number>2</number>
     </property>
     <widget class="QWidget" name="loginPage">
      <widget class="QPushButton" name="registerButton">
@@ -49,11 +49,16 @@
      <widget class="QLabel" name="emailLoginLabel">
       <property name="geometry">
        <rect>
-        <x>270</x>
+        <x>220</x>
         <y>270</y>
-        <width>49</width>
-        <height>16</height>
+        <width>71</width>
+        <height>21</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+       </font>
       </property>
       <property name="text">
        <string>Email:</string>
@@ -62,11 +67,16 @@
      <widget class="QLabel" name="passwordLoginLabel">
       <property name="geometry">
        <rect>
-        <x>250</x>
+        <x>200</x>
         <y>310</y>
-        <width>61</width>
-        <height>20</height>
+        <width>101</width>
+        <height>31</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+       </font>
       </property>
       <property name="text">
        <string>Password:</string>
@@ -75,21 +85,21 @@
      <widget class="QLineEdit" name="emailLoginInput">
       <property name="geometry">
        <rect>
-        <x>330</x>
+        <x>320</x>
         <y>270</y>
         <width>191</width>
         <height>24</height>
        </rect>
       </property>
       <property name="placeholderText">
-       <string>abc</string>
+       <string/>
       </property>
      </widget>
      <widget class="QLineEdit" name="passwordLoginInput">
       <property name="geometry">
        <rect>
-        <x>330</x>
-        <y>310</y>
+        <x>320</x>
+        <y>320</y>
         <width>191</width>
         <height>24</height>
        </rect>
@@ -104,7 +114,7 @@
      <widget class="QPushButton" name="loginButton">
       <property name="geometry">
        <rect>
-        <x>340</x>
+        <x>360</x>
         <y>380</y>
         <width>101</width>
         <height>41</height>
@@ -136,7 +146,7 @@
       <property name="geometry">
        <rect>
         <x>400</x>
-        <y>480</y>
+        <y>510</y>
         <width>131</width>
         <height>24</height>
        </rect>
@@ -148,11 +158,16 @@
      <widget class="QLabel" name="surnameRegisterLabel">
       <property name="geometry">
        <rect>
-        <x>108</x>
+        <x>228</x>
         <y>130</y>
-        <width>61</width>
+        <width>71</width>
         <height>20</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
       </property>
       <property name="text">
        <string>Surname:</string>
@@ -161,8 +176,8 @@
      <widget class="QLineEdit" name="emailRegisterInput">
       <property name="geometry">
        <rect>
-        <x>210</x>
-        <y>170</y>
+        <x>340</x>
+        <y>180</y>
         <width>113</width>
         <height>24</height>
        </rect>
@@ -175,10 +190,15 @@
       <property name="geometry">
        <rect>
         <x>50</x>
-        <y>350</y>
-        <width>91</width>
+        <y>380</y>
+        <width>131</width>
         <height>20</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
       </property>
       <property name="text">
        <string>Student Major:</string>
@@ -187,11 +207,16 @@
      <widget class="QLabel" name="fullNameRegisterLabel">
       <property name="geometry">
        <rect>
-        <x>108</x>
+        <x>228</x>
         <y>80</y>
-        <width>61</width>
+        <width>91</width>
         <height>20</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
       </property>
       <property name="text">
        <string>Full Name:</string>
@@ -200,8 +225,8 @@
      <widget class="QLineEdit" name="surnameRegisterInput">
       <property name="geometry">
        <rect>
-        <x>200</x>
-        <y>120</y>
+        <x>340</x>
+        <y>130</y>
         <width>113</width>
         <height>24</height>
        </rect>
@@ -210,11 +235,16 @@
      <widget class="QLabel" name="emailRegisterLabel">
       <property name="geometry">
        <rect>
-        <x>108</x>
+        <x>228</x>
         <y>180</y>
         <width>61</width>
         <height>20</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
       </property>
       <property name="text">
        <string>Email:</string>
@@ -223,7 +253,7 @@
      <widget class="QLineEdit" name="passwordRegisterInput">
       <property name="geometry">
        <rect>
-        <x>210</x>
+        <x>340</x>
         <y>220</y>
         <width>113</width>
         <height>24</height>
@@ -244,11 +274,16 @@
      <widget class="QLabel" name="passwordRegisterLabel">
       <property name="geometry">
        <rect>
-        <x>108</x>
+        <x>228</x>
         <y>220</y>
-        <width>61</width>
+        <width>81</width>
         <height>20</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
       </property>
       <property name="text">
        <string>Password:</string>
@@ -258,7 +293,7 @@
       <property name="geometry">
        <rect>
         <x>240</x>
-        <y>480</y>
+        <y>510</y>
         <width>80</width>
         <height>24</height>
        </rect>
@@ -270,8 +305,8 @@
      <widget class="QDateEdit" name="dateOfBirthRegisterEdit">
       <property name="geometry">
        <rect>
-        <x>210</x>
-        <y>260</y>
+        <x>340</x>
+        <y>270</y>
         <width>110</width>
         <height>25</height>
        </rect>
@@ -280,11 +315,16 @@
      <widget class="QLabel" name="dateOfBirthRegisterLabel">
       <property name="geometry">
        <rect>
-        <x>100</x>
+        <x>220</x>
         <y>270</y>
-        <width>71</width>
+        <width>101</width>
         <height>16</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
       </property>
       <property name="text">
        <string>Date of Birth:</string>
@@ -293,11 +333,16 @@
      <widget class="QRadioButton" name="studentRegisterRadioButton">
       <property name="geometry">
        <rect>
-        <x>110</x>
-        <y>310</y>
+        <x>220</x>
+        <y>330</y>
         <width>91</width>
         <height>22</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
       </property>
       <property name="text">
        <string>Student</string>
@@ -306,11 +351,16 @@
      <widget class="QRadioButton" name="professorRegisterRadioButton">
       <property name="geometry">
        <rect>
-        <x>270</x>
-        <y>310</y>
+        <x>380</x>
+        <y>330</y>
         <width>91</width>
         <height>22</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
       </property>
       <property name="text">
        <string>Professor</string>
@@ -319,8 +369,8 @@
      <widget class="QLineEdit" name="nameRegisterInput">
       <property name="geometry">
        <rect>
-        <x>200</x>
-        <y>70</y>
+        <x>340</x>
+        <y>80</y>
         <width>113</width>
         <height>24</height>
        </rect>
@@ -336,7 +386,7 @@
       <property name="geometry">
        <rect>
         <x>50</x>
-        <y>380</y>
+        <y>410</y>
         <width>231</width>
         <height>24</height>
        </rect>
@@ -391,7 +441,7 @@
       <property name="geometry">
        <rect>
         <x>590</x>
-        <y>380</y>
+        <y>410</y>
         <width>121</width>
         <height>24</height>
        </rect>
@@ -426,10 +476,15 @@
       <property name="geometry">
        <rect>
         <x>330</x>
-        <y>350</y>
-        <width>131</width>
-        <height>16</height>
+        <y>380</y>
+        <width>201</width>
+        <height>21</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
       </property>
       <property name="text">
        <string>Professor Specialization:</string>
@@ -439,10 +494,15 @@
       <property name="geometry">
        <rect>
         <x>590</x>
-        <y>350</y>
-        <width>81</width>
+        <y>380</y>
+        <width>121</width>
         <height>16</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
       </property>
       <property name="text">
        <string>Professor Title:</string>
@@ -452,7 +512,7 @@
       <property name="geometry">
        <rect>
         <x>330</x>
-        <y>380</y>
+        <y>410</y>
         <width>231</width>
         <height>24</height>
        </rect>
@@ -523,9 +583,14 @@
        <rect>
         <x>90</x>
         <y>80</y>
-        <width>61</width>
+        <width>91</width>
         <height>16</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+       </font>
       </property>
       <property name="text">
        <string>Welcome </string>
@@ -534,11 +599,16 @@
      <widget class="QLabel" name="SMNameLabel">
       <property name="geometry">
        <rect>
-        <x>160</x>
+        <x>190</x>
         <y>80</y>
-        <width>49</width>
-        <height>16</height>
+        <width>181</width>
+        <height>21</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+       </font>
       </property>
       <property name="text">
        <string/>
@@ -756,6 +826,11 @@
         <height>16</height>
        </rect>
       </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
       <property name="text">
        <string>ID:</string>
       </property>
@@ -766,8 +841,13 @@
         <x>140</x>
         <y>160</y>
         <width>181</width>
-        <height>16</height>
+        <height>21</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
       </property>
       <property name="text">
        <string/>
@@ -782,6 +862,11 @@
         <height>16</height>
        </rect>
       </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
       <property name="text">
        <string>Name:</string>
       </property>
@@ -791,9 +876,14 @@
        <rect>
         <x>140</x>
         <y>200</y>
-        <width>221</width>
-        <height>16</height>
+        <width>241</width>
+        <height>21</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
       </property>
       <property name="text">
        <string/>
@@ -808,6 +898,11 @@
         <height>16</height>
        </rect>
       </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
       <property name="text">
        <string>Surname:</string>
       </property>
@@ -817,9 +912,14 @@
        <rect>
         <x>130</x>
         <y>250</y>
-        <width>211</width>
-        <height>16</height>
+        <width>251</width>
+        <height>21</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
       </property>
       <property name="text">
        <string/>
@@ -834,6 +934,11 @@
         <height>16</height>
        </rect>
       </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
       <property name="text">
        <string>Date of Birth:</string>
       </property>
@@ -843,9 +948,14 @@
        <rect>
         <x>170</x>
         <y>300</y>
-        <width>191</width>
-        <height>16</height>
+        <width>231</width>
+        <height>21</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
       </property>
       <property name="text">
        <string/>
@@ -860,6 +970,11 @@
         <height>16</height>
        </rect>
       </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
       <property name="text">
        <string>Email:</string>
       </property>
@@ -869,9 +984,14 @@
        <rect>
         <x>140</x>
         <y>350</y>
-        <width>231</width>
-        <height>16</height>
+        <width>271</width>
+        <height>21</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
       </property>
       <property name="text">
        <string/>
@@ -886,6 +1006,11 @@
         <height>16</height>
        </rect>
       </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
       <property name="text">
        <string>Cource Code:</string>
       </property>
@@ -895,9 +1020,14 @@
        <rect>
         <x>170</x>
         <y>430</y>
-        <width>161</width>
-        <height>16</height>
+        <width>191</width>
+        <height>21</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
       </property>
       <property name="text">
        <string/>
@@ -912,6 +1042,11 @@
         <height>16</height>
        </rect>
       </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
       <property name="text">
        <string>Password:</string>
       </property>
@@ -921,9 +1056,14 @@
        <rect>
         <x>150</x>
         <y>390</y>
-        <width>171</width>
-        <height>16</height>
+        <width>211</width>
+        <height>21</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
       </property>
       <property name="text">
        <string/>
@@ -947,11 +1087,16 @@
      <widget class="QLabel" name="PMNameLabel">
       <property name="geometry">
        <rect>
-        <x>150</x>
+        <x>180</x>
         <y>110</y>
-        <width>49</width>
-        <height>16</height>
+        <width>161</width>
+        <height>31</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+       </font>
       </property>
       <property name="text">
        <string/>
@@ -962,9 +1107,14 @@
        <rect>
         <x>80</x>
         <y>110</y>
-        <width>61</width>
-        <height>16</height>
+        <width>101</width>
+        <height>31</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+       </font>
       </property>
       <property name="text">
        <string>Welcome </string>
@@ -1023,10 +1173,15 @@
       <property name="geometry">
        <rect>
         <x>40</x>
-        <y>300</y>
-        <width>141</width>
-        <height>16</height>
+        <y>290</y>
+        <width>221</width>
+        <height>31</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+       </font>
       </property>
       <property name="text">
        <string>Assignments to grade:</string>
@@ -1035,9 +1190,9 @@
      <widget class="QPushButton" name="PMViewAccountDataButton">
       <property name="geometry">
        <rect>
-        <x>580</x>
-        <y>350</y>
-        <width>131</width>
+        <x>550</x>
+        <y>280</y>
+        <width>141</width>
         <height>24</height>
        </rect>
       </property>
@@ -1121,6 +1276,11 @@
         <height>16</height>
        </rect>
       </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
       <property name="text">
        <string>Surname:</string>
       </property>
@@ -1128,11 +1288,16 @@
      <widget class="QLabel" name="PMADCurrentSciSpec">
       <property name="geometry">
        <rect>
-        <x>180</x>
+        <x>220</x>
         <y>470</y>
         <width>231</width>
-        <height>16</height>
+        <height>21</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
       </property>
       <property name="text">
        <string/>
@@ -1144,8 +1309,13 @@
         <x>140</x>
         <y>350</y>
         <width>241</width>
-        <height>16</height>
+        <height>21</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
       </property>
       <property name="text">
        <string/>
@@ -1156,9 +1326,14 @@
        <rect>
         <x>40</x>
         <y>470</y>
-        <width>141</width>
-        <height>16</height>
+        <width>161</width>
+        <height>21</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
       </property>
       <property name="text">
        <string>Scientic Specialization:</string>
@@ -1173,6 +1348,11 @@
         <height>16</height>
        </rect>
       </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
       <property name="text">
        <string/>
       </property>
@@ -1185,6 +1365,11 @@
         <width>49</width>
         <height>16</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
       </property>
       <property name="text">
        <string>ID:</string>
@@ -1199,6 +1384,11 @@
         <height>16</height>
        </rect>
       </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
       <property name="text">
        <string>Name:</string>
       </property>
@@ -1212,6 +1402,11 @@
         <height>16</height>
        </rect>
       </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
       <property name="text">
        <string>Email:</string>
       </property>
@@ -1222,8 +1417,13 @@
         <x>140</x>
         <y>200</y>
         <width>251</width>
-        <height>16</height>
+        <height>21</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
       </property>
       <property name="text">
        <string/>
@@ -1238,6 +1438,11 @@
         <height>16</height>
        </rect>
       </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
       <property name="text">
        <string>Password:</string>
       </property>
@@ -1251,6 +1456,11 @@
         <height>16</height>
        </rect>
       </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
       <property name="text">
        <string>Date of Birth:</string>
       </property>
@@ -1261,8 +1471,13 @@
         <x>130</x>
         <y>250</y>
         <width>251</width>
-        <height>16</height>
+        <height>21</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
       </property>
       <property name="text">
        <string/>
@@ -1274,8 +1489,13 @@
         <x>170</x>
         <y>300</y>
         <width>221</width>
-        <height>16</height>
+        <height>21</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
       </property>
       <property name="text">
        <string/>
@@ -1287,8 +1507,13 @@
         <x>140</x>
         <y>160</y>
         <width>221</width>
-        <height>16</height>
+        <height>21</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
       </property>
       <property name="text">
        <string/>
@@ -1303,6 +1528,11 @@
         <height>16</height>
        </rect>
       </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
       <property name="text">
        <string>Title:</string>
       </property>
@@ -1315,6 +1545,11 @@
         <width>211</width>
         <height>16</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
       </property>
       <property name="text">
        <string/>
@@ -1942,6 +2177,11 @@
         <height>22</height>
        </rect>
       </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
       <property name="text">
        <string/>
       </property>
@@ -1954,6 +2194,11 @@
         <width>461</width>
         <height>22</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
       </property>
       <property name="text">
        <string/>
@@ -1968,6 +2213,11 @@
         <height>22</height>
        </rect>
       </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
       <property name="text">
        <string/>
       </property>
@@ -1980,6 +2230,11 @@
         <width>491</width>
         <height>22</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
       </property>
       <property name="text">
        <string/>
@@ -2002,10 +2257,15 @@
       <property name="geometry">
        <rect>
         <x>100</x>
-        <y>180</y>
+        <y>170</y>
         <width>571</width>
-        <height>61</height>
+        <height>71</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+       </font>
       </property>
       <property name="text">
        <string/>
@@ -2096,9 +2356,14 @@
        <rect>
         <x>310</x>
         <y>60</y>
-        <width>111</width>
-        <height>16</height>
+        <width>171</width>
+        <height>21</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
       </property>
       <property name="text">
        <string>Send Assignment</string>
@@ -2113,8 +2378,16 @@
         <height>21</height>
        </rect>
       </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
       <property name="text">
        <string/>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
       </property>
      </widget>
      <widget class="QLabel" name="SMSTADescriptionLabel">
@@ -2126,15 +2399,23 @@
         <height>101</height>
        </rect>
       </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
       <property name="text">
        <string/>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
       </property>
      </widget>
      <widget class="QPushButton" name="SMSTAAddFileButton">
       <property name="geometry">
        <rect>
         <x>580</x>
-        <y>130</y>
+        <y>290</y>
         <width>80</width>
         <height>24</height>
        </rect>
@@ -2203,6 +2484,11 @@
         <height>21</height>
        </rect>
       </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
       <property name="text">
        <string>Grade The Assignment</string>
       </property>
@@ -2212,9 +2498,14 @@
        <rect>
         <x>40</x>
         <y>150</y>
-        <width>49</width>
+        <width>71</width>
         <height>16</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
       </property>
       <property name="text">
        <string>Sender:</string>
@@ -2223,11 +2514,16 @@
      <widget class="QLabel" name="PMGTASenderDataLabel">
       <property name="geometry">
        <rect>
-        <x>100</x>
+        <x>120</x>
         <y>150</y>
-        <width>331</width>
-        <height>16</height>
+        <width>311</width>
+        <height>21</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
       </property>
       <property name="text">
        <string/>
@@ -2238,9 +2534,14 @@
        <rect>
         <x>30</x>
         <y>210</y>
-        <width>121</width>
-        <height>16</height>
+        <width>151</width>
+        <height>21</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
       </property>
       <property name="text">
        <string>Title of Assignment:</string>
@@ -2249,10 +2550,10 @@
      <widget class="QListWidget" name="PMGTAListOfFiles">
       <property name="geometry">
        <rect>
-        <x>140</x>
-        <y>290</y>
+        <x>60</x>
+        <y>340</y>
         <width>256</width>
-        <height>192</height>
+        <height>141</height>
        </rect>
       </property>
      </widget>
@@ -2261,9 +2562,14 @@
        <rect>
         <x>30</x>
         <y>290</y>
-        <width>101</width>
+        <width>131</width>
         <height>16</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
       </property>
       <property name="text">
        <string>List of Files Sent:</string>
@@ -2272,8 +2578,8 @@
      <widget class="QPushButton" name="PMGTAViewSelectedFileButton">
       <property name="geometry">
        <rect>
-        <x>180</x>
-        <y>520</y>
+        <x>120</x>
+        <y>500</y>
         <width>131</width>
         <height>24</height>
        </rect>
@@ -2285,8 +2591,8 @@
      <widget class="QPushButton" name="PMGTAGradeTheAssignmentButton">
       <property name="geometry">
        <rect>
-        <x>490</x>
-        <y>420</y>
+        <x>540</x>
+        <y>370</y>
         <width>141</width>
         <height>24</height>
        </rect>
@@ -2298,10 +2604,10 @@
      <widget class="QLabel" name="PMGTATitleDataLabel">
       <property name="geometry">
        <rect>
-        <x>160</x>
+        <x>180</x>
         <y>210</y>
-        <width>211</width>
-        <height>16</height>
+        <width>291</width>
+        <height>21</height>
        </rect>
       </property>
       <property name="text">
@@ -2388,7 +2694,7 @@
      </widget>
     </widget>
     <widget class="QWidget" name="SMViewGradesPage">
-     <widget class="QTableWidget" name="tableWidget">
+     <widget class="QTableWidget" name="SMVGTable">
       <property name="geometry">
        <rect>
         <x>60</x>
@@ -2396,6 +2702,19 @@
         <width>661</width>
         <height>411</height>
        </rect>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="SMVGBackButton">
+      <property name="geometry">
+       <rect>
+        <x>590</x>
+        <y>550</y>
+        <width>80</width>
+        <height>24</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Back</string>
       </property>
      </widget>
     </widget>

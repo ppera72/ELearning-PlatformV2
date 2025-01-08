@@ -10,6 +10,7 @@
 #include <ctime>
 #include <QButtonGroup>
 #include <QFileDialog>
+#include <QTableWidget>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -52,6 +53,11 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->SMSTASendAssignmentButton, &QPushButton::clicked, this, &MainWindow::on_SMSTASendAssignmentButton_clicked);
     connect(ui->SMSTAAddFileButton, &QPushButton::clicked, this, &MainWindow::on_SMSTAAddFileButton_clicked);
 
+    connect(ui->PMChangeEmailButton, &QPushButton::clicked, this, &MainWindow::on_PMChangeEmailButton_clicked);
+    connect(ui->PMChangePasswordButton, &QPushButton::clicked, this, &MainWindow::on_PMChangePasswordButton_clicked);
+    connect(ui->PMChangeNameButton, &QPushButton::clicked, this, &MainWindow::on_PMChangeNameButton_clicked);
+    connect(ui->PMChangeSurnameButton, &QPushButton::clicked, this, &MainWindow::on_PMChangeSurnameButton_clicked);
+
     connect(ui->PMGradeSelectedAssignmentButton, &QPushButton::clicked, this, &MainWindow::on_PMGradeSelectedAssignmentButton_clicked);
     connect(ui->PMGTACancelButton, &QPushButton::clicked, this, &MainWindow::on_PMGTACancelButton_clicked);
     connect(ui->PMGTAViewSelectedFileButton, &QPushButton::clicked, this, &MainWindow::on_PMGTAViewSelectedFileButton_clicked);
@@ -77,11 +83,10 @@ MainWindow::MainWindow(QWidget *parent)
     ui->ATEndDateDateEdit->setDate(QDate::currentDate());
 
 
-    UserData.readFromFile(UserData.studFileName, true);
-    UserData.readFromFile(UserData.profFileName, false);
+    UserData.loadData();
     assignments.loadData();
 
-    for(auto&& a : UserData.studentData){
+    /*for(auto&& a : UserData.studentData){
         qDebug()<<a;
     }
     for(auto&& a : UserData.professorData){
@@ -96,7 +101,7 @@ MainWindow::MainWindow(QWidget *parent)
     qDebug()<<"test: start";
     for(auto&& a : assignments.testList){
         qDebug()<<a;
-    }
+    }*/
 }
 
 MainWindow::~MainWindow()
@@ -268,7 +273,6 @@ void MainWindow::on_loginButton_clicked()
                 // pre SM:
                 currentStudent = getStudData(UserData.studentData);
                 ui->SMNameLabel->setText(QString::fromStdString(currentStudent.Name()));
-                qDebug()<<currentStudent.CourseCode();
                 for(auto&& assignment : assignments.assignmentListForDisplay){
                     if(assignment.find(currentStudent.CourseCode()) != std::string::npos){
                         ui->SMUpcomingAssignmentsList->addItem(QString::fromStdString(assignment));
@@ -279,6 +283,7 @@ void MainWindow::on_loginButton_clicked()
                         ui->SMUpcomingTestsList->addItem(QString::fromStdString(test));
                     }
                 }
+                writeToStudGradesTable();
 
             }
             else{
@@ -300,7 +305,6 @@ void MainWindow::on_loginButton_clicked()
                         ui->PMAssignmentsToGradeList->addItem(QString::fromStdString(aToGrade));
                     }
                 }
-
             }
             else{
                 QMessageBox::warning(this, tr("Login Attempt"), tr("Wrong password!\nPlease try again!"), QMessageBox::Ok);
@@ -391,24 +395,45 @@ void MainWindow::on_SMChangePasswordButton_clicked()
 {
     bool ok;
     QString text = QInputDialog::getText(this, tr("Change Details"),tr("Your new password:"), QLineEdit::Normal,QString::fromStdString(currentStudent.Password()), &ok);
-    if (ok && !text.isEmpty())
-        qDebug()<<text;
+    if (ok && !text.isEmpty()){
+        if(checkPassword(text)){
+            currentStudent.Password(text.toStdString());
+            QMessageBox::information(this, "Details Change", "Password has been successfully changed!", QMessageBox::Ok);
+        }
+        else{
+            QMessageBox::warning(this, "Incorect input data", "Password is incorrect!\nPlease try again!", QMessageBox::Ok);
+        }
+    }
 }
 
 void MainWindow::on_SMChangeNameButton_clicked()
 {
     bool ok;
     QString text = QInputDialog::getText(this, tr("Change Details"),tr("Your new name:"), QLineEdit::Normal,QString::fromStdString(currentStudent.Name()), &ok);
-    if (ok && !text.isEmpty())
-        qDebug()<<text;
+    if (ok && !text.isEmpty()){
+        if(checkNames(text, text)){
+            currentStudent.Name(text.toStdString());
+            QMessageBox::information(this, "Details Change", "Name has been successfully changed!", QMessageBox::Ok);
+        }
+        else{
+            QMessageBox::warning(this, "Incorect input data", "Name is incorrect!\nPlease try again!", QMessageBox::Ok);
+        }
+    }
 }
 
 void MainWindow::on_SMChangeSurnameButton_clicked()
 {
     bool ok;
     QString text = QInputDialog::getText(this, tr("Change Details"),tr("Your new surname:"), QLineEdit::Normal,QString::fromStdString(currentStudent.Surname()), &ok);
-    if (ok && !text.isEmpty())
-        qDebug()<<text;
+    if (ok && !text.isEmpty()){
+        if(checkNames(text, text)){
+            currentStudent.Surname(text.toStdString());
+            QMessageBox::information(this, "Details Change", "Surname has been successfully changed!", QMessageBox::Ok);
+        }
+        else{
+            QMessageBox::warning(this, "Incorect input data", "Surname is incorrect!\nPlease try again!", QMessageBox::Ok);
+        }
+    }
 }
 
 void MainWindow::on_SMViewAccountDataButton_clicked(){
@@ -428,10 +453,34 @@ void MainWindow::on_SMAccountDetailsBackButton_clicked(){
 
 void MainWindow::on_SMViewGradesButton_clicked(){
     ui->stackedWidget->setCurrentIndex(13);
-    //ui->SMVGTable->;
+    ui->SMVGTable->setRowCount(UserData.studentGrades.size());
+    ui->SMVGTable->setColumnCount(4);
+
+    QStringList headers = {"Student ID", "Title of Assignment/Test", "Grade", "Description"};
+    ui->SMVGTable->setHorizontalHeaderLabels(headers);
+
+    writeToStudGradesTable();
+    ui->SMVGTable->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+}
+
+void MainWindow::writeToStudGradesTable(){
+    for(auto&& grade : UserData.studentGrades){
+        std::vector<std::string> helpVec = assignments.getTestData(grade);
+        if(helpVec[0].empty()){
+            continue;
+        }
+        if(stoi(helpVec[0]) == currentStudent.Id()){
+            for(unsigned long long i = 0; i < UserData.studentGrades.size(); i++){
+                for(unsigned long long j = 0; j < 4 && j < helpVec.size();++j){
+                    ui->SMVGTable->setItem(i, j, new QTableWidgetItem(QString::fromStdString(helpVec[j])));
+                }
+            }
+        }
+    }
 }
 
 void MainWindow::on_SMVGBackButton_clicked(){
+    ui->SMVGTable->clear();
     ui->stackedWidget->setCurrentIndex(2);
 }
 
@@ -443,7 +492,7 @@ void MainWindow::on_SMLogOutButton_clicked(){
             if(user.find(std::to_string(currentStudent.Id())) != std::string::npos){
                 std::stringstream helpMessage;
                 std::string message;
-                helpMessage<<currentStudent.Id()<<";"<<currentStudent.Name()<<";"<<currentStudent.Surname()<<";"<<currentStudent.dateOfBirth.wholeDate()<<";"<<currentStudent.Email()<<";"<<currentStudent.Password()<<";"<<currentStudent.CourseCode();
+                helpMessage<<currentStudent.Id()<<";"<<currentStudent.Name()<<";"<<currentStudent.Surname()<<";"<<currentStudent.getDate().wholeDate()<<";"<<currentStudent.Email()<<";"<<currentStudent.Password()<<";"<<currentStudent.CourseCode();
                 message = helpMessage.str();
                 UserData.studentData[currentStudent.Id() - 1] = message;
                 UserData.clearFile(UserData.studFileName);
@@ -470,7 +519,7 @@ void MainWindow::on_PMLogOutButton_clicked(){
             if(user.find(std::to_string(currentProfessor.Id())) != std::string::npos){
                 std::stringstream helpMessage;
                 std::string message;
-                helpMessage<<currentProfessor.Id()<<";"<<currentProfessor.Name()<<";"<<currentProfessor.Surname()<<";"<<currentProfessor.dateOfBirth.wholeDate()<<";"<<currentProfessor.Email()<<";"<<currentProfessor.Password()<<";"<<currentProfessor.Title()<<";"<<currentProfessor.SciSpec();
+                helpMessage<<currentProfessor.Id()<<";"<<currentProfessor.Name()<<";"<<currentProfessor.Surname()<<";"<<currentProfessor.getDate().wholeDate()<<";"<<currentProfessor.Email()<<";"<<currentProfessor.Password()<<";"<<currentProfessor.Title()<<";"<<currentProfessor.SciSpec();
                 message = helpMessage.str();
                 UserData.professorData[currentProfessor.Id() - 1] = message;
                 UserData.clearFile(UserData.profFileName);
@@ -504,6 +553,68 @@ void MainWindow::on_PMViewAccountDataButton_clicked(){
 
     ui->stackedWidget->setCurrentIndex(5);
 }
+
+void MainWindow::on_PMChangeEmailButton_clicked()
+{
+    bool ok;
+    QString text = QInputDialog::getText(this, tr("Details Change"),tr("Your new email:"), QLineEdit::Normal,QString::fromStdString(currentProfessor.Email()), &ok);
+    if (ok && !text.isEmpty())
+    {
+        if(checkEmail(text) && !checkIfInDatabase(text.toStdString(), UserData.studentData) && !checkIfInDatabase(text.toStdString(), UserData.professorData)){
+            currentProfessor.Email(text.toStdString());
+            QMessageBox::information(this, "Details Change", "Email has been successfully changed!", QMessageBox::Ok);
+        }
+        else{
+            QMessageBox::warning(this, "Incorect input data", "Email is incorrect!\nPlease try again!", QMessageBox::Ok);
+        }
+    }
+}
+
+void MainWindow::on_PMChangePasswordButton_clicked()
+{
+    bool ok;
+    QString text = QInputDialog::getText(this, tr("Change Details"),tr("Your new password:"), QLineEdit::Normal,QString::fromStdString(currentProfessor.Password()), &ok);
+    if (ok && !text.isEmpty()){
+        if(checkPassword(text)){
+            currentProfessor.Password(text.toStdString());
+            QMessageBox::information(this, "Details Change", "Password has been successfully changed!", QMessageBox::Ok);
+        }
+        else{
+            QMessageBox::warning(this, "Incorect input data", "Password is incorrect!\nPlease try again!", QMessageBox::Ok);
+        }
+    }
+}
+
+void MainWindow::on_PMChangeNameButton_clicked()
+{
+    bool ok;
+    QString text = QInputDialog::getText(this, tr("Change Details"),tr("Your new name:"), QLineEdit::Normal,QString::fromStdString(currentProfessor.Name()), &ok);
+    if (ok && !text.isEmpty()){
+        if(checkNames(text, text)){
+            currentProfessor.Name(text.toStdString());
+            QMessageBox::information(this, "Details Change", "Name has been successfully changed!", QMessageBox::Ok);
+        }
+        else{
+            QMessageBox::warning(this, "Incorect input data", "Name is incorrect!\nPlease try again!", QMessageBox::Ok);
+        }
+    }
+}
+
+void MainWindow::on_PMChangeSurnameButton_clicked()
+{
+    bool ok;
+    QString text = QInputDialog::getText(this, tr("Change Details"),tr("Your new surname:"), QLineEdit::Normal,QString::fromStdString(currentStudent.Surname()), &ok);
+    if (ok && !text.isEmpty()){
+        if(checkNames(text, text)){
+            currentProfessor.Surname(text.toStdString());
+            QMessageBox::information(this, "Details Change", "Surname has been successfully changed!", QMessageBox::Ok);
+        }
+        else{
+            QMessageBox::warning(this, "Incorect input data", "Surname is incorrect!\nPlease try again!", QMessageBox::Ok);
+        }
+    }
+}
+
 void MainWindow::on_PMAccountDetailsBackButton_clicked(){
     ui->stackedWidget->setCurrentIndex(4);
 }
@@ -603,6 +714,7 @@ void MainWindow::on_ATAddTestButton_clicked()
                 assignments.testList.push_back(a);
             }
             ATQuestionsFull.clear();
+            assignments.clearFile(assignments.assignmentFileForDisplay);
             for(auto&& a : assignments.testListForDisplay){
                 std::vector<std::string> helpVec = assignments.getTestData(a);
                 auto cnt = std::find(writedTests.begin(), writedTests.end(), a);
@@ -614,8 +726,9 @@ void MainWindow::on_ATAddTestButton_clicked()
                     writedTests.push_back(a);
                 }
             }
+
             writedTests.clear();
-            assignments.testListForDisplay.clear(); // this causes issues when prof->add test->log out->stud and stud->log out->stud/ but not when stud->
+            assignments.testListForDisplay.clear();
             ui->ATTitleInput->clear();
             ui->ATQuestionsList->clear();
             ui->ATAQQuestionsList->clear();
@@ -701,7 +814,7 @@ void MainWindow::on_ATAQConfirmQuestionsButton_clicked()
             ui->ATQuestionsList->addItem(QString::fromStdString(q));
         }
         ATAQQuestions.clear();
-        ui->stackedWidget->setCurrentIndex(4);
+        ui->stackedWidget->setCurrentIndex(6);
     }
 }
 
@@ -719,20 +832,22 @@ void MainWindow::on_ATAQCancelButton_clicked()
 // ADD TEST PAGE END
 
 // SOLVE THE TEST PAGE
-std::string selectedTest;
+QListWidgetItem* selectedTest;
+std::string selTestStr;
 void MainWindow::on_SMStartSelectedTestButton_clicked()
 {
     int correctAnswersScore = 0;
     std::string grade;
     std::string testTitle;
 
-    // getting questions+answers
-    selectedTest = ui->SMUpcomingTestsList->currentItem()->text().toStdString();
-    if(selectedTest.empty()){
+    // getting questions + answers
+    selectedTest = ui->SMUpcomingTestsList->currentItem();
+    if(selectedTest->text().isEmpty()){
         QMessageBox::warning(this, "Starting Test", "No test has been selected!\nPlease select test!", QMessageBox::Ok);
     }
     else{
-        std::vector<std::string> helpVec = assignments.getTestData(selectedTest);
+        selTestStr = selectedTest->text().toStdString();
+        std::vector<std::string> helpVec = assignments.getTestData(selTestStr);
         std::vector<std::string> helpQuestionsVec;
         int currentTestID = stoi(helpVec[0]);
         for(auto&& test:assignments.testList){
@@ -748,10 +863,12 @@ void MainWindow::on_SMStartSelectedTestButton_clicked()
         ui->SMSTTAllAnswersLabel->setText(QString::number(helpQuestionsVec.size()));
         for(auto&& test : helpQuestionsVec){
             ui->SMSTTCorrectAnswersLabel->setText(QString::number(correctAnswersScore));
+
             QEventLoop loop;
             std::vector<std::string> helpTestVec = assignments.getTestData(test);
             std::vector<std::string> answers = {helpTestVec[4], helpTestVec[5], helpTestVec[6], helpTestVec[7]};
             ui->SMSTTQuestionLabel->setText(QString::fromStdString(helpTestVec[3]));
+
             QRadioButton* ansButtons[] = {ui->SMSTTAnswer1Button, ui->SMSTTAnswer2Button, ui->SMSTTAnswer3Button, ui->SMSTTAnswer4Button};
             std::srand(std::time(nullptr));
             std::random_shuffle(answers.begin(), answers.end());  // shuffle answers
@@ -768,41 +885,76 @@ void MainWindow::on_SMStartSelectedTestButton_clicked()
                         correctAnswersScore += 1;
                         break;
                     }
-                    ansButtons[i]->setChecked(false);
                 }
-
+                ansButtons[i]->setChecked(false);
             }
             ui->SMSTTCorrectAnswersLabel->setText(QString::number(correctAnswersScore));
         }
 
+        // grade and write grade to file and vec
         grade = UserData.assignAGrade(correctAnswersScore, helpQuestionsVec.size());
 
         std::string messBoxMessage = "You've completed this test\nYou've scored: " + std::to_string(correctAnswersScore) + " and got: " + grade;
         QMessageBox::information(this, "Test Completed!", QString::fromStdString(messBoxMessage), QMessageBox::Ok);
         std::stringstream message;
+
         message<<currentStudent.Id()<<";"<<testTitle<<";"<<grade;
-        UserData.studentGrades.push_back(message.str());
-        UserData.writeToFile(UserData.studGradesFileName, message.str());
+        std::string mess = message.str();
+        UserData.studentGrades.push_back(mess);
+        UserData.writeToFile(UserData.studGradesFileName, mess);
 
-        ui->SMCompletedTasksList->addItem(QString::fromStdString(selectedTest));
+        ui->SMCompletedTasksList->addItem(QString::fromStdString(selTestStr));
         ui->stackedWidget->setCurrentIndex(2);
+
         // delete form upcoming tests
+        delete selectedTest;
+        // delete from main test file + vec
+        std::vector<std::string> filteredVec;
+        for(auto&& test : assignments.testList){
+            std::vector<std::string> helpTest = assignments.getTestData(test);
+            if(helpTest[0].empty()){
+                continue;
+            }
+            if(stoi(helpTest[0]) != currentTestID){
+                filteredVec.push_back(test);
+            }
+        }
+        assignments.testList = std::move(filteredVec);
+        filteredVec.clear();
+        assignments.clearFile(assignments.testFile);
+        for(auto&& test : assignments.testList){
+            assignments.addToFile(assignments.testFile, test);
+        }
 
-
+        // delete from display test file + vec
+        for(auto&& test : assignments.testListForDisplay){
+            std::vector<std::string> helpTest = assignments.getTestData(test);
+            if(helpTest[0].empty()){
+                continue;
+            }
+            if(stoi(helpTest[0]) != currentTestID){
+                filteredVec.push_back(test);
+            }
+        }
+        assignments.testListForDisplay = std::move(filteredVec);
+        filteredVec.clear();
+        assignments.clearFile(assignments.testFileForDisplay);
+        for(auto&& test : assignments.testListForDisplay){
+            assignments.addToFile(assignments.testFileForDisplay, test);
+        }
     }
 }
 
 // SOLVE THE TEST PAGE END
 
 // SEND THE ASSIGNMENT PAGE
-std::string selectedAssignment;
+QListWidgetItem* selectedAssignment;
+std::string selAssignmentStr;
 QList<std::string> filesForAssignment;
 std::vector<std::string> helpAssignmentVec;
 void MainWindow::on_SMStartSelectedAssignmentButton_clicked(){
 
-
     // get assignment data
-
     if(ui->SMUpcomingAssignmentsList->selectedItems().size() == 0){
         QMessageBox::warning(this, "Sending assignment", "No assignment has been selected!\nPlease select assignment!", QMessageBox::Ok);
     }
@@ -810,12 +962,14 @@ void MainWindow::on_SMStartSelectedAssignmentButton_clicked(){
         QMessageBox::warning(this, "Sending assignment", "You can only select one assignment at a time!", QMessageBox::Ok);
     }
     else{
-        selectedAssignment = ui->SMUpcomingAssignmentsList->currentItem()->text().toStdString();
-        if(selectedAssignment.empty()){
+        // check if nothing is selected
+        selectedAssignment = ui->SMUpcomingAssignmentsList->currentItem();
+        if(selectedAssignment->text().isEmpty()){
             QMessageBox::warning(this, "Starting Assignment", "No assignment has been selected!\nPlease select assignment!", QMessageBox::Ok);
         }
         else{
-            helpAssignmentVec = assignments.getTestData(selectedAssignment);
+            selAssignmentStr = selectedAssignment->text().toStdString();
+            helpAssignmentVec = assignments.getTestData(selAssignmentStr);
             int currentAssingmentID = stoi(helpAssignmentVec[0]);
             for(auto&& assignment : assignments.assignmentList){
                 helpAssignmentVec = assignments.getTestData(assignment);
@@ -860,7 +1014,7 @@ void MainWindow::on_SMSTASendAssignmentButton_clicked(){
         QMessageBox::warning(this, "Sending assignment error!", "File list is empty!\nPlease add a file to your assignment!", QMessageBox::Ok);
     }
     std::stringstream message;
-    message<<helpAssignmentVec[0]<<";"<<helpAssignmentVec[1]<<";"<<currentStudent.Id()<<";"<<currentStudent.CourseCode();
+    message<<helpAssignmentVec[0]<<";"<<helpAssignmentVec[1]<<";"<<currentStudent.Id()<<";"<<currentStudent.CourseCode()<<";";
     for(auto&& assignment : filesForAssignment){
         message<<assignment<<";";
     }
@@ -873,16 +1027,21 @@ void MainWindow::on_SMSTASendAssignmentButton_clicked(){
     ui->SMSTAFileList->clear();
     ui->stackedWidget->setCurrentIndex(2);
 
-    ui->SMCompletedTasksList->addItem(QString::fromStdString(selectedAssignment));
-    ui->PMAssignmentsToGradeList->addItem(QString::fromStdString(selectedAssignment));
+    ui->SMCompletedTasksList->addItem(QString::fromStdString(selAssignmentStr));
+    ui->PMAssignmentsToGradeList->addItem(QString::fromStdString(selAssignmentStr));
     // delete from upcoming
+    delete selectedAssignment;
+
+
 }
 
 // SEND THE ASSIGNMENT PAGE END
 
 // GRADE THE ASSIGNMENT PAGE
-std::string selectedAssignmentToGrade;
+QListWidgetItem*  selectedAssignmentToGrade;
+std::string selAssignmentToGradeStr;
 std::vector<std::string> helpGradeAssignmentVec, senderStudent;
+int currentAssingmentID;
 
 void MainWindow::on_PMGradeSelectedAssignmentButton_clicked()
 {
@@ -894,9 +1053,10 @@ void MainWindow::on_PMGradeSelectedAssignmentButton_clicked()
         QMessageBox::warning(this, "Grading assignment", "You can only grade one assignment at a time!", QMessageBox::Ok);
     }
     else{
-        selectedAssignmentToGrade = ui->PMAssignmentsToGradeList->currentItem()->text().toStdString();
-        helpGradeAssignmentVec = assignments.getTestData(selectedAssignmentToGrade);
-        int currentAssingmentID = stoi(helpGradeAssignmentVec[0]);
+        selectedAssignmentToGrade = ui->PMAssignmentsToGradeList->currentItem();
+        selAssignmentToGradeStr = selectedAssignmentToGrade->text().toStdString();
+        helpGradeAssignmentVec = assignments.getTestData(selAssignmentToGradeStr);
+        currentAssingmentID = stoi(helpGradeAssignmentVec[0]);
         for(auto&& assignment : assignments.assignmentList){
             helpGradeAssignmentVec = assignments.getTestData(assignment);
             if(stoi(helpGradeAssignmentVec[0]) == currentAssingmentID){
@@ -909,8 +1069,13 @@ void MainWindow::on_PMGradeSelectedAssignmentButton_clicked()
         int senderID = 0;
         for(auto&& entry : assignments.assignmentToGrade){
             std::vector<std::string> helpEntry = assignments.getTestData(entry);
+            if(helpEntry[0].empty()){
+                continue;
+            }
             if(currentAssingmentID == stoi(helpEntry[0])){
-                ui->PMGTAListOfFiles->addItem(QString::fromStdString(helpEntry[3]));
+                for(auto&& file : filesForAssignment){
+                    ui->PMGTAListOfFiles->addItem(QString::fromStdString(file));
+                }
                 senderID = stoi(helpEntry[2]);
                 ui->PMGTATitleDataLabel->setText(QString::fromStdString(helpEntry[1]));
             }
@@ -927,8 +1092,6 @@ void MainWindow::on_PMGradeSelectedAssignmentButton_clicked()
                 break;
             }
         }
-
-
     }
 }
 
@@ -938,22 +1101,33 @@ void MainWindow::on_PMGTACancelButton_clicked()
     reply = QMessageBox::question(this, "Cancel Grading Assignment", "Are you sure you want to cancel grading the assignemnt?\nAll the data will be lost!", QMessageBox::Yes|QMessageBox::No);
     if(reply == QMessageBox::Yes){
         ui->stackedWidget->setCurrentIndex(3);
+
     }
 }
 void MainWindow::on_PMGTAViewSelectedFileButton_clicked()
 {
-    ui->stackedWidget->setCurrentIndex(12);
-    QString selectedFile = ui->PMGTAListOfFiles->currentItem()->text();
-    QFile file(selectedFile);
-
-    if(!file.open(QFile::ReadOnly | QFile::Text)){
-        QMessageBox::warning(this, "File Error", "File is empty!", QMessageBox::Ok);
+    QListWidgetItem* selectedFile = ui->PMGTAListOfFiles->currentItem();
+    if(ui->PMGTAListOfFiles->selectedItems().size() == 0){
+        QMessageBox::warning(this, "Selecting File", "No file has been selected!", QMessageBox::Ok);
     }
-    QTextStream in(&file);
-    QString text = in.readAll();
-    ui->plainTextEdit->setPlainText(text);
+    else if(ui->PMGTAListOfFiles->selectedItems().size() > 1){
+        QMessageBox::warning(this, "Selecting Files", "Only one file can be selected at a certain time!", QMessageBox::Ok);
+    }
+    else{
+        ui->stackedWidget->setCurrentIndex(12);
+        QString selFileStr = selectedFile->text();
+        QFile file(selFileStr);
 
-    file.close();
+        if(!file.open(QFile::ReadOnly | QFile::Text)){
+            QMessageBox::warning(this, "File Error", "File is empty!", QMessageBox::Ok);
+        }
+        QTextStream in(&file);
+        QString text = in.readAll();
+        ui->plainTextEdit->setPlainText(text);
+
+        file.close();
+    }
+
 }
 void MainWindow::on_PMGTAGradeTheAssignmentButton_clicked()
 {
@@ -970,8 +1144,62 @@ void MainWindow::on_PMGTAGradeTheAssignmentButton_clicked()
             mess<<";"<<feedback.toStdString();
         }
         messToSend = mess.str();
+        UserData.studentGrades.push_back(messToSend);
         UserData.writeToFile(UserData.studGradesFileName, messToSend);
+        delete selectedAssignmentToGrade;
         ui->stackedWidget->setCurrentIndex(4);
+
+        // delete from main assignment file + vec
+        std::vector<std::string> filteredVec;
+        for(auto&& test : assignments.assignmentList){
+            std::vector<std::string> helpTest = assignments.getTestData(test);
+            if(helpTest[0].empty()){
+                continue;
+            }
+            if(stoi(helpTest[0]) != currentAssingmentID){
+                filteredVec.push_back(test);
+            }
+        }
+        assignments.assignmentList = std::move(filteredVec);
+        filteredVec.clear();
+        assignments.clearFile(assignments.assignmentFile);
+        for(auto&& test : assignments.assignmentList){
+            assignments.addToFile(assignments.assignmentFile, test);
+        }
+
+        // delete from display assignment file + vec
+        for(auto&& test : assignments.assignmentListForDisplay){
+            std::vector<std::string> helpTest = assignments.getTestData(test);
+            if(helpTest[0].empty()){
+                continue;
+            }
+            if(stoi(helpTest[0]) != currentAssingmentID){
+                filteredVec.push_back(test);
+            }
+        }
+        assignments.assignmentListForDisplay = std::move(filteredVec);
+        filteredVec.clear();
+        assignments.clearFile(assignments.assignmentFileForDisplay);
+        for(auto&& test : assignments.assignmentListForDisplay){
+            assignments.addToFile(assignments.assignmentFileForDisplay, test);
+        }
+
+        // delete from toGrade assignment file + vec
+        for(auto&& test : assignments.assignmentToGrade){
+            std::vector<std::string> helpTest = assignments.getTestData(test);
+            if(helpTest[0].empty()){
+                continue;
+            }
+            if(stoi(helpTest[0]) != currentAssingmentID){
+                filteredVec.push_back(test);
+            }
+        }
+        assignments.assignmentToGrade = std::move(filteredVec);
+        filteredVec.clear();
+        assignments.clearFile(assignments.assignmentFileToGrade);
+        for(auto&& test : assignments.assignmentToGrade){
+            assignments.addToFile(assignments.assignmentFileToGrade, test);
+        }
 
     }
 }

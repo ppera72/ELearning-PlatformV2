@@ -6,13 +6,14 @@
 
 class Person
 {
-public:
+private:
     std::string name, surname, email, password;
     int id;
     Date dateOfBirth;
-
+public:
     Person(int id, std::string n, std::string s, Date dateOB, std::string e, std::string p);
     Person();
+
     int Id() const;
     std::string Name() const;
     std::string Surname() const;

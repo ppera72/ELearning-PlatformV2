@@ -16,7 +16,7 @@ public:
     std::vector<std::string> studentData, professorData, studentGrades;
 
     void writeToFile(std::string filePath, std::string message);
-    void readFromFile(std::string filePath, bool ifStud);
+    void loadData();
     int getLastID(std::vector<std::string> data);
     void clearFile(std::string filePath);
     std::string assignAGrade(int corrAnswers, int numOfQuestions);

@@ -10,7 +10,6 @@ public:
 
     std::vector<std::string> assignmentList, assignmentListForDisplay, assignmentToGrade;
     std::vector<std::string> testList, testListForDisplay;
-    std::vector<std::string> currentTestData;
 
     const std::string assignmentFile = "assignments.txt";
     const std::string testFile = "tests.txt";
@@ -27,7 +26,6 @@ public:
     void startTest();
     std::vector<std::string> getTestData(std::string test);
     void sendAssginment(std::string filePath);
-    // void gradeAssignment(std::string filePath); ???
 
 };
 

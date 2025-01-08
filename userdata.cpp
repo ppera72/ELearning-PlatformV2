@@ -17,26 +17,42 @@ void userData::writeToFile(std::string filePath, std::string message)
     File.close();
 }
 
-void userData::readFromFile(std::string filePath, bool ifStud)
+void userData::loadData()
 {
-    std::string path = "C:\\Users\\Patryk\\Desktop\\Praca\\C Plus Plus\\E-LearningPlatformV2\\userData\\" + filePath; // change path!!!
-    std::ifstream File(path.c_str());
-    if(File.good()){
+    std::string profPath = "C:\\Users\\Patryk\\Desktop\\Praca\\C Plus Plus\\E-LearningPlatformV2\\userData\\" + profFileName; // change path!!!
+    std::string studPath = "C:\\Users\\Patryk\\Desktop\\Praca\\C Plus Plus\\E-LearningPlatformV2\\userData\\" + studFileName; // change path!!!
+    std::string studGradesPath = "C:\\Users\\Patryk\\Desktop\\Praca\\C Plus Plus\\E-LearningPlatformV2\\userData\\" + studGradesFileName; // change path!!!
+
+    std::ifstream profFile(profPath.c_str());
+    std::ifstream studFile(studPath.c_str());
+    std::ifstream studGradesFile(studGradesPath.c_str());
+
+    if(profFile.good()){
         std::string c;
-        if(ifStud){
-            while(File >> c){
-                studentData.push_back(c);
-            }
-            lastID = getLastID(studentData);
+        while(profFile >> c){
+            professorData.push_back(c);
         }
-        else{
-            while(File >> c){
-                professorData.push_back(c);
-            }
-            lastID = getLastID(professorData);
+        lastID = getLastID(professorData);
+    }
+
+    if(studFile.good()){
+        std::string c;
+        while(studFile >> c){
+            studentData.push_back(c);
+        }
+        lastID = getLastID(studentData);
+    }
+
+    if(studGradesFile.good()){
+        std::string c;
+        while(studGradesFile >> c){
+            studentGrades.push_back(c);
         }
     }
-    File.close();
+
+    profFile.close();
+    studFile.close();
+    studGradesFile.close();
 }
 
 int userData::getLastID(std::vector<std::string> data)

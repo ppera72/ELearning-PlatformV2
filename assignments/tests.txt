@@ -1,10 +1,10 @@
-1;Title1;CiEn;Question 1;Correct Answer;Wrong Answer;Wrong Answer;Wrong Answer;03.01.2025;04.01.2025
-1;Title1;CiEn;Question 2;Correct Answer;Wrong Answer;Wrong Answer;Wrong Answer;03.01.2025;04.01.2025
-2;Title2;CiEn;Q1;Correct Answer;Wrong Answer;Wrong Answer;Wrong Answer;03.01.2025;04.01.2025
-2;Title2;CiEn;Q2;Correct Answer;Wrong Answer;Wrong Answer;Wrong Answer;03.01.2025;04.01.2025
 3;c++ test;CiEn;Which of the following correctly declares a constant variable in C++?;const int value = 10;int const value 10;constant int value = 10;int value const = 10;04.01.2025;05.01.2025
 3;c++ test;CiEn;What is the purpose of the std::vector class in C++?;It provides a dynamically resizable array.;It is a fixed-size array container.;It manages linked lists.;It sorts elements automatically.;04.01.2025;05.01.2025
 3;c++ test;CiEn;Which access specifier allows a member to be accessed only by derived classes in C++?;protected;public;private;friend;04.01.2025;05.01.2025
 3;c++ test;CiEn;What is the output of the following code? int x = 3 | x += 5 * 2 | cout << x;13;16;10;11;04.01.2025;05.01.2025
 3;c++ test;CiEn;Which of the following statements about C++ inheritance is true?;A derived class can inherit from more than one base class.;A derived class can only inherit from one base class.; C++ does not support inheritance.;Base classes must always be abstract.;04.01.2025;05.01.2025
 3;c++ test;CiEn;Which of the following declarations of a pointer to int variable is correct?;int* ptr;int ptr;*int ptr;int& ptr;04.01.2025;05.01.2025
+4;Example Test;CiEn;Question 1;Correct Answer;Wrong Answer;Wrong Answer;Wrong Answer;08.01.2025;09.01.2025
+4;Example Test;CiEn;Question 2;Correct Answer;Wrong Answer;Wrong Answer;Wrong Answer;08.01.2025;09.01.2025
+5;Example Test2;CoEn;Question 1;Correct Answer;Wrong Answer;Wrong Answer;Wrong Answer;08.01.2025;09.01.2025
+5;Example Test2;CoEn;Question 2;Correct Answer;Wrong Answer;Wrong Answer;Wrong Answer;08.01.2025;09.01.2025

@@ -50,12 +50,17 @@ private:
     void on_SMChangePasswordButton_clicked();
     void on_SMChangeNameButton_clicked();
     void on_SMChangeSurnameButton_clicked();
+
     void on_SMViewAccountDataButton_clicked();
     void on_SMAccountDetailsBackButton_clicked();
     void on_SMViewGradesButton_clicked();
     void on_SMVGBackButton_clicked();
+    void writeToStudGradesTable();
 
-
+    void on_PMChangeEmailButton_clicked();
+    void on_PMChangePasswordButton_clicked();
+    void on_PMChangeNameButton_clicked();
+    void on_PMChangeSurnameButton_clicked();
     void on_PMViewAccountDataButton_clicked();
     void on_PMAccountDetailsBackButton_clicked();
 
@@ -84,6 +89,7 @@ private:
     void on_PMGTAViewSelectedFileButton_clicked();
     void on_PMGTAGradeTheAssignmentButton_clicked();
     void on_PMGTAVTFBackButton_clicked();
+
 
 };
 #endif // MAINWINDOW_H

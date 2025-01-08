@@ -13,6 +13,7 @@
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QComboBox>
 #include <QtWidgets/QDateEdit>
+#include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QListWidget>
@@ -22,6 +23,7 @@
 #include <QtWidgets/QRadioButton>
 #include <QtWidgets/QSpinBox>
 #include <QtWidgets/QStackedWidget>
+#include <QtWidgets/QTableWidget>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -199,6 +201,9 @@ public:
     QWidget *PMGTAViewFilePage;
     QPlainTextEdit *plainTextEdit;
     QPushButton *PMGTAVTFBackButton;
+    QWidget *SMViewGradesPage;
+    QTableWidget *SMVGTable;
+    QPushButton *SMVGBackButton;
 
     void setupUi(QMainWindow *MainWindow)
     {
@@ -801,11 +806,20 @@ public:
         PMGTAVTFBackButton->setObjectName("PMGTAVTFBackButton");
         PMGTAVTFBackButton->setGeometry(QRect(550, 540, 80, 24));
         stackedWidget->addWidget(PMGTAViewFilePage);
+        SMViewGradesPage = new QWidget();
+        SMViewGradesPage->setObjectName("SMViewGradesPage");
+        SMVGTable = new QTableWidget(SMViewGradesPage);
+        SMVGTable->setObjectName("SMVGTable");
+        SMVGTable->setGeometry(QRect(60, 100, 661, 411));
+        SMVGBackButton = new QPushButton(SMViewGradesPage);
+        SMVGBackButton->setObjectName("SMVGBackButton");
+        SMVGBackButton->setGeometry(QRect(590, 550, 80, 24));
+        stackedWidget->addWidget(SMViewGradesPage);
         MainWindow->setCentralWidget(centralwidget);
 
         retranslateUi(MainWindow);
 
-        stackedWidget->setCurrentIndex(2);
+        stackedWidget->setCurrentIndex(0);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -1010,6 +1024,7 @@ public:
         PMGTAGradeCombo->setItemText(5, QCoreApplication::translate("MainWindow", "5.0", nullptr));
 
         PMGTAVTFBackButton->setText(QCoreApplication::translate("MainWindow", "Back", nullptr));
+        SMVGBackButton->setText(QCoreApplication::translate("MainWindow", "Back", nullptr));
     } // retranslateUi
 
 };
